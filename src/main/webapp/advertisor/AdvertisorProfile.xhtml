@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+	<ui:composition template="/WEB-INF/template/master.xhtml">
+		<ui:define name="content">
+			<h:form id="form" enctype="multipart/form-data">
+
+				<p:panelGrid style="margin: 0 auto;" columns="2">
+					<f:facet name="header">
+
+						<h:graphicImage
+							value="/images/dynamic/?file=#{adverstiserEditProfileBean.roomAdvertiser.profileImage}&amp;type=2"
+							width="400" height="171" />
+
+					</f:facet>
+
+					<h:outputText value="First Name:" />
+					<h:outputText
+						value="#{adverstiserEditProfileBean.roomAdvertiser.firstName}" />
+
+					<h:outputText value="Last Name:" />
+					<h:outputText
+						value="#{adverstiserEditProfileBean.roomAdvertiser.lastName}" />
+
+					<h:outputText value="Email:" />
+					<h:outputText
+						value="#{adverstiserEditProfileBean.roomAdvertiser.email}" />
+
+					<h:outputText value="City:" />
+					<h:outputText
+						value="#{adverstiserEditProfileBean.roomAdvertiser.city}" />
+
+					<h:outputText value="Country:" />
+					<h:outputText
+						value="#{adverstiserEditProfileBean.roomAdvertiser.country}" />
+
+					<h:outputText value="Birthday:" />
+					<h:outputText
+						value="#{adverstiserEditProfileBean.roomAdvertiser.birthday}" />
+
+					<h:outputText value="Phone Number:" />
+					<h:outputText
+						value="#{adverstiserEditProfileBean.roomAdvertiser.phoneNumber}" />
+				</p:panelGrid>
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

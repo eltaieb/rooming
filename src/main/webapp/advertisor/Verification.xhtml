@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+	<ui:composition template="/WEB-INF/template/master.xhtml">
+		<ui:define name="content">
+			<h:form id="form" enctype="multipart/form-data">
+
+				<p:panelGrid columns="2" layout="grid" styleClass="ui-responsive">
+					<p:outputLabel for="verficationType" value="Verfication Type" />
+					<p:selectOneMenu id="verficationType"
+						converter="#{lookupConverter}"
+						value="#{advertiserVerficationManagedBean.roomAdvertiser.identificationType}">
+						<f:selectItems
+							value="#{advertiserVerficationManagedBean.identificationTypes}"
+							var="identificationType" itemValue="#{identificationType}"
+							itemLabel="#{identificationType.name}" />
+
+					</p:selectOneMenu>
+					<p:outputLabel for="verifyDocNum" value="Verification Number: " />
+					<p:inputText id="verifyDocNum"
+						value="#{advertiserVerficationManagedBean.roomAdvertiser.identificationNumber}"
+						required="true" requiredMessage="VerifyDocNumber is Reuired">
+						<f:convertNumber minFractionDigits="3" />
+					</p:inputText>					
+					<p:message for="verifyDocNum" redisplay="false" />
+					
+					<p:message for="doc" />
+					<p:outputLabel for="doc" value="Verification Document " />
+					<p:fileUpload
+						fileUploadListener="#{advertiserVerficationManagedBean.upload}"
+						allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="400000"
+						description="Select Images" id="doc" />
+						 <p:growl id="messages" showDetail="true"/>
+					<!-- <p:message for="doc" redisplay="false" />
+					 -->
+					<p:commandButton value="Verify"
+						action="#{advertiserVerficationManagedBean.saveAdvisorVerfications()}"
+						update="@form" />
+				</p:panelGrid> 
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

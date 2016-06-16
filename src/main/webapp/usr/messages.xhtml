@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<script>
+	window.onload = init;
+	var wsUri = "ws://localhost:8080/rooming/chat/";
+	var output = "";
+	var websocket = "";
+	var chat = "";
+
+	function loadAllMessages(obj) {
+		$(obj).each(function(index, o) {
+			writeToScreen(o);
+		});
+	}
+
+	function init() {
+		wsUri += #{messageBean.roomAdvertiser.id};
+		websocket = new WebSocket(wsUri);
+		output = document.getElementById("msgTextArea");
+		chat = document.getElementById("chat");
+		websocket.onopen = function(evt) {
+			onOpen(evt)
+		};
+		websocket.onmessage = function(evt) {
+			onMessage(evt)
+		};
+		websocket.onerror = function(evt) {
+			onError(evt)
+		};
+
+	}
+
+	function send_message(owner, seeker, room) {
+		var obj = new Object();
+		obj.type = 0;//type 0 means you are owner
+		obj.from = owner;
+		obj.to = seeker;
+		obj.about = room;
+		obj.message = chat.value;
+		doSend(obj);
+		document.getElementById("chat").value="";
+
+	}
+
+	function onOpen(evt) {
+	}
+
+	function onMessage(evt) {
+		var data = JSON.parse(evt.data);
+		writeToScreen(data.message);
+	}
+
+	function onError(evt) {
+		writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
+	}
+
+	function doSend(message) {
+		websocket.send(JSON.stringify(message));
+	}
+
+	function writeToScreen(message) {
+		output = document.getElementById("msgTextArea");
+		output.innerHTML += message + "\n";
+		output.scrollTop = output.scrollHeight;
+
+	}
+
+	</script>
+</h:head>
+<h:body>
+
+
+	<p:layout style="min-width:400px;min-height:600px;">
+		<p:layoutUnit position="west" resizable="true" size="200"
+			minSize="600" maxSize="800">
+			<h:form>
+				<p:dataTable var="facility" value="#{messageBean.facilityModel}"
+					selectionMode="single" paginator="true" rows="10"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+					rowsPerPageTemplate="5,10,15" id="facilityTable"
+					selection="#{messageBean.selectedFacility}" lazy="true">
+					<f:facet name="header">
+            		Managing Facilities
+        		</f:facet>
+					<p:ajax event="rowToggle"
+						listener="#{messageBean.onFacilityRowToggle}" update="roomTable" />
+					<p:column style="width:36px">
+						<p:rowToggler />
+					</p:column>
+
+					<p:column headerText="facility No.">
+						<h:outputText value="#{facility.id}" />
+					</p:column>
+					<p:column headerText="Description">
+					#{facility.description}
+				</p:column>
+					<p:rowExpansion id="rowexpansion">
+
+						<p:dataTable var="room" value="#{messageBean.roomModel}"
+							selectionMode="single" id="roomTable" paginator="true" rows="10"
+							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+							rowsPerPageTemplate="5,10,15"
+							selection="#{messageBean.selectedRoom}" rowKey="#{room.id}"
+							lazy="true">
+							<f:facet name="header">
+            		Managing rooms
+        		</f:facet>
+							<p:ajax event="rowToggle"
+								listener="#{messageBean.onRoomRowToggle}" update="seekers" />
+							<p:column style="width:36px">
+								<p:rowToggler />
+							</p:column>
+
+							<p:column headerText="Room No.">
+								<h:outputText value="#{room.id}" />
+							</p:column>
+
+							<p:rowExpansion id="rowexpansion">
+								<p:outputLabel for="seekers" value="seekers:" />
+								<p:panelGrid columns="1" style="margin-bottom:10px"
+									cellpadding="5" columnClasses="label, value">
+									<p:selectOneListbox id="seekers"
+										value="#{messageBean.selectedRoomSeeker}" var="s"
+										filter="true" filterMatchMode="contains"
+										converter="seekerConverter"
+										valueChangeListener="#{messageBean.processValueChange}"
+										style="width:100%;">
+										<p:ajax update=":sendForm:sendButton" />
+										<f:selectItems value="#{messageBean.seekers}" var="seeker"
+											itemLabel="#{seeker.email}" itemValue="#{seeker}" />
+										<p:column>
+											<h:outputText value="#{s.username}" />
+										</p:column>
+
+									</p:selectOneListbox>
+								</p:panelGrid>
+							</p:rowExpansion>
+						</p:dataTable>
+					</p:rowExpansion>
+				</p:dataTable>
+			</h:form>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center">
+			<textarea id="msgTextArea"
+				style="border-color: black; border-style: solid; border-width: 2px; height: 80%; width: 90%;"
+				readonly="readonly"></textarea>
+			<textarea rows="" cols="" id="chat"
+				style="width: 90%; margin-top: 10px;"></textarea>
+			<h:form id="sendForm">
+				<p:commandButton id="sendButton"
+					onclick="send_message(#{messageBean.roomAdvertiser.id}, #{messageBean.selectedRoomSeeker.id}, #{messageBean.selectedRoom.id})"
+					value="Send" />
+			</h:form>
+		</p:layoutUnit>
+	</p:layout>
+
+
+</h:body>
+</html>

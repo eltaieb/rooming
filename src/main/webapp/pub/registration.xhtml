@@ -1,0 +1,123 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/template/master.xhtml">
+
+	<ui:define name="content">
+		<h:form id="form" enctype="multipart/form-data">
+			<center>
+
+				<h2 style="position: absolute; top: 160px; left: 800px;">Sign
+					Up</h2>
+				<p:panelGrid columns="3" layout="grid" styleClass="ui-responsive"
+					style="width:600px; position:absolute; top:200px;left:550px;">
+
+					<p:outputLabel for="Uname" value="User Name" />
+					<p:inputText id="Uname"
+						value="#{roomAdvertiserManagedBean.roomAdvertiser.username}"
+						required="true" requiredMessage="Name is Reuired">
+						<f:validateLength minimum="2" maximum="10" />
+					</p:inputText>
+					<p:message for="Uname" />
+					<p:outputLabel for="password" value="Password: " />
+					<p:password id="password"
+						value="#{roomAdvertiserManagedBean.roomAdvertiser.password}"
+						required="true" requiredMessage="Password is Reuired"
+						redisplay="true">
+						<f:validateLength minimum="2" maximum="10" />
+					</p:password>
+					<p:message for="password" />
+					<p:outputLabel for="name" value="Advisor Name" />
+					<p:inputText id="name"
+						value="#{roomAdvertiserManagedBean.roomAdvertiser.firstName}"
+						required="true" requiredMessage="First Name is Reuired">
+						<f:validateLength minimum="2" maximum="10" />
+					</p:inputText>
+					<p:message for="name" />
+					<p:outputLabel for="Lname" value="Advisor Last Name" />
+					<p:inputText id="Lname"
+						value="#{roomAdvertiserManagedBean.roomAdvertiser.lastName}"
+						required="true" requiredMessage="Last Name is Reuired">
+						<f:validateLength minimum="2" maximum="10" />
+					</p:inputText>
+
+					<p:message for="Lname" />
+					<p:outputLabel for="phone" value="Phone Number" />
+					<p:inputText id="phone"
+						value="#{roomAdvertiserManagedBean.roomAdvertiser.phoneNumber}"
+						requiredMessage="Phone Number is Required" required="true"
+						label="Phone">
+
+					</p:inputText>
+					<p:message for="phone" />
+					<p:outputLabel for="country" value="Country" />
+					<p:selectOneMenu id="country"
+						value="#{roomAdvertiserManagedBean.roomAdvertiser.country}"
+						style="width:125px">
+						<f:selectItem itemValue="Egypt" itemLabel="Egypt" />
+					</p:selectOneMenu>
+					<p:message for="country" />
+					<p:outputLabel for="city" value="City" />
+					<p:selectOneMenu id="city"
+						value="#{roomAdvertiserManagedBean.roomAdvertiser.city}"
+						style="width:125px">
+						<f:selectItem itemValue="Cairo" itemLabel="Cairo" />
+						<f:selectItem itemValue="Alexandria" itemLabel="Alexandria" />
+						<f:selectItem itemValue="Gizeh" itemLabel="Gizeh" />
+						<f:selectItem itemValue="Shubra El-Kheima"
+							itemLabel="Shubra El-Kheima" />
+						<f:selectItem itemValue="Port Said" itemLabel="Port Said" />
+						<f:selectItem itemValue="Suez" itemLabel="Suez" />
+						<f:selectItem itemValue="Luxor" itemLabel="Luxor" />
+						<f:selectItem itemValue="al-Mansura" itemLabel="al-Mansura" />
+						<f:selectItem itemValue="El-Mahalla El-Kubra"
+							itemLabel="El-Mahalla El-Kubra" />
+						<f:selectItem itemValue="Tanta" itemLabel="Tanta" />
+						<f:selectItem itemValue="Asyut" itemLabel="Asyut" />
+						<f:selectItem itemValue="Ismailia" itemLabel="Ismailia" />
+						<f:selectItem itemValue="Fayyum" itemLabel="Fayyum" />
+						<f:selectItem itemValue="Zagazig" itemLabel="Zagazig" />
+						<f:selectItem itemValue="Aswan" itemLabel="Aswan" />
+					</p:selectOneMenu>
+					<p:message for="city" />
+					<p:outputLabel for="buillingNumber" value="Builing Number" />
+					<p:inputText id="buillingNumber"
+						value="#{roomAdvertiserManagedBean.roomAdvertiser.buildingNumber}"
+						requiredMessage="Builing Number is Required" required="true"
+						label="buillingNumber">
+						<f:convertNumber minFractionDigits="0" />
+					</p:inputText>
+					<p:message for="buillingNumber" />
+					<p:outputLabel for="floorNumber" value="Floor Number" />
+					<p:inputText id="floorNumber"
+						value="#{roomAdvertiserManagedBean.roomAdvertiser.floorNumber}"
+						requiredMessage="Floor Number is Required" required="true"
+						label="floorNumber">
+						<f:convertNumber minFractionDigits="2" />
+					</p:inputText>
+					<p:message for="floorNumber" />
+					<p:outputLabel for="street" value="Street" />
+					<p:inputText id="street"
+						value="#{roomAdvertiserManagedBean.roomAdvertiser.street}"
+						requiredMessage="street is Required" required="true"
+						label="street">
+
+					</p:inputText>
+					<p:message for="street" />
+					<p:outputLabel value="Profile Image" />
+					<p:fileUpload value="#{roomAdvertiserManagedBean.uploaded}"
+						mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+						sizeLimit="400000" description="Select Images" />
+					<!-- <p:message for="phrofileImg" /> -->
+					<p:spacer></p:spacer>
+					<p:commandButton value="Register" ajax="false"
+						action="#{roomAdvertiserManagedBean.saveRoomAdvisor()}"
+						update="@form" />
+				</p:panelGrid>
+				<center></center>
+			</center>
+		</h:form>
+	</ui:define>
+</ui:composition>

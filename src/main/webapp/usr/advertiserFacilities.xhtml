@@ -1,0 +1,52 @@
+<ui:composition template="/WEB-INF/template/master.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<h:form id="form">
+			<h2 style="position:absolute; top:160px; left:200px; width:1300px">My Facilities</h2>
+			<p:dataTable value="#{advertiserFacilitiesListBean.facilities}" style="position:absolute; top:200px; left:200px; width:1300px"
+				var="facility">
+				<p:column headerText="Building Number" width="100">
+					<p:outputLabel value="#{facility.buildingNumber}" />
+				</p:column>
+
+				<p:column headerText="Street" width="300">
+					<p:outputLabel value="#{facility.street}" />
+				</p:column>
+				<p:column headerText="City" width="200">
+					<p:outputLabel value="#{facility.city}" />
+				</p:column>
+
+				<p:column headerText="Country" width="200">
+					<p:outputLabel value="#{facility.country}" />
+				</p:column>
+
+				<p:column headerText="Actions">
+					<p:commandButton value="Show  Location"
+						actionListener="#{advertiserFacilitiesListBean.assignCurrentlySelectedFacility(facility)}"
+						update="selectedFacilityLocationForm"
+						oncomplete="PF('mapDialog').show()"></p:commandButton>
+					<p:commandButton value="Edit Facility" ajax="false"
+						actionListener="#{advertiserFacilitiesListBean.editFacility(facility)}" />
+
+					<p:commandButton value="View Facility" ajax="false"
+						actionListener="#{advertiserFacilitiesListBean.viewFacility(facility)}" />
+				</p:column>
+			</p:dataTable>
+
+		</h:form>
+
+		<p:dialog modal="true" widgetVar="mapDialog" width="500px" height="500px">
+			<h:form id="selectedFacilityLocationForm">
+				<p:gmap
+					center="#{advertiserFacilitiesListBean.currentFacility.lan} , #{advertiserFacilitiesListBean.currentFacility.lon} "
+					type="HYBRID" style="width:100%;height:400px" zoom="18"></p:gmap>
+				<br />
+			<center>	<p:commandButton value="Hide" onclick="PF('mapDialog').hide()" /></center>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,1 @@
+ALTER TABLE `rooming_db`.`fac` RENAME TO  `rooming_db`.`bookmark` ;

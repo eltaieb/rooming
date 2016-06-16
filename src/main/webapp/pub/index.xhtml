@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<h:head>
+	<title><ui:insert name="title">Rooming</ui:insert></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="Rooming Rent " />
+	<script type="application/x-javascript"> addEventListener("load", function() {setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<h:outputStylesheet name="lightbox.css" library="css" />
+	<h:outputStylesheet name="bootstrap.min.css" library="css" />
+	<h:outputStylesheet name="style.css" library="css" />
+	<h:outputScript name="jquery-2.1.4.min.js" library="js" />
+	<h:outputScript name="bootstrap.min.js" library="js" />
+	<h:outputScript name="move-top.js" library="js" />
+	<h:outputScript name="easing.js" library="js" />
+
+</h:head>
+<h:body>
+
+	<div class="header" id="home">
+		<div class="header-top">
+			<nav class="navbar navbar-default nav-dflt-setin">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header nav-min-wid">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+						aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<h1>
+						<a class="navbar-brand" href="index.xhtml">Rooming</a>
+					</h1>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse "
+					id="bs-example-navbar-collapse-1">
+
+
+					<ul class="nav navbar-nav nav-max-wid cl-effect-5" id="cl-effect-5">
+						<li><h:link outcome="/pub/index.xhtml">
+								<span class="active" data-hover="Default">Home</span>
+							</h:link></li>
+						<li><h:link outcome="/pub/registration.xhtml"
+								rendered="#{!userSessionBean.authenticated}">
+								<span data-hover="SignUp">Registration</span>
+							</h:link></li>
+						<li><h:link outcome="/pub/userauthentication.xhtml"
+								rendered="#{!userSessionBean.authenticated}">
+								<span data-hover="SignIn">Login</span>
+							</h:link></li>
+						<li><h:link outcome="/usr/facilitywizard.xhtml"
+								rendered="#{userSessionBean.authenticated}">
+								<span data-hover="Facilities">My Facilities</span>
+							</h:link></li>
+						<li><h:link outcome="/usr/updateprofile.xhtml"
+								rendered="#{userSessionBean.authenticated}">
+								<span data-hover="Profile">My Profile</span>
+							</h:link></li>
+						<li><h:link outcome="/pub/Logout.xhtml"
+								rendered="#{userSessionBean.authenticated}">
+								<span data-hover="Logout">Logout</span>
+							</h:link></li>
+					</ul>
+				</div>
+				<!-- /.navbar-collapse -->
+				<div class="clearfix"></div>
+			</div>
+			<!-- /.container-fluid --> </nav>
+		</div>
+		<div class="header-bottom">
+			<div id="mycarousel" class="carousel slide" data-ride="carousel">
+				<!-- Indicators -->
+				<ol class="carousel-indicators">
+					<li data-target="#mycarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#mycarousel" data-slide-to="1"></li>
+					<li data-target="#mycarousel" data-slide-to="2"></li>
+				</ol>
+
+				<!-- Wrapper for slides -->
+				<div class="carousel-inner" role="listbox">
+					<div class="item active">
+						<h:graphicImage name="images/ban.jpg" styleClass="banner-wid" />
+						<div class="carousel-caption">
+							<h3>Welcome to Rooming,By providing fasting way, reliable
+								and management to deliver your business in the right place</h3>
+						</div>
+					</div>
+					<div class="item">
+						<h:graphicImage name="images/ban1.jpg" styleClass="banner-wid" />
+
+					</div>
+					<div class="item">
+						<h:graphicImage name="images/ban2.jpg" styleClass="banner-wid" />
+					</div>
+				</div>
+				<!-- Controls -->
+
+			</div>
+		</div>
+	</div>
+	<div class="work-section">
+		<div class="container">
+			<div class="col-md-6 work-grids">
+				<div class="work-grid-text">
+					<ul>
+						<li><span class="glyphicon glyphicon-glass work-grid-icn"
+							aria-hidden="true"></span>Care</li>
+						<li><span class="glyphicon glyphicon-wrench work-grid-icn"
+							aria-hidden="true"></span>Installation</li>
+						<li><span class="glyphicon glyphicon-pushpin work-grid-icn"
+							aria-hidden="true"></span>Preference</li>
+
+					</ul>
+					<div class="clearfix"></div>
+					<p>Finding your perfect room or roommate is quick and easy.
+						Create your personalized search profile in seconds.</p>
+				</div>
+			</div>
+			<div class="col-md-6 work-grids">
+				<div class="work-img">
+					<h:graphicImage name="images/wrk.jpg" styleClass="work-img-wid" />
+				</div>
+			</div>
+			<div class="col-md-6 work-grids">
+				<div class="work-img">
+					<h:graphicImage name="images/wrk1.jpg" styleClass="work-img-wid" />
+				</div>
+			</div>
+			<div class="col-md-6 work-grids">
+				<div class="work-grid-text">
+					<ul>
+						<li><span class="glyphicon glyphicon-usd work-grid-icn"
+							aria-hidden="true"></span>Affordable</li>
+						<li><span class="glyphicon glyphicon-ok work-grid-icn"
+							aria-hidden="true"></span>Quality Check</li>
+						<li><span class="glyphicon glyphicon-user work-grid-icn"
+							aria-hidden="true"></span>Support</li>
+
+					</ul>
+					<div class="clearfix"></div>
+					<p>
+						We manually validate every room to ensure we only offer you the
+						best.<br /> Our dedicated customer service team is here to help
+						you every step of the way.
+					</p>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+
+	<!--script-->
+	<script src="js/responsiveslides.min.js"></script>
+	<script>
+                            $(function () {
+                              $("#slider").responsiveSlides({
+                                auto: true,
+                                speed: 500,
+                                namespace: "callbacks",
+                                pager: true,
+                              });
+                            });
+                        </script>
+	<!--script-->
+	<div class="container"></div>
+	<div class="footer">
+		<div class="ft-top">
+			<div class="twitter-feeds">
+				<div class="container">
+					<center>
+						<p>
+							All Rights Reserved. Design By <a
+								href="http://localhost:8080/rooming/pub/index.xhtml">Rooming</a>
+							&copy; 2016
+						</p>
+					</center>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>

@@ -1,0 +1,1 @@
+ALTER TABLE `rooming_db`.`users` ADD COLUMN `activated` TINYINT NULL  AFTER `role` , ADD COLUMN `active_url_date` DATETIME NULL  AFTER `activated` ;

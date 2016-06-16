@@ -1,0 +1,108 @@
+<ui:composition template="/WEB-INF/template/master.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:messages id="info" />
+			<center>
+				<p:panelGrid columns="3" styleClass="ui-responsive"
+					style="width:500px;" class="noborder">
+
+
+					<p:outputLabel for="name" value="First Name" />
+					<p:inputText id="name"
+						value="#{adverstiserEditProfileBean.roomAdvertiser.firstName}"
+						required="true" requiredMessage="Name is Reuired">
+						<f:validateLength minimum="2" maximum="10" />
+					</p:inputText>
+					<p:message for="name" />
+					<p:outputLabel for="Lname" value="Last Name" />
+					<p:inputText id="Lname"
+						value="#{adverstiserEditProfileBean.roomAdvertiser.lastName}"
+						required="true" requiredMessage="Name is Reuired">
+						<f:validateLength minimum="2" maximum="10" />
+					</p:inputText>
+					<p:message for="Lname" />
+					<p:outputLabel for="password" value="Password: " />
+					<p:password id="password"
+						value="#{adverstiserEditProfileBean.roomAdvertiser.password}"
+						required="true" requiredMessage="Password is Reuired"
+						redisplay="true">
+						<f:validateLength minimum="2" maximum="10" />
+					</p:password>
+					<p:message for="password" />
+					<p:outputLabel for="phone" value="Phone Number" />
+					<p:inputText id="phone"
+						value="#{adverstiserEditProfileBean.roomAdvertiser.phoneNumber}"
+						requiredMessage="Phone Number is Required" required="true"
+						label="Phone">
+					</p:inputText>
+					<p:message for="phone" />
+					<p:outputLabel for="country" value="Country" />
+					<p:selectOneMenu id="country"
+						value="#{adverstiserEditProfileBean.roomAdvertiser.country}"
+						style="width:125px">
+						<f:selectItem itemValue="Egypt" itemLabel="Egypt" />
+					</p:selectOneMenu>
+					<p:message for="country" />
+					<p:outputLabel for="city" value="City" />
+					<p:selectOneMenu id="city"
+						value="#{adverstiserEditProfileBean.roomAdvertiser.city}"
+						style="width:125px">
+						<f:selectItem itemValue="Cairo" itemLabel="Cairo" />
+						<f:selectItem itemValue="Alexandria" itemLabel="Alexandria" />
+						<f:selectItem itemValue="Gizeh" itemLabel="Gizeh" />
+						<f:selectItem itemValue="Shubra El-Kheima"
+							itemLabel="Shubra El-Kheima" />
+						<f:selectItem itemValue="Port Said" itemLabel="Port Said" />
+						<f:selectItem itemValue="Suez" itemLabel="Suez" />
+						<f:selectItem itemValue="Luxor" itemLabel="Luxor" />
+						<f:selectItem itemValue="al-Mansura" itemLabel="al-Mansura" />
+						<f:selectItem itemValue="El-Mahalla El-Kubra"
+							itemLabel="El-Mahalla El-Kubra" />
+						<f:selectItem itemValue="Tanta" itemLabel="Tanta" />
+						<f:selectItem itemValue="Asyut" itemLabel="Asyut" />
+						<f:selectItem itemValue="Ismailia" itemLabel="Ismailia" />
+						<f:selectItem itemValue="Fayyum" itemLabel="Fayyum" />
+						<f:selectItem itemValue="Zagazig" itemLabel="Zagazig" />
+						<f:selectItem itemValue="Aswan" itemLabel="Aswan" />
+					</p:selectOneMenu>
+					<p:message for="city" />
+					<p:outputLabel for="buillingNumber" value="Builing Number" />
+					<p:inputText id="buillingNumber"
+						value="#{adverstiserEditProfileBean.roomAdvertiser.buildingNumber}"
+						requiredMessage="Builing Number is Required" required="true"
+						label="buillingNumber">
+						<f:convertNumber minFractionDigits="0" />
+					</p:inputText>
+					<p:message for="buillingNumber" />
+					<p:outputLabel for="floorNumber" value="Floor Number" />
+					<p:inputText id="floorNumber"
+						value="#{adverstiserEditProfileBean.roomAdvertiser.floorNumber}"
+						requiredMessage="Floor Number is Required" required="true"
+						label="floorNumber">
+						<f:convertNumber minFractionDigits="2" />
+					</p:inputText>
+					<p:message for="floorNumber" />
+					<p:outputLabel for="street" value="Street" />
+					<p:inputText id="street"
+						value="#{adverstiserEditProfileBean.roomAdvertiser.street}"
+						requiredMessage="street is Required" required="true"
+						label="street">
+						<f:convertNumber minFractionDigits="2" />
+					</p:inputText>
+					<p:message for="street" />
+
+				</p:panelGrid>
+				<center>
+					<p:commandButton value="Edit Profile"
+						action="#{adverstiserEditProfileBean.saveAdvisorVerfications()}"
+						update="@form" />
+				</center>
+			</center>
+		</h:form>
+	</ui:define>
+</ui:composition>

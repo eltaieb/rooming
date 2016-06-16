@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="rooming-app-persistence-unit">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:jboss/datasources/RoomingApp-DS</jta-data-source>
+		<class>com.iti.rooming.common.entity.Admin</class>
+		<class>com.iti.rooming.common.entity.SelectionView</class>
+		<class>com.iti.rooming.common.entity.Amenity</class>
+		<class>com.iti.rooming.common.entity.Role</class>
+		<class>com.iti.rooming.common.entity.FacilityRole</class>
+		<class>com.iti.rooming.common.entity.Category</class>
+		<class>com.iti.rooming.common.entity.Facility</class>
+		<class>com.iti.rooming.common.entity.FacilityAmenity</class>
+		<class>com.iti.rooming.common.entity.FacilityImage</class>
+		<class>com.iti.rooming.common.entity.Lookup</class>
+		<class>com.iti.rooming.common.entity.Room</class>
+		<class>com.iti.rooming.common.entity.RoomAdvertiser</class>
+		<class>com.iti.rooming.common.entity.RoomImage</class>
+		<class>com.iti.rooming.common.entity.RoomInterst</class>
+		<class>com.iti.rooming.common.entity.RoomSeeker</class>
+		<class>com.iti.rooming.common.entity.SeekerFavouriteFacility</class>
+		<class>com.iti.rooming.common.entity.SearcherInterest</class>
+		<class>com.iti.rooming.common.entity.UsersRoom</class>
+		<class>com.iti.rooming.common.entity.Message</class>
+		<class>com.iti.rooming.common.entity.FacilitySeeker</class>
+		<class>com.iti.rooming.common.entity.User</class>
+		
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.show_sql" value="true" />
+		</properties>
+	</persistence-unit>
+</persistence>

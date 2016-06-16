@@ -1,0 +1,240 @@
+<ui:composition template="/WEB-INF/template/master.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<h:form id="formOfEditingFacility">
+
+			<p:panelGrid
+				style=" position:absolute; top:100px; left:400px; width:1000px; margin: 0 auto;"
+				columns="1" layout="grid">
+
+
+
+				<p:tabView id="tabviewForEditingFacility">
+
+					<p:tab id="facility" title="Facility Information">
+
+						<p:panelGrid layout="grid" columns="1">
+							<p:fieldset legend="Building Number: *"
+								style="margin-bottom:20px">
+								<h:panelGrid cellpadding="5">
+									<p:message for="buildingNumber"></p:message>
+									<p:inputText id="buildingNumber" required="true"
+										requiredMessage="Please fill in the Building Number"
+										converter="javax.faces.Number"
+										converterMessage="Please fill in a number"
+										value="#{facilityEditManagedBean.facility.buildingNumber}"></p:inputText>
+								</h:panelGrid>
+							</p:fieldset>
+							<p:fieldset legend="Description: *" style="margin-bottom:20px">
+								<h:panelGrid cellpadding="5">
+									<p:message for="description"></p:message>
+									<p:inputTextarea id="description" rows="7" cols="50"
+										required="true"
+										requiredMessage="Please fill in brief description about the facility"
+										value="#{facilityEditManagedBean.facility.description}"></p:inputTextarea>
+								</h:panelGrid>
+							</p:fieldset>
+							<p:fieldset legend="Facility Images: " style="margin-bottom:20px">
+								<h:panelGrid cellpadding="5">
+									<p:fileUpload
+										fileUploadListener="#{facilityEditManagedBean.uploadFacilityImage}"
+										mode="advanced" dragDropSupport="true" multiple="true"
+										update="facilityImages" fileLimit="6"
+										allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
+									<p:dataTable id="facilityImages" rowIndexVar="index"
+										emptyMessage=""
+										value="#{facilityEditManagedBean.facility.images}"
+										var="facilityImage">
+										<p:column headerText="Image">
+											<p:graphicImage
+												value="/images/dynamic/?file=#{facilityImage.image}&amp;type=1" />
+										</p:column>
+									</p:dataTable>
+								</h:panelGrid>
+							</p:fieldset>
+						</p:panelGrid>
+
+					</p:tab>
+
+					<p:tab id="location" title="Location">
+
+						<p:panelGrid layout="grid" columns="2">
+							<p:panel header="Map">
+								<p:message for="gmap"></p:message>
+								<f:view contentType="text/html">
+									<p:gmap id="gmap"
+										center="#{facilityEditManagedBean.facility.lan},#{facilityEditManagedBean.facility.lon} "
+										zoom="14" type="ROADMAP" style="width:400px;height:400px"
+										widgetVar="map"
+										model="#{facilityEditManagedBean.apartmentLocation}">
+										<p:ajax event="pointSelect"
+											listener="#{facilityEditManagedBean.onPointSelect}"
+											update="gmap country city postalCode street" />
+									</p:gmap>
+								</f:view>
+							</p:panel>
+
+							<p:panel header="Details">
+								<p:panelGrid columns="1" layout="grid">
+									<p:outputLabel value="Country *" />
+									<p:message for="country"></p:message>
+									<p:inputText id="country" required="true"
+										requiredMessage="Please fill in the Country"
+										value="#{facilityEditManagedBean.facility.country}">
+									</p:inputText>
+
+									<h:outputLabel value="City *" />
+									<p:message for="city"></p:message>
+									<p:inputText id="city" required="true"
+										requiredMessage="Please fill in the City"
+										value="#{facilityEditManagedBean.facility.city}"></p:inputText>
+
+									<h:outputLabel value="Street *" />
+									<p:message for="street"></p:message>
+									<p:inputText id="street" required="true"
+										requiredMessage="Please fill in the Street"
+										value="#{facilityEditManagedBean.facility.street}"></p:inputText>
+
+									<h:outputLabel value="Postal Code" />
+									<p:message for="postalCode"></p:message>
+									<p:inputText id="postalCode" converter="javax.faces.Number"
+										maxlength="5"
+										converterMessage="Please enter a correct Postal Code"
+										value="#{facilityEditManagedBean.facility.postalCode}"></p:inputText>
+								</p:panelGrid>
+							</p:panel>
+
+						</p:panelGrid>
+
+					</p:tab>
+
+					<p:tab id="tabOfRooms" title="Rooms">
+
+						<p:panelGrid layout="grid" columns="1" id="panelGridOfRooms">
+							<p:commandButton value="Add Room" type="button"
+								onclick="PF('dialogForAddingFacility').show();" />
+							<p:dataTable id="dataTableForRoomsOfFacility"
+								emptyMessage="No Rooms Were Added . Click On Button To Add One .."
+								value="#{facilityEditManagedBean.facility.rooms}" var="room">
+								<p:column headerText="Area">
+									<p:outputLabel value="#{room.area}" />
+								</p:column>
+								<p:column headerText="Price">
+									<p:outputLabel value="#{room.price}" />
+								</p:column>
+								<p:column headerText="Advertise Date">
+									<p:outputLabel value="#{room.advertiseDate}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</p:outputLabel>
+								</p:column>
+								<p:column headerText="Available For Rent">
+									<p:graphicImage library="img" name="yes.png"
+										styleClass="booleanImage" rendered="#{room.rentAvailable}" />
+									<p:graphicImage library="img" name="no.png"
+										styleClass="booleanImage" rendered="#{!room.rentAvailable}" />
+								</p:column>
+								<p:column headerText="Delete Room">
+									<h:commandLink value="Delete This Room"
+										actionListener="#{facilityEditManagedBean.deleteAction(room)}"
+										update=":formOfEditingFacility:tabviewForEditingFacility:dataTableForRoomsOfFacility" />
+								</p:column>
+
+							</p:dataTable>
+						</p:panelGrid>
+					</p:tab>
+
+
+					<p:tab id="facilityRoles" title="Roles">
+						<p:outputLabel value="Which gender is needed for this facility ?" />
+						<p:message for="gender"></p:message>
+						<p:selectOneRadio id="gender"
+							value="#{facilityEditManagedBean.facility.gender}" layout="grid"
+							columns="1">
+							<f:selectItem itemLabel="Female" itemValue="f" />
+							<f:selectItem itemLabel="Male" itemValue="m" />
+						</p:selectOneRadio>
+
+						<p:outputLabel value="What kind of seeker do you prefer ?" />
+						<p:selectManyMenu id="roles"
+							value="#{facilityEditManagedBean.selectedRoles}"
+							converter="#{roleConverterManagedBean}" var="t" filter="true"
+							filterMatchMode="contains" showCheckbox="true">
+							<f:selectItems value="#{facilityEditManagedBean.roles}"
+								var="theme" itemLabel="#{theme.name}" itemValue="#{theme}" />
+							<p:column>
+								<h:outputText value="#{t.name}" />
+							</p:column>
+						</p:selectManyMenu>
+					</p:tab>
+
+
+					<p:tab id="amenity" title="Amenities">
+						<p:selectManyMenu id="amenities"
+							value="#{facilityEditManagedBean.selectedAmenities}"
+							converter="#{amenityConverterManagedBean}" var="t" filter="true"
+							filterMatchMode="contains" showCheckbox="true">
+							<f:selectItems value="#{facilityEditManagedBean.amenities}"
+								var="theme" itemLabel="#{theme.name}" itemValue="#{theme}" />
+							<p:column>
+								<h:outputText value="#{t.name}" />
+							</p:column>
+						</p:selectManyMenu>
+					</p:tab>
+				</p:tabView>
+				<center>
+					<p:commandButton icon="ui-icon-tag"
+						style="margin-left:auto ; margin-right:auto"
+						value="Save Changes"
+						actionListener="#{facilityEditManagedBean.save}" />
+				</center>
+			</p:panelGrid>
+
+		</h:form>
+		<p:dialog header="Room Adder" widgetVar="dialogForAddingFacility"
+			modal="true" height="50%" width="50%">
+			<h:form id="formOfAddingNewRoomToFacility">
+				<p:panelGrid columns="3" layout="grid">
+					<p:outputLabel value="Area* : " />
+					<p:inputText id="area" required="true"
+						requiredMessage="Please fill in the Area"
+						value="#{facilityEditManagedBean.room.area}" />
+					<p:message for="area" />
+
+					<p:outputLabel value="Available For Rent : " />
+					<p:selectBooleanCheckbox id="rentAvailability"
+						value="#{facilityEditManagedBean.room.rentAvailable}" />
+					<p:message for="rentAvailability" />
+
+					<p:outputLabel value="Price* :" />
+					<p:spinner id="price" required="true"
+						requiredMessage="Please fill in the Price" stepFactor="0.25"
+						converter="javax.faces.Number"
+						converterMessage="Please enter a number"
+						value="#{facilityEditManagedBean.room.price}" min="50" />
+					<p:message for="price" />
+
+					<p:outputLabel value="Image :" />
+					<p:fileUpload
+						fileUploadListener="#{facilityEditManagedBean.uploadRoomImage}"
+						mode="advanced" dragDropSupport="true" multiple="true"
+						fileLimit="6" update="roomImageMessageAdderForm"
+						sizeLimit="1306624" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+					<p:growl id="roomImageMessageAdderForm" showDetail="true" />
+
+
+					<p:commandButton value="Add Room !"
+						styleClass="ui-priority-primary"
+						actionListener="#{facilityEditManagedBean.appendRoomToFacility()}"
+						onclick="PF('dialogForAddingFacility').hide();"
+						update=" @form  :formOfEditingFacility:tabviewForEditingFacility:dataTableForRoomsOfFacility" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,12 @@
+CREATE  TABLE `rooming_db`.`roles` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(255) NOT NULL ,
+  PRIMARY KEY (`id`) );
+
+  CREATE  TABLE `rooming_db`.`facility_roles` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `facility_id` INT(11) NOT NULL ,
+  `role_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`id`) )
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;

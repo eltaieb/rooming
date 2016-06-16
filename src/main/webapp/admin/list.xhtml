@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<ui:composition template="/admin/master/master.xhtml">
+
+	<ui:define name="content">
+		<h:form id="form">
+			<p:dataTable var="advertiser"
+				value="#{roomAdvertiserListManagedBean.model}" paginator="true"
+				rows="10"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="5,10,15" selectionMode="single"
+				id="advertiserTable"
+				selection="#{roomAdvertiserListManagedBean.selectedRoomAdvertiser}"
+				lazy="true">
+				<f:facet name="header">
+            		Expand rows for more details about facilities
+        		</f:facet>
+				<p:ajax event="rowToggle"
+					listener="#{roomAdvertiserListManagedBean.onRowToggle}"
+					update="facilityDataTable" />
+				<p:column style="width:36px">
+					<p:rowToggler />
+				</p:column>
+
+				<p:column headerText="Id">
+					<h:outputText value="#{advertiser.id}" />
+				</p:column>
+				<p:column headerText="Email" sortBy="#{advertiser.email}"
+					filterBy="#{advertiser.email}">
+					#{advertiser.email}
+				</p:column>
+				<p:column headerText="first_name" sortBy="#{advertiser.firstName}"
+					filterBy="#{advertiser.firstName}">
+					#{advertiser.firstName}
+				</p:column>
+				<p:column headerText="last_name" sortBy="#{advertiser.lastName}"
+					filterBy="#{advertiser.lastName}">
+					#{advertiser.lastName}
+				</p:column>
+				<p:column headerText="is verified" sortBy="#{advertiser.verified}">
+					#{advertiser.verified}
+				</p:column>
+				<p:column headerText="country" sortBy="#{advertiser.country}">
+					#{advertiser.country}
+				</p:column>
+				<p:column headerText="city" sortBy="#{advertiser.city}">
+					#{advertiser.city}
+				</p:column>
+				<p:rowExpansion id="rowexpansion">
+					<p:dataTable var="facility" id="facilityDataTable"
+						value="#{roomAdvertiserListManagedBean.facilities}">
+						<p:column headerText="Id">
+							<h:outputText value="#{facility.id}" />
+						</p:column>
+
+						<p:column headerText="Description">
+							<h:outputText value="#{facility.description}" />
+						</p:column>
+						<p:column headerText="building number">
+							<h:outputText value="#{facility.buildingNumber}" />
+						</p:column>
+						<p:column headerText="lon">
+							<h:outputText value="#{facility.lon}" />
+						</p:column>
+						<p:column headerText="lat">
+							<h:outputText value="#{facility.lan}" />
+						</p:column>
+						<p:column>
+							<p:commandButton id="btn" type="button" icon="ui-icon-pin-s"
+								value="Show Map" onclick="PF('dlg').show();" />
+							<p:dialog id="gmapDialog" widgetVar="dlg" width="625"
+								height="400" modal="true">
+								<p:gmap id="gmap" center="#{facility.lon}, #{facility.lan}"
+									zoom="15" type="HYBRID" style="width:100%;height:400px" />
+							</p:dialog>
+						</p:column>
+
+					</p:dataTable>
+				</p:rowExpansion>
+			</p:dataTable>
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+
+</html>

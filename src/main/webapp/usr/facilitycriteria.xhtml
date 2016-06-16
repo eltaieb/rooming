@@ -1,0 +1,44 @@
+<ui:composition template="/layout/master.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<h:form>
+			<p:dataTable var="facility"
+				value="#{facilityCriteriaManagedBean.findAllFacilitiesWithCriteria()}">
+
+				<p:column headerText="Lon">
+					<h:outputText value="#{facility.id}" />
+				</p:column>
+				<p:column headerText="Lon">
+					<h:outputText value="#{facility.lon}" />
+				</p:column>
+
+				<p:column headerText="Lan">
+					<h:outputText value="#{facility.lan}" />
+				</p:column>
+
+				<p:column headerText="Country">
+					<h:outputText value="#{facility.country}" />
+				</p:column>
+
+				<p:column headerText="City">
+					<h:outputText value="#{facility.city}" />
+				</p:column>
+
+				<p:column headerText="Street">
+					<h:outputText value="#{facility.street}" />
+				</p:column>
+				<p:column headerText="BuildingNumber">
+					<h:outputText value="#{facility.buildingNumber}" />
+				</p:column>
+				<p:column headerText="Description">
+					<h:outputText value="#{facility.description}" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

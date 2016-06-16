@@ -1,0 +1,12 @@
+.ui-seperator-template{
+	width:100% !important;
+	height:50px !important;
+	background-color: #242122  !important;
+}
+.ui-fieldset-legend{
+	padding:0.2em 1em  !important;
+}
+.booleanImage{
+	width:20px !important;
+	height:20px !important;
+}

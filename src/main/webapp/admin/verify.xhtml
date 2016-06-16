@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<ui:composition template="/admin/master/master.xhtml">
+
+	<ui:define name="content">
+		<h:form id="form">
+			<p:dataTable var="advertiser"
+				value="#{adminAdvertiserVerifyManagedBean.unValidateAdvisrors}" paginator="true"
+				rows="10"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="5,10,15" selectionMode="single"
+				selection="#{adminAdvertiserVerifyManagedBean.selectedRoomAdvertiser}"
+				id="advertiserTable" lazy="true">
+				<p:column headerText="Id">
+					<h:outputText value="#{advertiser.id}" />
+				</p:column>
+				<p:column headerText="Email" sortBy="#{advertiser.email}"
+					filterBy="#{advertiser.email}">
+					#{advertiser.email}
+				</p:column>
+				<p:column headerText="first_name" sortBy="#{advertiser.firstName}"
+					filterBy="#{advertiser.firstName}">
+					#{advertiser.firstName}
+				</p:column>
+				<p:column headerText="last_name" sortBy="#{advertiser.lastName}"
+					filterBy="#{advertiser.lastName}">
+					#{advertiser.lastName}
+				</p:column>
+				<p:column headerText="is verified" sortBy="#{advertiser.verified}">
+					#{advertiser.verified}
+				</p:column>
+				<p:column headerText="country" sortBy="#{advertiser.country}">
+					#{advertiser.country}
+				</p:column>
+				<p:column headerText="city" sortBy="#{advertiser.city}">
+					#{advertiser.city}
+				</p:column>
+				<p:column>
+					<p:commandButton id="docBtn" value="Document" type="button" />
+					<p:overlayPanel id="imgPanel" for="docBtn" showEffect="blind"
+						hideEffect="explode" showEvent="mouseover" hideEvent="mousedown"
+						dismissable="false" showCloseIcon="true">
+
+						<h:graphicImage
+							value="/images/dynamic/?file=#{advisor.identificationDocumentPath}" />
+					</p:overlayPanel>
+				</p:column>
+				<p:column headerText="Verfiy">
+					<p:commandButton value="Verify"
+						actionListener="#{adminAdvertiserVerifyManagedBean.verify(advertiser)}"
+						update="@form" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+
+</html>
