@@ -40,4 +40,9 @@ public interface FacilityService  {
 			Bounds boundary);
 	public List<Facility> getAll(RoomAdvertiser roomAdvertiser);
 
+	public List<Facility> getAllFacilitiesOf(RoomAdvertiser roomAdvertiser);
+	
+
+
+
 }

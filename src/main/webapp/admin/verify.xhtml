@@ -7,12 +7,12 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 
-<ui:composition template="/admin/master/master.xhtml">
+<ui:composition template="/WEB-INF/master/master.xhtml">
 
 	<ui:define name="content">
 		<h:form id="form">
 			<p:dataTable var="advertiser"
-				value="#{adminAdvertiserVerifyManagedBean.unValidateAdvisrors}" paginator="true"
+				value="#{adminAdvertiserVerifyManagedBean.model}" paginator="true"
 				rows="10"
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 				rowsPerPageTemplate="5,10,15" selectionMode="single"
@@ -20,10 +20,6 @@
 				id="advertiserTable" lazy="true">
 				<p:column headerText="Id">
 					<h:outputText value="#{advertiser.id}" />
-				</p:column>
-				<p:column headerText="Email" sortBy="#{advertiser.email}"
-					filterBy="#{advertiser.email}">
-					#{advertiser.email}
 				</p:column>
 				<p:column headerText="first_name" sortBy="#{advertiser.firstName}"
 					filterBy="#{advertiser.firstName}">
@@ -33,8 +29,8 @@
 					filterBy="#{advertiser.lastName}">
 					#{advertiser.lastName}
 				</p:column>
-				<p:column headerText="is verified" sortBy="#{advertiser.verified}">
-					#{advertiser.verified}
+				<p:column headerText="phone">
+					#{advertiser.phoneNumber}
 				</p:column>
 				<p:column headerText="country" sortBy="#{advertiser.country}">
 					#{advertiser.country}
@@ -42,14 +38,19 @@
 				<p:column headerText="city" sortBy="#{advertiser.city}">
 					#{advertiser.city}
 				</p:column>
-				<p:column>
+				<p:column headerText="profile_image">
+					<h:graphicImage
+						value="/images/dynamic/?file=#{advertiser.profileImage}&amp;type=4"
+						style="width:45px; height:45px;" />
+				</p:column>
+				<p:column headerText="Verification Document">
 					<p:commandButton id="docBtn" value="Document" type="button" />
 					<p:overlayPanel id="imgPanel" for="docBtn" showEffect="blind"
-						hideEffect="explode" showEvent="mouseover" hideEvent="mousedown"
+						hideEffect="explode" showEvent="mouseover" hideEvent="mouseout"
 						dismissable="false" showCloseIcon="true">
-
 						<h:graphicImage
-							value="/images/dynamic/?file=#{advisor.identificationDocumentPath}" />
+							value="/images/dynamic/?file=#{advertiser.identificationDocumentPath}&amp;type=1"
+							style="width:400px; height:400px;" />
 					</p:overlayPanel>
 				</p:column>
 				<p:column headerText="Verfiy">
@@ -57,7 +58,7 @@
 						actionListener="#{adminAdvertiserVerifyManagedBean.verify(advertiser)}"
 						update="@form" />
 				</p:column>
-
+			
 			</p:dataTable>
 		</h:form>
 

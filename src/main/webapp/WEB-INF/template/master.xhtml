@@ -53,18 +53,24 @@
 .navbar-brand {
 	color: white !important;
 }
-.ui-state-error
-{
-	color:black !important;
-	background:white !important;
+
+.ui-state-error {
+	color: black !important;
+	background: white !important;
 }
-.ui-message-error
-{
-	background:transparent !important;;
+
+.ui-message-error {
+	background: transparent !important;;
 }
 </style>
 </h:head>
 <h:body id="page-top" styleClass="index">
+	<h:form>
+		<p:idleMonitor timeout="50000">
+			<p:ajax event="idle"
+				listener="#{userAuthenticationManagedBean.logout()}" />
+		</p:idleMonitor>
+	</h:form>
 	<ui:insert name="navigation">
 		<ui:include src="/WEB-INF/template/navigation.xhtml"></ui:include>
 	</ui:insert>

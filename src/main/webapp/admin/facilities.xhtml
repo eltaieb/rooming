@@ -1,0 +1,41 @@
+
+<ui:composition template="/WEB-INF/master/master.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<h:form id="facilityListListForm">
+			<p:dataTable var="facility" rows="10" paginator="true"
+				value="#{facilityListBean.lazyFacilityModel}"
+				resizableColumns="true" draggableColumns="true"
+				rowKey="#{facility.id}"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" selectionMode="single" dynamic="true"
+				selection="#{facilityListBean.facility}" id="facilityListTable"
+				widgetVar="facilityListTable" lazy="true">
+
+				<p:ajax event="rowSelect" update=":facilityListListForm" />
+
+
+				<p:column headerText="Buliding Number"
+					filterBy="#{facility.buildingNumber}"
+					sortBy="#{facility.buildingNumber}">
+					<h:outputText value="#{facility.buildingNumber}" />
+				</p:column>
+				<p:column headerText="City" filterBy="#{facility.city}"
+					sortBy="#{facility.city}">
+					<h:outputText value="#{facility.city}" />
+				</p:column>
+				<p:column headerText="Country" filterBy="#{facility.country}"
+					sortBy="#{facility.country}">
+					<h:outputText value="#{facility.country}" />
+				</p:column>
+			</p:dataTable>
+			<p:chart type="pie" model="#{cityPiechartBean.cityPieModel}"
+				style="width:400px;height:300px" />
+
+		</h:form>
+	</ui:define>
+</ui:composition>

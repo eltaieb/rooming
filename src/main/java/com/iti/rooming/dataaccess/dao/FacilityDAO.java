@@ -43,5 +43,7 @@ public interface FacilityDAO  {
 			List<SelectionView> selectedFacilityIds);
 
 	public List<Facility> getAll(RoomAdvertiser roomAdvertiser);
+
+	public List<Facility> getAllFacilitiesOf(RoomAdvertiser roomAdvertiser);
 	
 }

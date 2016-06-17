@@ -592,4 +592,40 @@ public class RoomingManagmentImpl implements RoomingManagment {
 		return facilityService.getAll(roomAdvertiser);
 	}
 
+	@Override
+	public int getNumOfAdvertiserRows(Map<String, Object> filters) {
+		return roomAdvertiserService.getNumOfAdvertiserRows(filters);
+	}
+
+	@Override
+	public List<RoomAdvertiser> loadAdvertisersLazyMode(int first,
+			int pageSize, String sortField, boolean b,
+			Map<String, Object> filters) {
+		return roomAdvertiserService.loadAdvertisersLazyMode(first, pageSize,
+				sortField, b, filters);
+	}
+
+	@Override
+	public List<RoomAdvertiser> findAllUnValidateAdvisors(int first,
+			int pageSize, String sortField, boolean b,
+			Map<String, Object> filters) {
+		return roomAdvertiserService.findAllUnValidateAdvisors(first, pageSize,
+				sortField, b, filters);
+	}
+
+	@Override
+	public List<Facility> getAllFacilitiesOf(RoomAdvertiser roomAdvertiser) {
+		return facilityService.getAllFacilitiesOf(roomAdvertiser);
+	}
+
+	@Override
+	public List getAllRoomAdvertisers() {
+		return roomAdvertiserService.getAllRoomAdvertisers();
+	}
+
+	@Override
+	public List<Facility> loadFacility(int first, int pageSize,
+			String sortField, boolean b, Map<String, Object> filters) {
+		return facilityService.loadFacility(first, pageSize, sortField, b, filters);
+	}
 }

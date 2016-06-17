@@ -1,6 +1,7 @@
 package com.iti.rooming.dataaccess.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Local;
 
@@ -26,4 +27,17 @@ public interface RoomingAdvertiserDAO {
 
 	public RoomAdvertiser login(RoomAdvertiser roomAdvertiser);
 
+	public RoomAdvertiser getProfile(Long ownerId);
+
+	public List<RoomAdvertiser> loadAdvertisersLazyMode(int first,
+			int pageSize, String sortField, boolean b,
+			Map<String, Object> filters);
+
+	public int getNumOfAdvertiserRows(Map<String, Object> filters);
+
+	public List<RoomAdvertiser> findAllUnValidateAdvisors(int first,
+			int pageSize, String sortField, boolean b,
+			Map<String, Object> filters);
+
+	public List getAllRoomAdvertisers();
 }

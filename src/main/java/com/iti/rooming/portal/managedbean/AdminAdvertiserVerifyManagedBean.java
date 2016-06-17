@@ -3,15 +3,21 @@ package com.iti.rooming.portal.managedbean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Spliterator;
+import java.util.function.Consumer;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 import org.primefaces.model.UploadedFile;
 
 import com.iti.rooming.business.management.RoomingManagment;
+import com.iti.rooming.common.entity.Amenity;
 import com.iti.rooming.common.entity.RoomAdvertiser;
 import com.iti.rooming.common.exception.RoomingException;
 
@@ -28,13 +34,65 @@ public class AdminAdvertiserVerifyManagedBean extends BaseBean implements
 	private RoomAdvertiser roomAdvertiser;
 
 	private UploadedFile uploaded;
-	
-	List<RoomAdvertiser> unValidateAdvisrors;
+
+	private LazyDataModel<RoomAdvertiser> model;
+	private RoomAdvertiser selectedRoomAdvertiser;
 
 	@PostConstruct
 	public void init() {
+		selectedRoomAdvertiser = new RoomAdvertiser();
 		roomAdvertiser = new RoomAdvertiser();
-		unValidateAdvisrors = findAllUnValidateAdvisors();
+		loadInLazyModel();
+
+	}
+
+	private void loadInLazyModel() {
+
+		model = new LazyDataModel<RoomAdvertiser>() {
+			private static final long serialVersionUID = 1L;
+			private List<RoomAdvertiser> advertisers;
+
+			@Override
+			public RoomAdvertiser getRowData(String rowKey) {
+				for (RoomAdvertiser advertiser : advertisers) {
+					if (advertiser.getId().toString().equals(rowKey))
+						return advertiser;
+				}
+
+				return null;
+			}
+
+			@Override
+			public Object getRowKey(RoomAdvertiser order) {
+				return order.getId();
+			}
+
+			public List<RoomAdvertiser> load(int first, int pageSize,
+					String sortField, SortOrder sortOrder,
+					Map<String, Object> filters) {
+				advertisers = roomingManagment.findAllUnValidateAdvisors(first,
+						pageSize, sortField, sortOrder == SortOrder.ASCENDING,
+						filters);
+				this.setRowCount(roomingManagment
+						.getNumOfAdvertiserRows(filters));
+
+				return advertisers;
+
+			}
+
+			@Override
+			public void forEach(Consumer<? super RoomAdvertiser> action) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public Spliterator<RoomAdvertiser> spliterator() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+		};
 
 	}
 
@@ -54,30 +112,31 @@ public class AdminAdvertiserVerifyManagedBean extends BaseBean implements
 		this.roomAdvertiser = roomAdvertiser;
 	}
 
-	public List<RoomAdvertiser> findAllUnValidateAdvisors() {
-
-		unValidateAdvisrors = roomingManagment.findUnValidAdvertisers();
-
-		return unValidateAdvisrors;
-
-	}
-
 	public void verify(RoomAdvertiser roomAdvertis) {
 		roomAdvertis.setIsVerified(true);
 		try {
 			roomingManagment.addOrUpdateRoomAdvertiser(roomAdvertis);
-			findAllUnValidateAdvisors();
+			loadInLazyModel();
 		} catch (RoomingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public List<RoomAdvertiser> getUnValidateAdvisrors() {
-		return unValidateAdvisrors;
+
+	public LazyDataModel<RoomAdvertiser> getModel() {
+		return model;
 	}
 
-	public void setUnValidateAdvisrors(List<RoomAdvertiser> unValidateAdvisrors) {
-		this.unValidateAdvisrors = unValidateAdvisrors;
+	public void setModel(LazyDataModel<RoomAdvertiser> model) {
+		this.model = model;
 	}
+
+	public RoomAdvertiser getSelectedRoomAdvertiser() {
+		return selectedRoomAdvertiser;
+	}
+
+	public void setSelectedRoomAdvertiser(RoomAdvertiser selectedRoomAdvertiser) {
+		this.selectedRoomAdvertiser = selectedRoomAdvertiser;
+	}
+
 }

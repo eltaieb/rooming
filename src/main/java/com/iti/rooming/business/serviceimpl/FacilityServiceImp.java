@@ -84,4 +84,9 @@ public class FacilityServiceImp implements FacilityService {
 		return facilityDAO.getAll(roomAdvertiser);
 	}
 
+	@Override
+	public List<Facility> getAllFacilitiesOf(RoomAdvertiser roomAdvertiser) {
+		return facilityDAO.getAllFacilitiesOf(roomAdvertiser);
+	}
+
 }

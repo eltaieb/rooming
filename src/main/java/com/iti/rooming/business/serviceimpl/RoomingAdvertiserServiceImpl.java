@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -20,7 +21,6 @@ import com.iti.rooming.common.utils.Mail;
 import com.iti.rooming.common.utils.RandomString;
 import com.iti.rooming.common.utils.TokenGenerator;
 import com.iti.rooming.common.utils.URLGenerator;
-import com.iti.rooming.dataaccess.dao.RoomAdvertiserDao;
 import com.iti.rooming.dataaccess.dao.RoomingAdvertiserDAO;
 import com.iti.rooming.ws.controller.OwnerWS;
 import com.sun.javafx.fxml.builder.URLBuilder;
@@ -29,16 +29,13 @@ import com.sun.javafx.fxml.builder.URLBuilder;
 public class RoomingAdvertiserServiceImpl implements RoomingAdvertiserService {
 	private static final Integer MAX_TOKEN_LEN = 20;
 	@EJB
-	private RoomingAdvertiserDAO roomingAdverstierDao;
-
-	@EJB
-	private RoomAdvertiserDao roomAdvertiserDao;
+	private RoomingAdvertiserDAO roomingAdverstierDAO;
 
 	public void sendResetPasswordURL(String email) throws RoomingException,
 			NoSuchAlgorithmException, AddressException, MessagingException,
 			IOException {
 		String token = null;
-		RoomAdvertiser roomAdvertiser = roomingAdverstierDao
+		RoomAdvertiser roomAdvertiser = roomingAdverstierDAO
 				.validateEmail(email);
 		if (roomAdvertiser != null) {
 			token = TokenGenerator.generate(roomAdvertiser.hashCode() + 0L);
@@ -61,7 +58,7 @@ public class RoomingAdvertiserServiceImpl implements RoomingAdvertiserService {
 
 	private void persisteTokenINDB(RoomAdvertiser roomAdvertiser)
 			throws RoomingException {
-		roomingAdverstierDao.saveToken(roomAdvertiser);
+		roomingAdverstierDAO.saveToken(roomAdvertiser);
 	}
 
 	private String getRandomString() {
@@ -77,33 +74,34 @@ public class RoomingAdvertiserServiceImpl implements RoomingAdvertiserService {
 	public void updatePassword(String password, String token)
 			throws RoomingException {
 
-		roomingAdverstierDao.updatePassword(password, token);
+		roomingAdverstierDAO.updatePassword(password, token);
 	}
 
 	public RoomAdvertiser addOrUpdateRoomAdvertiser(
 			RoomAdvertiser roomAdvertiser) throws RoomingException {
-		return roomAdvertiserDao.addOrUpdateRoomAdvertiser(roomAdvertiser);
+		return roomingAdverstierDAO.addOrUpdateRoomAdvertiser(roomAdvertiser);
 	}
 
 	@Override
 	public List<RoomAdvertiser> findRoomAdvertisers() throws RoomingException {
-		return roomAdvertiserDao.findRoomAdvertisers();
+		return roomingAdverstierDAO.findRoomAdvertisers();
 
 	}
 
 	@Override
 	public List<RoomAdvertiser> findUnValidAdvertisers() {
-		return roomAdvertiserDao.findUnValidAdvertisers();
+		return roomingAdverstierDAO.findUnValidAdvertisers();
 	}
 
 	@Override
 	public RoomAdvertiser login(RoomAdvertiser roomAdvertiser) {
-		return roomingAdverstierDao.login(roomAdvertiser);
+		return roomingAdverstierDAO.login(roomAdvertiser);
 	}
 
 	@Override
 	public OwnerWrapper getProfile(Long ownerId) {
-		RoomAdvertiser roomAdvertiser = roomAdvertiserDao.getProfile(ownerId);
+		RoomAdvertiser roomAdvertiser = roomingAdverstierDAO
+				.getProfile(ownerId);
 		if (roomAdvertiser == null)
 			return null;
 		OwnerWrapper ownerWrapper = convertToOwnerWrapper(roomAdvertiser);
@@ -117,6 +115,32 @@ public class RoomingAdvertiserServiceImpl implements RoomingAdvertiserService {
 		ownerWrapper.setlName(roomAdvertiser.getLastName());
 		ownerWrapper.setIsVerified(roomAdvertiser.getIsVerified());
 		return ownerWrapper;
+	}
+
+	@Override
+	public List<RoomAdvertiser> loadAdvertisersLazyMode(int first,
+			int pageSize, String sortField, boolean b,
+			Map<String, Object> filters) {
+		return roomingAdverstierDAO.loadAdvertisersLazyMode(first, pageSize,
+				sortField, b, filters);
+	}
+
+	@Override
+	public int getNumOfAdvertiserRows(Map<String, Object> filters) {
+		return roomingAdverstierDAO.getNumOfAdvertiserRows(filters);
+	}
+
+	@Override
+	public List<RoomAdvertiser> findAllUnValidateAdvisors(int first,
+			int pageSize, String sortField, boolean b,
+			Map<String, Object> filters) {
+		return roomingAdverstierDAO.findAllUnValidateAdvisors(first, pageSize,
+				sortField, b, filters);
+	}
+
+	@Override
+	public List getAllRoomAdvertisers() {
+		return roomingAdverstierDAO.getAllRoomAdvertisers();
 	}
 
 }

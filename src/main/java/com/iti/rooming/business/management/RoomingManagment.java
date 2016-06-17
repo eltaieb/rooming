@@ -189,4 +189,21 @@ public interface RoomingManagment {
 			List<Amenity> selectedAmenities, List<Role> selectedRoles)
 			throws RoomingException;
 
+	public int getNumOfAdvertiserRows(Map<String, Object> filters);
+
+	public List<RoomAdvertiser> loadAdvertisersLazyMode(int first,
+			int pageSize, String sortField, boolean b,
+			Map<String, Object> filters);
+
+	public List<RoomAdvertiser> findAllUnValidateAdvisors(int first,
+			int pageSize, String sortField, boolean b,
+			Map<String, Object> filters);
+
+	public List<Facility> getAllFacilitiesOf(RoomAdvertiser roomAdvertiser);
+
+	public List getAllRoomAdvertisers();
+
+	public List<Facility> loadFacility(int first, int pageSize,
+			String sortField, boolean b, Map<String, Object> filters);
+
 }

@@ -157,4 +157,12 @@ public class FacilityDAOImpl extends BaseDAO implements FacilityDAO {
 		query.setParameter("roomAdvertiser", roomAdvertiser);
 		return query.getResultList();
 	}
+
+	@Override
+	public List<Facility> getAllFacilitiesOf(RoomAdvertiser roomAdvertiser) {
+		String sql = "SELECT f FROM Facility f WHERE f.roomAdvertiser=:roomAdvertiser";
+		Query query = em.createQuery(sql, Facility.class);
+		query.setParameter("roomAdvertiser", roomAdvertiser);
+		return query.getResultList();
+	}
 }
