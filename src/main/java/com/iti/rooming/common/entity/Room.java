@@ -163,6 +163,99 @@ public class Room extends BaseEntity implements Serializable {
 	public void setRoomImages(List<RoomImage> roomImages) {
 		this.roomImages = roomImages;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((advertiseDate == null) ? 0 : advertiseDate.hashCode());
+		result = prime * result + ((area == null) ? 0 : area.hashCode());
+		result = prime * result
+				+ ((duration == null) ? 0 : duration.hashCode());
+		result = prime * result
+				+ ((expandable == null) ? 0 : expandable.hashCode());
+		result = prime * result
+				+ ((facility == null) ? 0 : facility.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((images == null) ? 0 : images.hashCode());
+		result = prime * result
+				+ ((isDeleted == null) ? 0 : isDeleted.hashCode());
+		result = prime * result + ((price == null) ? 0 : price.hashCode());
+		result = prime * result
+				+ ((rentAvailable == null) ? 0 : rentAvailable.hashCode());
+		result = prime * result
+				+ ((roomImages == null) ? 0 : roomImages.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Room other = (Room) obj;
+		if (advertiseDate == null) {
+			if (other.advertiseDate != null)
+				return false;
+		} else if (!advertiseDate.equals(other.advertiseDate))
+			return false;
+		if (area == null) {
+			if (other.area != null)
+				return false;
+		} else if (!area.equals(other.area))
+			return false;
+		if (duration == null) {
+			if (other.duration != null)
+				return false;
+		} else if (!duration.equals(other.duration))
+			return false;
+		if (expandable == null) {
+			if (other.expandable != null)
+				return false;
+		} else if (!expandable.equals(other.expandable))
+			return false;
+		if (facility == null) {
+			if (other.facility != null)
+				return false;
+		} else if (!facility.equals(other.facility))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (images == null) {
+			if (other.images != null)
+				return false;
+		} else if (!images.equals(other.images))
+			return false;
+		if (isDeleted == null) {
+			if (other.isDeleted != null)
+				return false;
+		} else if (!isDeleted.equals(other.isDeleted))
+			return false;
+		if (price == null) {
+			if (other.price != null)
+				return false;
+		} else if (!price.equals(other.price))
+			return false;
+		if (rentAvailable == null) {
+			if (other.rentAvailable != null)
+				return false;
+		} else if (!rentAvailable.equals(other.rentAvailable))
+			return false;
+		if (roomImages == null) {
+			if (other.roomImages != null)
+				return false;
+		} else if (!roomImages.equals(other.roomImages))
+			return false;
+		return true;
+	}
+	
 	
 	
 }

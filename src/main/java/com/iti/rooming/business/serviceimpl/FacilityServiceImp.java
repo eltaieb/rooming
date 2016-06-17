@@ -85,6 +85,12 @@ public class FacilityServiceImp implements FacilityService {
 	}
 
 	@Override
+	public void removeDeletedFacilityImages(List<FacilityImage> facilityImages,
+			Facility facility) throws RoomingException {
+		facilityDAO.removeImageNotInFacilityImages(facilityImages, facility);
+
+	}
+	@Override
 	public List<Facility> getAllFacilitiesOf(RoomAdvertiser roomAdvertiser) {
 		return facilityDAO.getAllFacilitiesOf(roomAdvertiser);
 	}

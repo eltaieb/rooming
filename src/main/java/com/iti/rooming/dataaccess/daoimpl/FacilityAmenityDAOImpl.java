@@ -16,18 +16,19 @@ public class FacilityAmenityDAOImpl  extends BaseDAO implements FacilityAmenityD
 
 	@Override
 	public FacilityAmenity addOrUpdate(FacilityAmenity facilityAmenity) {
-		
 		return (FacilityAmenity)super.persist(facilityAmenity);
 	}
 
 	@Override
 	public List<Amenity> getAmenityByFacility(Facility facility) {
 		Query q = em
-				.createQuery("SELECT fa.amenity FROM FacilityAmenity fa WHERE fa.facility = :facility");
-				q.setParameter("facility",facility);
+				.createQuery("SELECT DISTINCT fa.amenity FROM FacilityAmenity fa WHERE fa.facility = :facility");
+		q.setParameter("facility", facility);
 		return (List<Amenity>) q.getResultList();
 
 	}
+
+
 
 	@Override
 	public void removeAmenityByFaility(Facility facility) {

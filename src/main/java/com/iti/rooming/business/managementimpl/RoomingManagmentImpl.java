@@ -284,21 +284,23 @@ public class RoomingManagmentImpl implements RoomingManagment {
 			return null;
 		} else {
 			/* 1 ROOMS */
-			List<Room> facilityRooms = new ArrayList<Room>();
-			facilityRooms = roomService.getRoomsOfFacility(facility);
+			List<Room> facilityRooms = roomService.getRoomsOfFacility(facility);
 			for (Room room : facilityRooms) {
 				List<RoomImage> roomImages = new ArrayList<RoomImage>();
 				roomImages = roomService.getRoomImageOfRoom(room);
 				room.setImages(roomImages);
 			}
 			facility.setRooms(facilityRooms);
+			if (facility.getRooms() == null)
+				facility.setRooms(new ArrayList());
 			/* 2 ADVERTISOR */
 			facility.getRoomAdvertiser();
 			/* 3 IMAGE */
-			List<FacilityImage> facilityImages = new ArrayList();
-			facilityImages = facilityService
+			List<FacilityImage> facilityImages = facilityService
 					.getFacilityImagesOfFacility(facility);
 			facility.setImages(facilityImages);
+			if (facility.getImages() == null)
+				facility.setImages(new ArrayList());
 			/* 4 AMENITIES */
 			facility.setAmenities(facilityAmenityService
 					.getAmenitiesOfFacility(facility));
@@ -307,7 +309,6 @@ public class RoomingManagmentImpl implements RoomingManagment {
 
 			return facility;
 		}
-
 	}
 
 	@Override
@@ -529,28 +530,46 @@ public class RoomingManagmentImpl implements RoomingManagment {
 	}
 
 	@Override
-	public Facility updateFacility(Facility facility,
-			List<Amenity> selectedAmenities, List<Role> selectedRoles)
-			throws RoomingException {
+	public Facility updateFacility(Facility facility, List<Amenity> amenities,
+			List<Role> roles) throws RoomingException {
+
 		List<Room> facilityRooms = facility.getRooms();
+		List<FacilityImage> facilityImages = facility.getImages();
 		// update facility
 		facility = facilityService.addOrUpdateFacility(facility);
 		// delete amenity And roles
 		facilityAmenityService.removeAmenityByFacility(facility);
 		facilityRoleService.removeRoleByFacility(facility);
 		// insert new updates of amenities and roles
-		for (Amenity amenity : selectedAmenities) {
+		for (Amenity amenity : amenities) {
 			FacilityAmenity facilityAmenity = new FacilityAmenity();
 			facilityAmenity.setAmenity(amenity);
 			facilityAmenity.setFacility(facility);
 			facilityAmenityService.addOrUpdate(facilityAmenity);
 		}
-		for (Role role : selectedRoles) {
+		for (Role role : roles) {
 			FacilityRole facilityRole = new FacilityRole();
 			facilityRole.setRole(role);
 			facilityRole.setFacility(facility);
 			facilityRoleService.saveOrUpdate(facilityRole);
 		}
+
+		// Images
+		// 1) Newly Added
+		for (int index = 0; index < facilityImages.size(); index++) {
+			// FacilityImage image = facilityImages.get(index);
+			// image.setFacility(facility);
+			facilityImages.get(index).setFacility(facility);
+			FacilityImage image = facilityService
+					.addOrUpdateFacilityImage(facilityImages.get(index));
+			facilityImages.set(index, image);
+			// image = facilityService.addOrUpdateFacilityImage(image);
+			// facilityImages.
+			// facilityImages.remove(index);
+			// facilityImages.add(image);
+		}
+		// 2) Deleted
+		facilityService.removeDeletedFacilityImages(facilityImages, facility);
 
 		// Room Cases :
 		// 1) Newly Added Rooms
@@ -558,7 +577,12 @@ public class RoomingManagmentImpl implements RoomingManagment {
 		for (int index = 0; index < facilityRooms.size(); index++) {
 			Room room = facilityRooms.get(index);
 			room.setFacility(facility);
+			List<RoomImage> roomImages = room.getImages();
 			room = roomService.addOrUpdateRoom(room);
+			for (RoomImage roomImage : roomImages) {
+				roomImage.setRoom(room);
+				roomService.addOrUpdateRoomImage(roomImage);
+			}
 			facilityRooms.remove(index);
 			facilityRooms.add(room);
 		}

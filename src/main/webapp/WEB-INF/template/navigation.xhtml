@@ -35,44 +35,51 @@
 					<div class="collapse navbar-collapse "
 						id="bs-example-navbar-collapse-1">
 
-						<ul class="nav navbar-nav nav-max-wid cl-effect-5"
-							id="cl-effect-5">
+						<ul class="nav navbar-nav nav-max-wid cl-effect-6"
+							id="cl-effect-6">
 							<li><h:link outcome="/pub/index.xhtml">
-									<span data-hover="Home">Home</span>
+									<span style="color: white" data-hover="Home">Home</span>
 								</h:link></li>
 							<li><h:link outcome="/pub/registration.xhtml"
 									rendered="#{!userSessionBean.authenticated}">
-									<span data-hover="SignUp">Registration</span>
+									<span style="color: white" data-hover="SignUp">Registration</span>
 								</h:link></li>
 
 							<li><h:link outcome="/pub/userauthentication.xhtml"
 									rendered="#{!userSessionBean.authenticated}">
-									<span data-hover="SignIn">Login</span>
+									<span style="color: white" data-hover="SignIn">Login</span>
 								</h:link></li>
 							<li><h:link outcome="/usr/facilitywizard.xhtml"
 									rendered="#{userSessionBean.authenticated}">
-									<span data-hover="Facilities">Add new Facility</span>
+									<span style="color: white" data-hover="Facilities">Add
+										new Facility</span>
 								</h:link></li>
 							<li><h:link outcome="/usr/verification.xhtml"
 									rendered="#{userSessionBean.authenticated}">
-									<span data-hover="Verification">Verification</span>
+									<span style="color: white" data-hover="Verification">Verification</span>
 								</h:link></li>
 							<li><h:link outcome="/usr/advertiserFacilities.xhtml"
 									rendered="#{userSessionBean.authenticated}">
-									<span data-hover="My Facilities">My Facilities</span>
+									<span style="color: white" data-hover="My Facilities">My
+										Facilities</span>
+								</h:link></li>
+							<li><h:link outcome="/usr/messages.xhtml"
+									rendered="#{userSessionBean.authenticated}">
+									<span style="color: white" data-hover="Messages">chat</span>
 								</h:link></li>
 							<li><h:link outcome="/usr/updateprofile.xhtml"
 									rendered="#{userSessionBean.authenticated}">
-									<span data-hover="My Profile">My Profile</span>
+									<span style="color: white" data-hover="My Profile">My
+										Profile</span>
 								</h:link></li>
 							<li><h:link outcome="/pub/Logout.xhtml"
 									rendered="#{userSessionBean.authenticated}">
-									<span data-hover="Logout">Logout</span>
+									<span style="color: white" data-hover="Logout">Logout</span>
 								</h:link></li>
 						</ul>
 
 					</div>
-					<!-- /.navbar-collapse -->
+
 					<div class="clearfix"></div>
 				</div>
 				<!-- /.container-fluid --> </nav>

@@ -49,15 +49,7 @@ public class DynamicImageServlet extends HttpServlet {
 				path = Configurations
 						.getProperty(Configurations.PROFILE_IMAGE);
 
-			} else if(type.equals("6")){
-				file = request.getParameter("file");
-				path = Configurations
-						.getProperty(Configurations.UPLOADED_FACILITY_IMAGES_PATH);
-			} else if(type.equals("7")){
-				file = request.getParameter("file");
-				path = Configurations
-						.getProperty(Configurations.UPLOADED_ROOM_IMAGES_PATH);
-			}
+			} 
 			
 			BufferedInputStream in = new BufferedInputStream(
 					new FileInputStream(path + "\\" + file));

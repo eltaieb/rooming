@@ -159,6 +159,21 @@ public class FacilityDAOImpl extends BaseDAO implements FacilityDAO {
 	}
 
 	@Override
+	public void removeImageNotInFacilityImages(
+			List<FacilityImage> facilityImages, Facility facility) {
+		if (facilityImages != null && facilityImages.size() > 0) {
+			Query query = em
+					.createQuery("DELETE FROM FacilityImage fi WHERE fi.facility = :facility AND fi NOT IN ( :images )");
+			query = query.setParameter("images", facilityImages);
+			query.setParameter("facility", facility).executeUpdate();
+		} else {// Case Rooms existed but then where all deleted
+			Query query = em
+					.createQuery("DELETE FROM FacilityImage fi WHERE fi.facility = :facility ");
+			query.setParameter("facility", facility).executeUpdate();
+		}
+	}
+
+	@Override
 	public List<Facility> getAllFacilitiesOf(RoomAdvertiser roomAdvertiser) {
 		String sql = "SELECT f FROM Facility f WHERE f.roomAdvertiser=:roomAdvertiser";
 		Query query = em.createQuery(sql, Facility.class);

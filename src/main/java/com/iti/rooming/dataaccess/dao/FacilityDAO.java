@@ -44,6 +44,9 @@ public interface FacilityDAO  {
 
 	public List<Facility> getAll(RoomAdvertiser roomAdvertiser);
 
+	public void removeImageNotInFacilityImages(
+			List<FacilityImage> facilityImages, Facility facility)throws RoomingException;
+
 	public List<Facility> getAllFacilitiesOf(RoomAdvertiser roomAdvertiser);
 	
 }

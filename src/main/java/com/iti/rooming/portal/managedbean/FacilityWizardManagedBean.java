@@ -190,29 +190,30 @@ public class FacilityWizardManagedBean extends BaseBean implements Serializable 
 	}
 
 	/* | ON SUBMIT CLICK | */
-	public void save() {
+	public String save() {
 		// update map view
 		try {
 			facility.setIsDeleted(Boolean.FALSE);
 			facility.setAmenities(selectedAmenities);
 			facility.setRoles(selectedRoles);
 			facility = management.addOrUpdateFacility(facility);
+			FacesMessage msg = new FacesMessage("Success",
+					"Facility was added successfully ! ");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+			return "allfacilitiesofadvertiser.xhtml";
 		} catch (RoomingException e1) {
 			FacesMessage msg = new FacesMessage("Failure",
 					"Sorry a problem occured while adding your facility ! ");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
+			return "allfacilitiesofadvertiser.xhtml";
 		}
-		FacesMessage msg = new FacesMessage("Successful",
-				"Your Facility Was Added Successfully ! ");
-		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 	/* | ON DELETE CLICK | */
 	public void deleteAction(Room room) {
-		System.out.println(facility.getRooms().toString());
 		facility.getRooms().remove(room);
-		System.out.println(facility.getRooms().toString());
 	}
+
 
 	/* | ON DELETE IMAGE CLICK | */
 	public void deleteImageAction(FacilityImage deletedImage) {
@@ -228,7 +229,6 @@ public class FacilityWizardManagedBean extends BaseBean implements Serializable 
 			facility.getImages().remove(index);
 		}
 	}
-
 	
 	/* | ON NEXT CLICK | */
 	public String onFlowProcess(FlowEvent event) {
@@ -243,8 +243,8 @@ public class FacilityWizardManagedBean extends BaseBean implements Serializable 
 	/* | Initialize Facility | */
 	private void initiateNewFacility() {
 		facility = new Facility();
-		facility.setLan(30.070999);
-		facility.setLon(31.021115);
+		facility.setLan(30.071090);
+		facility.setLon(31.021142);
 		facility.setCountry("Egypt");
 		facility.setDescription("");
 
@@ -285,7 +285,6 @@ public class FacilityWizardManagedBean extends BaseBean implements Serializable 
 
 	/* | Add Room To Facility | */
 	public void appendRoomToFacility() {
-		System.out.println(room.toString());
 		room.setIsDeleted(Boolean.FALSE);
 		room.setAdvertiseDate(new Date());
 		room.setExpandable(Boolean.FALSE);
@@ -298,7 +297,7 @@ public class FacilityWizardManagedBean extends BaseBean implements Serializable 
 	public void uploadRoomImage(FileUploadEvent event) {
 		try {
 			Utils.copyFile(Configurations
-					.getProperty(Configurations.UPLOADED_ROOM_IMAGES_PATH),
+					.getProperty(Configurations.ROOM_PATH),
 					event.getFile().getFileName(), event.getFile()
 							.getInputstream());
 
