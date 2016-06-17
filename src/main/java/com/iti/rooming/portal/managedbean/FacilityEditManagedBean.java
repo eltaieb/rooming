@@ -170,38 +170,21 @@ public class FacilityEditManagedBean extends BaseBean implements Serializable {
 				+ " " + facility.getCountry();
 		location = new DefaultMapModel();
 		location.addOverlay(new Marker(latLng, locationName));
-		
-		List<FacilityImage> facilityImages = management.getFacilityImagesByFacility(facility);
-		if(facilityImages==null)
-			facilityImages =new ArrayList<FacilityImage>(); 
-		facility.setImages(facilityImages);
+
 		// SET ROLES AND AMENITIES
 		amenities = management.getAllAmenities();
-		selectedAmenities = management.getAmenitiesByFacility(facility);
+		selectedAmenities = facility.getAmenities();
 		if (amenities == null)
 			amenities = new ArrayList<Amenity>();
 		if (selectedAmenities == null)
 			selectedAmenities = new ArrayList<Amenity>();
 
 		roles = management.getAllRoles();
-		selectedRoles = management.getRolesByFacility(facility);
+		selectedRoles = facility.getRoles();
 		if (roles == null)
 			roles = new ArrayList<Role>();
 		if (selectedRoles == null)
 			selectedRoles = new ArrayList<Role>();
-		// SET FACILITY IMAGES
-		facility.setImages(management.getFacilityImagesByFacility(facility));
-		// SET ROOMS AND ROOMS IMAGES
-		List<Room> facilityRooms = management
-				.getRoomsAndThierImageByFacility(facility);
-		if (facilityRooms == null)
-			facilityRooms = new ArrayList<Room>();
-		facility.setRooms(facilityRooms);
-		
-		facility.setAmenities(new ArrayList<Amenity>());
-		facility.setRoles(new ArrayList<Role>());
-		if(facility.getImages()==null)
-			facility.setImages(new ArrayList<FacilityImage>());
 	}
 
 	/* | Add Room To Facility | */
@@ -222,27 +205,30 @@ public class FacilityEditManagedBean extends BaseBean implements Serializable {
 
 	/* | ON DELETE CLICK | */
 	public void deleteAction(Room room) {
-		System.out.println(facility.getRooms().toString());
 		facility.getRooms().remove(room);
-		System.out.println(facility.getRooms().toString());
 	}
 
 	/* | ON DELETE IMAGE CLICK | */
-	public void deletePictureAction(Room room , RoomImage image) {
-		int index = facility.getRooms().indexOf(room);
-		Room roomHolder = room;
-		facility.getRooms().remove(room);
-		roomHolder.getImages().remove(image);
-		facility.getRooms().add(index, roomHolder);
-		System.out.println(facility.getRooms().toString());
+	public void deleteImageAction(FacilityImage deletedImage) {
+		int index = -1;
+		for (int loop = 0; loop < facility.getImages().size(); loop++) {
+			FacilityImage image = facility.getImages().get(loop);
+			if (image.equals(deletedImage)) {
+				index = loop;
+				break;
+			}
+		}
+		if (index > -1) {
+			facility.getImages().remove(index);
+		}
 	}
 
 	/* | Set Room Image | */
 	public void uploadRoomImage(FileUploadEvent event) {
 		try {
-			Utils.copyFile(Configurations
-					.getProperty(Configurations.UPLOADED_ROOM_IMAGES_PATH),
-					event.getFile().getFileName(), event.getFile()
+			Utils.copyFile(
+					Configurations.getProperty(Configurations.ROOM_PATH), event
+							.getFile().getFileName(), event.getFile()
 							.getInputstream());
 
 			RoomImage roomImage = new RoomImage();
@@ -262,9 +248,8 @@ public class FacilityEditManagedBean extends BaseBean implements Serializable {
 		try {
 
 			Utils.copyFile(Configurations
-					.getProperty(Configurations.UPLOADED_FACILITY_IMAGES_PATH),
-					event.getFile().getFileName(), event.getFile()
-							.getInputstream());
+					.getProperty(Configurations.FACILITY_IMAGES_PATH), event
+					.getFile().getFileName(), event.getFile().getInputstream());
 
 			FacilityImage image = new FacilityImage();
 			image.setImage(event.getFile().getFileName());
@@ -318,18 +303,14 @@ public class FacilityEditManagedBean extends BaseBean implements Serializable {
 		System.out.println(facility.toString());
 		return address.getResults().get(0).getFormattedAddress();
 	}
-	
+
 	/* | ON SUBMIT CLICK | */
-	public void save() throws IOException {
+	public void save() {
 		// update map view
 		try {
 			facility.setIsDeleted(Boolean.FALSE);
-			facility = management.updateFacility(
-					facility ,
-					selectedAmenities ,
-					selectedRoles
-					);
-			redirect("/rooming/usr/advertiserFacilities.xhtml");
+			facility = management.updateFacility(facility, selectedAmenities,
+					selectedRoles);
 		} catch (RoomingException e1) {
 			FacesMessage msg = new FacesMessage("Failure",
 					"Sorry a problem occured while updating your facility ! ");
@@ -337,7 +318,7 @@ public class FacilityEditManagedBean extends BaseBean implements Serializable {
 		}
 		FacesMessage msg = new FacesMessage("Successful",
 				"Your Facility Was Updated Successfully ! ");
-		FacesContext.getCurrentInstance().addMessage(null, msg);		
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 }

@@ -43,5 +43,8 @@ public interface FacilityDAO  {
 			List<SelectionView> selectedFacilityIds);
 
 	public List<Facility> getAll(RoomAdvertiser roomAdvertiser);
+
+	public void removeImageNotInFacilityImages(
+			List<FacilityImage> facilityImages, Facility facility)throws RoomingException;
 	
 }

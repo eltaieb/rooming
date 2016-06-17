@@ -5,13 +5,17 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	<ui:define name="content">
+
 		<h:form id="formOfEditingFacility">
 
-			<p:panelGrid
-				style=" position:absolute; top:100px; left:400px; width:1000px; margin: 0 auto;"
-				columns="1" layout="grid">
+			<p:panelGrid style="margin: 0 auto;" columns="1" layout="grid">
 
-
+				<f:facet name="header">
+					<p:outputLabel
+						value="Click On A Tab To Edit Its Information Then Click   " />
+					<p:commandButton icon="ui-icon-tag" value="  Here To Save"
+						actionListener="#{facilityEditManagedBean.save}" />
+				</f:facet>
 
 				<p:tabView id="tabviewForEditingFacility">
 
@@ -33,7 +37,7 @@
 								<h:panelGrid cellpadding="5">
 									<p:message for="description"></p:message>
 									<p:inputTextarea id="description" rows="7" cols="50"
-										required="true"
+										maxlength="255" required="true"
 										requiredMessage="Please fill in brief description about the facility"
 										value="#{facilityEditManagedBean.facility.description}"></p:inputTextarea>
 								</h:panelGrid>
@@ -44,15 +48,20 @@
 										fileUploadListener="#{facilityEditManagedBean.uploadFacilityImage}"
 										mode="advanced" dragDropSupport="true" multiple="true"
 										update="facilityImages" fileLimit="6"
-										allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+										allowTypes="/(\.|\/)(gif|jpe?g|jpg|png)$/" />
 
 									<p:dataTable id="facilityImages" rowIndexVar="index"
-										emptyMessage=""
+										emptyMessage="No Images Found"
 										value="#{facilityEditManagedBean.facility.images}"
 										var="facilityImage">
 										<p:column headerText="Image">
-											<p:graphicImage
-												value="/images/dynamic/?file=#{facilityImage.image}&amp;type=1" />
+											<p:graphicImage style="width:300px;height:250px"
+												value="/images/dynamic/?file=#{facilityImage.image}&amp;type=3" />
+										</p:column>
+										<p:column headerText="Delete Image">
+											<h:commandLink value="Delete"
+												actionListener="#{facilityEditManagedBean.deleteImageAction(facilityImage)}"
+												update=":formOfEditingFacility:tabviewForEditingFacility:facilityImages" />
 										</p:column>
 									</p:dataTable>
 								</h:panelGrid>
@@ -121,23 +130,38 @@
 							<p:dataTable id="dataTableForRoomsOfFacility"
 								emptyMessage="No Rooms Were Added . Click On Button To Add One .."
 								value="#{facilityEditManagedBean.facility.rooms}" var="room">
-								<p:column headerText="Area">
-									<p:outputLabel value="#{room.area}" />
+								<p:column headerText="Information">
+									<p:panelGrid layout="grid" columns="2">
+										<p:outputLabel value="Area" />
+										<p:outputLabel value="#{room.area}" />
+										<p:outputLabel value="Price" />
+										<p:outputLabel value="#{room.price}" />
+										<p:outputLabel value="Advertise Date :" />
+										<p:outputLabel value="#{room.advertiseDate.toString()}" />
+										<p:outputLabel value="Available For Rent :" />
+										<p:graphicImage library="images" name="yes.png"
+											style="width:50px;height:50px"
+											rendered="#{room.rentAvailable}" />
+										<p:graphicImage library="images" name="no.png"
+											style="width:50px;height:50px"
+											rendered="#{!room.rentAvailable}" />
+									</p:panelGrid>
 								</p:column>
-								<p:column headerText="Price">
-									<p:outputLabel value="#{room.price}" />
+								<p:column headerText="Images">
+									<p:fieldset legend="Click to view them" collapsed="true"
+										toggleable="true" toggleSpeed="500">
+										<p:dataTable value="#{room.images}" var="r"
+											emptyMessage="There Are No Images For This Room"
+											type="ordered">
+											<p:column>
+												<p:graphicImage style="width:300px;height:250px"
+													value="/images/dynamic/?file=#{r.image}&amp;type=2" />
+											</p:column>
+										</p:dataTable>
+
+									</p:fieldset>
 								</p:column>
-								<p:column headerText="Advertise Date">
-									<p:outputLabel value="#{room.advertiseDate}">
-										<f:convertDateTime pattern="dd/MM/yyyy" />
-									</p:outputLabel>
-								</p:column>
-								<p:column headerText="Available For Rent">
-									<p:graphicImage library="img" name="yes.png"
-										styleClass="booleanImage" rendered="#{room.rentAvailable}" />
-									<p:graphicImage library="img" name="no.png"
-										styleClass="booleanImage" rendered="#{!room.rentAvailable}" />
-								</p:column>
+
 								<p:column headerText="Delete Room">
 									<h:commandLink value="Delete This Room"
 										actionListener="#{facilityEditManagedBean.deleteAction(room)}"
@@ -186,21 +210,15 @@
 						</p:selectManyMenu>
 					</p:tab>
 				</p:tabView>
-				<center>
-					<p:commandButton icon="ui-icon-tag"
-						style="margin-left:auto ; margin-right:auto"
-						value="Save Changes"
-						actionListener="#{facilityEditManagedBean.save}" />
-				</center>
-			</p:panelGrid>
 
+			</p:panelGrid>
 		</h:form>
 		<p:dialog header="Room Adder" widgetVar="dialogForAddingFacility"
 			modal="true" height="50%" width="50%">
 			<h:form id="formOfAddingNewRoomToFacility">
 				<p:panelGrid columns="3" layout="grid">
 					<p:outputLabel value="Area* : " />
-					<p:inputText id="area" required="true"
+					<p:inputText id="area" required="true" maxlength="12"
 						requiredMessage="Please fill in the Area"
 						value="#{facilityEditManagedBean.room.area}" />
 					<p:message for="area" />
@@ -211,7 +229,7 @@
 					<p:message for="rentAvailability" />
 
 					<p:outputLabel value="Price* :" />
-					<p:spinner id="price" required="true"
+					<p:spinner id="price" required="true" max="999999.99"
 						requiredMessage="Please fill in the Price" stepFactor="0.25"
 						converter="javax.faces.Number"
 						converterMessage="Please enter a number"
@@ -235,6 +253,8 @@
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>
+
+
 
 	</ui:define>
 </ui:composition>

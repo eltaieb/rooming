@@ -38,6 +38,10 @@ public interface FacilityService  {
 	public List<Facility> getFacilityByBoundaryAndPrice(
 			BigDecimal minimumPrice, BigDecimal maximumPrice,
 			Bounds boundary);
+	
 	public List<Facility> getAll(RoomAdvertiser roomAdvertiser);
+	
+	public void removeDeletedFacilityImages(List<FacilityImage> facilityImages,
+			Facility facility)throws RoomingException;
 
 }

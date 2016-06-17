@@ -1,138 +1,147 @@
-<ui:composition template="/WEB-INF/template/master.xhtml"
-	xmlns="http://www.w3.org/1999/xhtml"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	<ui:define name="content">
-		<h:form>
-			<p:panelGrid style=" position:absolute; top:100px; left:400px; width:1000px; margin: 0 auto;" columns="1" layout="grid">
-				
-				<p:panel id="information" header="Basic Information :">
-					<p:panelGrid columns="2" layout="grid">
-						<h:outputLabel value="Building Number :" />
-						<h:outputLabel value="Description :" />
 
-						<h:outputText
-							value="#{facilityViewManagedBean.facility.buildingNumber}" />
-						<h:outputText
-							value="#{facilityViewManagedBean.facility.description}" />
-					</p:panelGrid>
-				</p:panel>
+<h:head>
+</h:head>
+<h:body>
+	<ui:composition template="/WEB-INF/template/master.xhtml">
+		<ui:define name="content">
+			<h:form>
+				<p:panelGrid style="margin: 0 auto;" columns="1" layout="grid">
+					<f:facet name="header">
+						<h:outputText value="View Facility" />
+					</f:facet>
+					<p:panel id="information" header="Basic Information :">
+						<p:panelGrid columns="3" layout="grid">
+							<h:outputLabel value="Advertisor Phone Number :" />
+							<h:outputLabel value="Building Number :" />
+							<h:outputLabel value="Description :" />
+							<h:outputText
+								value="#{facilityViewManagedBean.facility.roomAdvertiser.phoneNumber}" />
+							<h:outputText
+								value="#{facilityViewManagedBean.facility.buildingNumber}" />
+							<h:outputText
+								value="#{facilityViewManagedBean.facility.description}" />
+						</p:panelGrid>
+					</p:panel>
 
-				<p:panel id="provider" header="FacilityProvider :">
-					<p:panelGrid columns="2" layout="grid">
-						<h:outputLabel value="Name :" />
-						<h:outputLabel value="Phone Number :" />
+					<p:panel header="Map">
+						<p:panelGrid columns="2" layout="grid">
+							<f:view contentType="text/html">
+								<p:gmap id="gmap"
+									center="#{facilityViewManagedBean.facility.lan},#{facilityViewManagedBean.facility.lon} "
+									zoom="14" type="ROADMAP" style="width:400px;height:400px"
+									widgetVar="map"
+									model="#{facilityViewManagedBean.apartmentLocation}">
 
-						<h:outputText
-							value="#{facilityViewManagedBean.facility.roomAdvertiser.firstName} #{facilityViewManagedBean.facility.roomAdvertiser.lastName}" />
-						<h:outputText
-							value="#{facilityViewManagedBean.facility.roomAdvertiser.phoneNumber}" />
-					</p:panelGrid>
-				</p:panel>
+								</p:gmap>
+							</f:view>
 
-				<p:panel header="Map">
-					<p:panelGrid columns="2" layout="grid">
-						<f:view contentType="text/html">
-							<p:gmap id="gmap"
-								center="#{facilityViewManagedBean.facility.lan},#{facilityViewManagedBean.facility.lon} "
-								zoom="14" type="ROADMAP" style="width:400px;height:400px"
-								widgetVar="map"
-								model="#{facilityViewManagedBean.apartmentLocation}">
+							<p:fieldset legend="Details">
+								<p:panelGrid columns="2" layout="grid">
+									<p:outputLabel value="Country " />
+									<p:outputLabel id="country" required="true"
+										requiredMessage="Please fill in the Country"
+										value="#{facilityViewManagedBean.facility.country}">
+									</p:outputLabel>
 
-							</p:gmap>
-						</f:view>
+									<h:outputLabel value="City " />
+									<p:outputLabel id="city" required="true"
+										requiredMessage="Please fill in the City"
+										value="#{facilityViewManagedBean.facility.city}"></p:outputLabel>
 
-						<p:fieldset legend="Details">
-							<p:panelGrid columns="2" layout="grid">
-								<p:outputLabel value="Country " />
-								<p:outputLabel id="country" required="true"
-									requiredMessage="Please fill in the Country"
-									value="#{facilityViewManagedBean.facility.country}">
-								</p:outputLabel>
+									<h:outputLabel value="Street " />
+									<p:outputLabel id="street" required="true"
+										requiredMessage="Please fill in the Street"
+										value="#{facilityViewManagedBean.facility.street}"></p:outputLabel>
 
-								<h:outputLabel value="City " />
-								<p:outputLabel id="city" required="true"
-									requiredMessage="Please fill in the City"
-									value="#{facilityViewManagedBean.facility.city}"></p:outputLabel>
+									<h:outputLabel value="Postal Code " />
+									<p:outputLabel id="postalCode"
+										value="#{facilityViewManagedBean.facility.postalCode}"></p:outputLabel>
+								</p:panelGrid>
+							</p:fieldset>
+						</p:panelGrid>
+					</p:panel>
 
-								<h:outputLabel value="Street " />
-								<p:outputLabel id="street" required="true"
-									requiredMessage="Please fill in the Street"
-									value="#{facilityViewManagedBean.facility.street}"></p:outputLabel>
 
-								<h:outputLabel value="Postal Code " />
-								<p:outputLabel id="postalCode"
-									value="#{facilityViewManagedBean.facility.postalCode}"></p:outputLabel>
-							</p:panelGrid>
-						</p:fieldset>
-					</p:panelGrid>
-				</p:panel>
 
-				<p:panel header="Amenities And Roles">
-					<p:panelGrid layout="grid" columns="3">
-						<p:fieldset legend="Gender Required :">
-							<p:outputLabel value="#{facilityViewManagedBean.gender}" />
-						</p:fieldset>
-						<p:fieldset legend="Amenities :">
-							<p:dataList value="#{facilityViewManagedBean.facility.amenities}"
-								var="a" type="ordered">
-								<p:outputLabel value="#{a.name}" />
-							</p:dataList>
-						</p:fieldset>
-						<p:fieldset legend="Roles :">
-							<p:dataList value="#{facilityViewManagedBean.facility.roles}"
-								var="r" type="ordered">
-								<p:outputLabel value="#{r.name}" />
-							</p:dataList>
-						</p:fieldset>
-					</p:panelGrid>
-				</p:panel>
-
-				<p:panel header="Facility Images">
-					<p:fieldset legend="Click to view them" collapsed="false"
-						toggleable="true" toggleSpeed="500">
-						<p:dataList value="#{facilityViewManagedBean.facility.images}"
-							var="r">
-							<h:graphicImage value="/images/dynamic/?file=#{r.image}" />
-						</p:dataList>
-					</p:fieldset>
-
-				</p:panel>
-
-				<p:panel header="Rooms">
-					<p:dataTable id="roomsOfFacility" emptyMessage="No Rooms Added .."
-						value="#{facilityViewManagedBean.facility.rooms}" var="room">
-						<p:column headerText="Area">
-							<p:outputLabel value="#{room.area}" />
-						</p:column>
-						<p:column headerText="Price">
-							<p:outputLabel value="#{room.price}" />
-						</p:column>
-						<p:column headerText="Advertise Date">
-							<p:outputLabel value="#{room.advertiseDate.toString()}" />
-						</p:column>
-						<p:column headerText="Available For Rent">
-							<p:graphicImage library="img" name="yes.png"
-								styleClass="booleanImage" rendered="#{room.rentAvailable}" />
-							<p:graphicImage library="img" name="no.png"
-								styleClass="booleanImage" rendered="#{!room.rentAvailable}" />
-						</p:column>
-						<p:column headerText="Images">
-							<p:fieldset legend="Click to view them" collapsed="true"
-								toggleable="true" toggleSpeed="500">
-								<p:dataList value="#{room.images}" var="r" type="ordered">
-									<p:outputLabel value="#{r.toString()}" />
+					<p:panel header="Amenities And Roles">
+						<p:panelGrid layout="grid" columns="3">
+							<p:fieldset legend="Gender Required :">
+								<p:outputLabel value="#{facilityViewManagedBean.gender}" />
+							</p:fieldset>
+							<p:fieldset legend="Amenities :">
+								<p:dataList emptyMessage="There are no provided amenities ."
+									value="#{facilityViewManagedBean.facility.amenities}" var="a"
+									>
+									<p:outputLabel value="#{a.name}" />
 								</p:dataList>
 							</p:fieldset>
-						</p:column>
-					</p:dataTable>
-				</p:panel>
+							<p:fieldset legend="Roles :">
+								<p:dataList value="#{facilityViewManagedBean.facility.roles}"
+									emptyMessage="There are no specific roles ." var="r"
+									>
+									<p:outputLabel value="#{r.name}" />
+								</p:dataList>
+							</p:fieldset>
+						</p:panelGrid>
+					</p:panel>
 
 
+					<p:panel header="Rooms">
+						<p:dataTable id="roomsOfFacility" emptyMessage="No Rooms Added .."
+							value="#{facilityViewManagedBean.facility.rooms}" var="room">
+							<p:column headerText="Information">
+								<p:panelGrid layout="grid" columns="2">
+									<p:outputLabel value="Area" />
+									<p:outputLabel value="#{room.area}" />
+									<p:outputLabel value="Price" />
+									<p:outputLabel value="#{room.price}" />
+									<p:outputLabel value="Advertise Date :" />
+									<p:outputLabel value="#{room.advertiseDate.toString()}" />
+									<p:outputLabel value="Available For Rent :" />
+									<p:graphicImage library="images" name="yes.png"
+										style="width:50px;height:50px"
+										rendered="#{room.rentAvailable}" />
+									<p:graphicImage library="images" name="no.png"
+										style="width:50px;height:50px"
+										rendered="#{!room.rentAvailable}" />
+								</p:panelGrid>
+							</p:column>
+							<p:column headerText="Images">
+								<p:fieldset legend="Click to view them" collapsed="true"
+									toggleable="true" toggleSpeed="500">
+									<p:dataList value="#{room.images}" var="r"
+										emptyMessage="There Are No Images For This Room"
+										>
+										<p:graphicImage style="width:300px;height:250px"
+											value="/images/dynamic/?file=#{r.image}&amp;type=2" />
+									</p:dataList>
+								</p:fieldset>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
 
-			</p:panelGrid>
-		</h:form>
-	</ui:define>
-</ui:composition>
+					<p:panel header="Facility Images">
+						<p:dataList id="facilityImages" rowIndexVar="index"
+							emptyMessage="No Images Found"
+							value="#{facilityViewManagedBean.facility.images}"
+							var="facilityImage">
+							<p:column headerText="Image">
+								<p:graphicImage style="width:300px;height:250px"
+									value="/images/dynamic/?file=#{facilityImage.image}&amp;type=3" />
+							</p:column>
+						</p:dataList>
+					</p:panel>
+				</p:panelGrid>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

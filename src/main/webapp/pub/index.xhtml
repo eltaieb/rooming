@@ -26,10 +26,12 @@
 
 	<div class="header" id="home">
 		<div class="header-top">
-			<nav class="navbar navbar-default nav-dflt-setin">
+			<nav class="navbar navbar-default nav-dflt-setin"
+				style="background-color:#5C9CCC">
 			<div class="container">
 				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header nav-min-wid">
+				<div class="navbar-header nav-min-wid"
+					style="background-color: #5C9CCC">
 					<button type="button" class="navbar-toggle collapsed"
 						data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
 						aria-expanded="false">
@@ -43,32 +45,34 @@
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse "
-					id="bs-example-navbar-collapse-1">
+					id="bs-example-navbar-collapse-1" style="background-color: #5C9CCC">
 
 
-					<ul class="nav navbar-nav nav-max-wid cl-effect-5" id="cl-effect-5">
+					<ul class="nav navbar-nav nav-max-wid cl-effect-6" id="cl-effect-6">
 						<li><h:link outcome="/pub/index.xhtml">
-								<span class="active" data-hover="Default">Home</span>
+								<span style="color: white" class="active" data-hover="Default">Home</span>
 							</h:link></li>
 						<li><h:link outcome="/pub/registration.xhtml"
 								rendered="#{!userSessionBean.authenticated}">
-								<span data-hover="SignUp">Registration</span>
+								<span style="color: white" data-hover="SignUp">Registration</span>
 							</h:link></li>
 						<li><h:link outcome="/pub/userauthentication.xhtml"
 								rendered="#{!userSessionBean.authenticated}">
-								<span data-hover="SignIn">Login</span>
+								<span style="color: white" data-hover="SignIn">Login</span>
 							</h:link></li>
 						<li><h:link outcome="/usr/facilitywizard.xhtml"
 								rendered="#{userSessionBean.authenticated}">
-								<span data-hover="Facilities">My Facilities</span>
+								<span style="color: white" data-hover="Facilities">My
+									Facilities</span>
 							</h:link></li>
 						<li><h:link outcome="/usr/updateprofile.xhtml"
 								rendered="#{userSessionBean.authenticated}">
-								<span data-hover="Profile">My Profile</span>
+								<span style="color: white" data-hover="Profile">My
+									Profile</span>
 							</h:link></li>
 						<li><h:link outcome="/pub/Logout.xhtml"
 								rendered="#{userSessionBean.authenticated}">
-								<span data-hover="Logout">Logout</span>
+								<span style="color: white" data-hover="Logout">Logout</span>
 							</h:link></li>
 					</ul>
 				</div>
@@ -89,18 +93,18 @@
 				<!-- Wrapper for slides -->
 				<div class="carousel-inner" role="listbox">
 					<div class="item active">
-						<h:graphicImage name="images/ban.jpg" styleClass="banner-wid" />
+						<h:graphicImage name="images/f3.jpg" styleClass="banner-wid" />
 						<div class="carousel-caption">
 							<h3>Welcome to Rooming,By providing fasting way, reliable
 								and management to deliver your business in the right place</h3>
 						</div>
 					</div>
 					<div class="item">
-						<h:graphicImage name="images/ban1.jpg" styleClass="banner-wid" />
+						<h:graphicImage name="images/f4.jpg" styleClass="banner-wid" />
 
 					</div>
 					<div class="item">
-						<h:graphicImage name="images/ban2.jpg" styleClass="banner-wid" />
+						<h:graphicImage name="images/f5.jpg" styleClass="banner-wid" />
 					</div>
 				</div>
 				<!-- Controls -->
@@ -128,12 +132,12 @@
 			</div>
 			<div class="col-md-6 work-grids">
 				<div class="work-img">
-					<h:graphicImage name="images/wrk.jpg" styleClass="work-img-wid" />
+					<h:graphicImage name="images/f3.jpg" styleClass="work-img-wid" />
 				</div>
 			</div>
 			<div class="col-md-6 work-grids">
 				<div class="work-img">
-					<h:graphicImage name="images/wrk1.jpg" styleClass="work-img-wid" />
+					<h:graphicImage name="images/f5.jpg" styleClass="work-img-wid" />
 				</div>
 			</div>
 			<div class="col-md-6 work-grids">
@@ -178,7 +182,7 @@
 	<div class="container"></div>
 	<div class="footer">
 		<div class="ft-top">
-			<div class="twitter-feeds">
+			<div class="twitter-feeds" style="background-color: #5C9CCC">
 				<div class="container">
 					<center>
 						<p>

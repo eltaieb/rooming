@@ -20,7 +20,6 @@ public class FacilityAmenityServiceImpl implements FacilityAmenityService{
 
 	@Override
 	public FacilityAmenity addOrUpdate(FacilityAmenity value) throws RoomingException {
-		// TODO Auto-generated method stub
 		return facilityAmenityDAO.addOrUpdate(value);
 	}
 

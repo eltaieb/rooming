@@ -28,7 +28,7 @@ public class RoomDAOImpl extends BaseDAO implements RoomDAO {
 	@Override
 	public List<Room> getRoomByFacility(Facility facility) {
 		Query query = em
-				.createQuery("SELECT r FROM Room r WHERE r.facility = :facility ");
+				.createQuery("SELECT r FROM Room r WHERE r.facility = :facility AND r.isDeleted=0 ");
 		query = query.setParameter("facility", facility);
 		return query.getResultList();
 	}
@@ -36,7 +36,7 @@ public class RoomDAOImpl extends BaseDAO implements RoomDAO {
 	@Override
 	public List<RoomImage> getRoomImageByRoom(Room room) {
 		Query query = em
-				.createQuery("SELECT r FROM RoomImage r WHERE r.room = :room ");
+				.createQuery("SELECT DISTINCT r FROM RoomImage r WHERE r.room = :room ");
 		query = query.setParameter("room", room);
 		return query.getResultList();
 	}
@@ -56,8 +56,9 @@ public class RoomDAOImpl extends BaseDAO implements RoomDAO {
 			Facility facility) throws RoomingException {
 		if (facilityRooms != null && facilityRooms.size() > 0) {
 			Query query = em
-					.createQuery("UPDATE Room r SET r.isDeleted=1 WHERE r NOT IN ( :rooms )");
-			query.setParameter("rooms", facilityRooms).executeUpdate();
+					.createQuery("UPDATE Room r SET r.isDeleted=1 WHERE r NOT IN ( :rooms ) AND r.facility = :facility");
+			query = query.setParameter("rooms", facilityRooms);
+			query.setParameter("facility", facility).executeUpdate();
 		} else {// Case Rooms existed but then where all deleted
 			Query query = em
 					.createQuery("UPDATE Room r SET r.isDeleted=1 WHERE r.facility = :facility ");

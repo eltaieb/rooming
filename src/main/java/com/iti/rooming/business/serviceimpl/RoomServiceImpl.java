@@ -21,7 +21,6 @@ public class RoomServiceImpl implements RoomService {
 	RoomDAO roomDAO;
 
 	public Room addOrUpdateRoom(Room room) throws RoomingException {
-
 		return roomDAO.addOrUpdateRoom(room);
 	}
 

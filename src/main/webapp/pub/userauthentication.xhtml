@@ -12,13 +12,12 @@
 <h:body>
 
 	<ui:composition template="/WEB-INF/template/master.xhtml">
-
 		<ui:define name="content">
 
 			<h:form id="form" enctype="multipart/form-data">
-				<center>
-				<p:growl/>
-					<p:panelGrid columns="3" id="pg" style="width:600px; top:300px; position:absolute; left:600px" styleClass="noborder">
+				<p:panelGrid style=" margin: 0 auto; margin-top: 4cm;" columns="1">
+				
+					<p:panelGrid columns="3" layout="grid" id="pg">
 						<p:outputLabel for="username" value="UserName: " />
 						<p:inputText id="username"
 							value="#{userAuthenticationManagedBean.userName}" required="true"
@@ -34,15 +33,13 @@
 							<f:validateLength minimum="2" maximum="10" />
 						</p:password>
 						<p:message for="password" />
-						<p:spacer></p:spacer>
+
+						<p:outputLabel value="" />
 						<p:commandButton value="login"
 							actionListener="#{userAuthenticationManagedBean.login()}"
 							update="@form" />
 					</p:panelGrid>
-					<center>
-						
-					</center>
-				</center>
+				</p:panelGrid>
 			</h:form>
 		</ui:define>
 	</ui:composition>

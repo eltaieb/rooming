@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<!--<script src="http://maps.google.com/maps/api/js?sensor=false"
+		type="text/javascript"></script>-->
+	<script
+		src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false&amp;libraries=places"></script>
+
+	<style>
+html,body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#map {
+	height: 100%;
+}
+
+.controls {
+	margin-top: 10px;
+	border: 1px solid transparent;
+	border-radius: 2px 0 0 2px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	height: 32px;
+	outline: none;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#pac-input {
+	background-color: #fff;
+	font-family: Roboto;
+	font-size: 15px;
+	font-weight: 300;
+	margin-left: 12px;
+	padding: 0 11px 0 13px;
+	text-overflow: ellipsis;
+	width: 300px;
+}
+
+#pac-input:focus {
+	border-color: #4d90fe;
+}
+
+.pac-container {
+	font-family: Roboto;
+}
+
+#type-selector {
+	color: #fff;
+	background-color: #4d90fe;
+	padding: 5px 11px 0px 11px;
+}
+
+#type-selector label {
+	font-family: Roboto;
+	font-size: 13px;
+	font-weight: 300;
+}
+</style>
+
+	<script>
+     
+      function initMap()
+	  {
+        var input = /** @type {!HTMLInputElement} */(
+            document.getElementById('pac-input'));
+
+        //var types = document.getElementById('type-selector');
+       
+        var autocomplete = new google.maps.places.Autocomplete(input);
+       
+        var infowindow = new google.maps.InfoWindow();
+       
+        autocomplete.addListener('place_changed', function() {
+          infowindow.close();
+         var place = autocomplete.getPlace();
+          if (!place.geometry) {
+            window.alert("Autocomplete's returned place contains no geometry");
+            return;
+          }
+			window.alert("Location on map ----"+place.geometry.location+"------");
+         
+          var address = '';
+          
+
+          infowindow.setContent('<div><strong>' + place.name + '</strong><br/>' + address+"</div>");
+         
+        });
+
+        /*function setupClickListener(id, types) {
+          var radioButton = document.getElementById(id);
+          radioButton.addEventListener('click', function() {
+            autocomplete.setTypes(types);
+          });
+        }
+
+        setupClickListener('changetype-all', []);
+        setupClickListener('changetype-address', ['address']);
+        setupClickListener('changetype-establishment', ['establishment']);
+        setupClickListener('changetype-geocode', ['geocode']);
+        */
+        
+      }
+      $( document ).ready(function() {
+    	  initMap();
+    	      	});
+
+      
+    </script>
+</h:head>
+<h:body>
+	<h1>Hello</h1>
+
+	<h:form>
+		<input id="pac-input" class="controls" type="text"
+			placeholder="Enter a location"></input>
+		<!-- GMAPS WITH MARKER -->
+		<h:outputLabel value="Marker Map" />
+
+		<f:view contentType="text/html">
+			<p:gmap id="gmap" center="30.890257, 31.707417" zoom="13"
+				type="ROADMAP" style="width:400px;height:400px" widgetVar="map"
+				model="#{facilityWizardManagedBean.apartmentLocation}">
+				<p:ajax event="pointSelect"
+					listener="#{facilityWizardManagedBean.onPointSelect}"
+					update="lat lng gmap" />
+			</p:gmap>
+
+		</f:view>
+		<h:inputText id="lat" value="#{facilityWizardManagedBean.facility.lan}" />
+		<h:inputText id="lng" value="#{facilityWizardManagedBean.facility.lon}" />
+</h:form>
+		
+
+
+</h:body>
+
+</html>

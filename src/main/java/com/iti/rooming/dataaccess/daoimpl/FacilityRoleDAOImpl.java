@@ -18,13 +18,15 @@ public class FacilityRoleDAOImpl extends BaseDAO implements FacilityRoleDAO{
 		return (FacilityRole)super.persist(facilityRole);
 	}
 
+
 	@Override
 	public List<Role> getRoleByFacility(Facility facility) {
 		Query q = em
-				.createQuery("SELECT fr.role FROM FacilityRole fr WHERE fr.facility = :facility");
-				q.setParameter("facility",facility);
+				.createQuery("SELECT DISTINCT fr.role FROM FacilityRole fr WHERE fr.facility = :facility");
+		q.setParameter("facility", facility);
 		return (List<Role>) q.getResultList();
 	}
+
 
 	@Override
 	public void removeRoleByFacility(Facility facility) {

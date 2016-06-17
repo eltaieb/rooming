@@ -1,6 +1,8 @@
 package com.iti.rooming.portal.managedbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -15,7 +17,13 @@ import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
 import com.iti.rooming.business.management.RoomingManagment;
+import com.iti.rooming.common.dto.geolocation.GeoLocationDetails;
+import com.iti.rooming.common.entity.Amenity;
 import com.iti.rooming.common.entity.Facility;
+import com.iti.rooming.common.entity.FacilityImage;
+import com.iti.rooming.common.entity.Role;
+import com.iti.rooming.common.entity.RoomAdvertiser;
+import com.iti.rooming.common.utils.MapUtil;
 
 @ManagedBean
 @ViewScoped
@@ -79,12 +87,27 @@ public class FacilityViewManagedBean implements Serializable {
 						+ facility.getCity() + " " + facility.getCountry();
 				apartmentLocation = new DefaultMapModel();
 				apartmentLocation.addOverlay(new Marker(latLng, location));
+				if(facility.getImages()==null)
+					facility.setImages(new ArrayList<FacilityImage>());
 			} catch (NumberFormatException e) {
 				handleNonExistingFacility();
 			}
 		} else {
 			handleNonExistingFacility();
 		}
+	}
+
+	/*
+	 * | Sets Facility location : (country , city , longitude , latitude ,
+	 * street , postal code ) |
+	 */
+	private void setFacilityLocationDetails(GeoLocationDetails address) {
+
+		facility.setLan(address.getResults().get(0).getGeometry().getLocation()
+				.getLat());
+		facility.setLon(address.getResults().get(0).getGeometry().getLocation()
+				.getLng());
+
 	}
 
 	void handleNonExistingFacility() {
