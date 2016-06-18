@@ -8,7 +8,6 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-
 </h:head>
 <h:body>
 	<ui:composition template="/WEB-INF/template/master.xhtml">
@@ -22,8 +21,8 @@
 					<p:wizard flowListener="#{facilityWizardManagedBean.onFlowProcess}">
 						<p:tab id="facility" title="Facility Information">
 							<p:panel header="Please fill in the following ..">
-								<p:fieldset legend="Building Number: *"
-									style="margin-bottom:20px">
+							<p:panelGrid layout="grid" columns="2">
+								<p:outputLabel value="Building Number: *" />
 									<h:panelGrid cellpadding="5">
 										<p:message for="buildingNumber"></p:message>
 										<p:inputText id="buildingNumber" required="true"
@@ -32,8 +31,7 @@
 											converterMessage="Please fill in a number" maxlength="6"
 											value="#{facilityWizardManagedBean.facility.buildingNumber}"></p:inputText>
 									</h:panelGrid>
-								</p:fieldset>
-								<p:fieldset legend="Description: *" style="margin-bottom:20px">
+								<p:outputLabel value="Description: *" />
 									<h:panelGrid cellpadding="5">
 										<p:message for="description"></p:message>
 										<p:inputTextarea id="description" rows="7" cols="50"
@@ -41,9 +39,7 @@
 											requiredMessage="Please fill in brief description about the facility"
 											value="#{facilityWizardManagedBean.facility.description}"></p:inputTextarea>
 									</h:panelGrid>
-								</p:fieldset>
-								<p:fieldset legend="Facility Images: "
-									style="margin-bottom:20px">
+								<p:outputLabel value="Facility Images: "/>
 									<h:panelGrid cellpadding="5">
 										<p:fileUpload
 											fileUploadListener="#{facilityWizardManagedBean.uploadFacilityImage}"
@@ -66,68 +62,69 @@
 											</p:column>
 										</p:dataTable>
 									</h:panelGrid>
-								</p:fieldset>
+									</p:panelGrid>
 							</p:panel>
 						</p:tab>
 
-						<p:tab id="location" title="Location">
-							<p:panel header="Mark location or fill detailed address ..">
-								<p:fieldset legend="Location: *" style="width:100%">
-									<h:panelGrid columns="2" cellpadding="5">
-										<p:fieldset legend="Map" style="margin-bottom:20px;width:100%">
-											<p:panelGrid cellpadding="5" columns="1" style="width:100%">
-												<p:message for="gmap"></p:message>
-												<f:view contentType="text/html">
-													<p:gmap id="gmap"
-														center="#{facilityWizardManagedBean.facility.lan},#{facilityWizardManagedBean.facility.lon} "
-														zoom="14" type="ROADMAP" style="width:400px;height:400px"
-														widgetVar="map"
-														model="#{facilityWizardManagedBean.apartmentLocation}">
-														<p:ajax event="pointSelect"
-															listener="#{facilityWizardManagedBean.onPointSelect}"
-															update="gmap country city postalCode street" />
-													</p:gmap>
-												</f:view>
 
-											</p:panelGrid>
-										</p:fieldset>
-
-										<p:fieldset legend="Details" style="margin-bottom:20px"
-											toggleable="true" toggleSpeed="500" collapsed="false">
-											<h:panelGrid cellpadding="5">
-												<p:outputLabel value="Country *" />
-												<p:message for="country"></p:message>
-												<p:inputText id="country" required="true"
-													requiredMessage="Please fill in the Country" maxlength="60"
-													value="#{facilityWizardManagedBean.facility.country}">
-												</p:inputText>
-
-
-												<h:outputLabel value="City *" />
-												<p:message for="city"></p:message>
-												<p:inputText id="city" required="true"
-													requiredMessage="Please fill in the City" maxlength="60"
-													value="#{facilityWizardManagedBean.facility.city}"></p:inputText>
-
-												<h:outputLabel value="Street *" />
-												<p:message for="street"></p:message>
-												<p:inputText id="street" required="true"
-													requiredMessage="Please fill in the Street" maxlength="60"
-													value="#{facilityWizardManagedBean.facility.street}"></p:inputText>
-
-												<h:outputLabel value="Postal Code" />
-												<p:message for="postalCode"></p:message>
-												<p:inputText id="postalCode" converter="javax.faces.Number"
-													maxlength="5"
-													converterMessage="Please enter a correct Postal Code"
-													value="#{facilityWizardManagedBean.facility.postalCode}"></p:inputText>
-											</h:panelGrid>
-										</p:fieldset>
-
-									</h:panelGrid>
-								</p:fieldset>
+					<p:tab id="location" title="Location">
+						<p:panelGrid layout="grid" columns="2"
+							style="border:none; border-radius:0.0;" >
+							<p:panel header="Map" style="border:none; border-radius:0.0;" id="locationGrid">
+								<p:message for="gmap"></p:message>
+								<p:inputText id="pac-input" class="controls"
+									placeholder="Enter a location" />
+									<script> initMap();</script>
+								<f:view contentType="text/html">
+									<p:gmap id="gmap"
+										center="#{facilityWizardManagedBean.facility.lan},#{facilityWizardManagedBean.facility.lon} "
+										zoom="14" type="ROADMAP" style="width:400px;height:400px"
+										widgetVar="map"
+										model="#{facilityWizardManagedBean.apartmentLocation}">
+										<p:ajax event="pointSelect"
+											listener="#{facilityWizardManagedBean.onPointSelect}"
+											update="gmap " />
+									</p:gmap>
+								</f:view>
+								<h:inputHidden id="lat"
+									value="#{facilityWizardManagedBean.facility.lan}" />
+								<h:inputHidden id="lng"
+									value="#{facilityWizardManagedBean.facility.lon}" />
 							</p:panel>
-						</p:tab>
+
+							<p:panel header="Details" style="border:none; border-radius:0.0;">
+								<p:panelGrid columns="1" styleClass="noBorder"
+									columnClasses="noBorder" layout="grid">
+									<p:outputLabel value="Country *" />
+									<p:message for="country"></p:message>
+									<p:inputText id="country" required="true"
+										requiredMessage="Please fill in the Country"
+										value="#{facilityWizardManagedBean.facility.country}">
+									</p:inputText>
+
+									<h:outputLabel value="City *" />
+									<p:message for="city"></p:message>
+									<p:inputText id="city" required="true" widgetVar="city"
+										requiredMessage="Please fill in the City"
+										value="#{facilityWizardManagedBean.facility.city}"></p:inputText>
+
+									<h:outputLabel value="Street *" />
+									<p:message for="street"></p:message>
+									<p:inputText id="street" required="true"
+										requiredMessage="Please fill in the Street"
+										value="#{facilityWizardManagedBean.facility.street}"></p:inputText>
+
+									<h:outputLabel value="Postal Code" />
+									<p:message for="postalCode"></p:message>
+									<p:inputText id="postalCode" converter="javax.faces.Number"
+										maxlength="5"
+										converterMessage="Please enter a correct Postal Code"
+										value="#{facilityWizardManagedBean.facility.postalCode}"></p:inputText>
+								</p:panelGrid>
+							</p:panel>
+						</p:panelGrid>
+					</p:tab>
+
 
 						<p:tab id="rooms" title="Rooms">
 							<p:panel header="Please fill in rooms ..">
@@ -148,10 +145,12 @@
 												<p:outputLabel value="Advertise Date :" />
 												<p:outputLabel value="#{room.advertiseDate.toString()}" />
 												<p:outputLabel value="Available For Rent :" />
-												<p:graphicImage library="images" name="yes.png" style="width:50px;height:50px"
-													 rendered="#{room.rentAvailable}" />
-												<p:graphicImage library="images" name="no.png" style="width:50px;height:50px"
-													 rendered="#{!room.rentAvailable}" />
+												<p:graphicImage library="images" name="yes.png"
+													style="width:50px;height:50px"
+													rendered="#{room.rentAvailable}" />
+												<p:graphicImage library="images" name="no.png"
+													style="width:50px;height:50px"
+													rendered="#{!room.rentAvailable}" />
 											</p:panelGrid>
 										</p:column>
 										<p:column headerText="Images">
@@ -182,7 +181,7 @@
 						</p:tab>
 
 
-						<p:tab id="facilityRoles" title="Roles">
+						<p:tab id="facilityRoles" title="Tags">
 							<p:panel
 								header="Finally , what are the things you need to make sure that the seeker will have ? ">
 								<p:panelGrid layout="grid" columns="1">
@@ -309,6 +308,44 @@
 				</h:form>
 			</p:dialog>
 
+			<style type="">
+.noBorder {
+	border: none !important;
+	border-radius: 0.0 !important;
+}
+</style>
+			<script>
+function initMap()
+{
+  var input = document.getElementById("facilitiesForm:pac-input");
+
+  //var types = document.getElementById('type-selector');
+ 
+  var autocomplete = new google.maps.places.Autocomplete(input);
+ 
+  var infowindow = new google.maps.InfoWindow();
+ 
+  autocomplete.addListener('place_changed', function() {
+    infowindow.close();
+   var place = autocomplete.getPlace();
+    if (!place.geometry) {
+      window.alert("Autocomplete's returned place contains no geometry");
+      return;
+    }
+    document.getElementById("facilitiesForm:lat").value=place.geometry.location.lat();
+    
+    document.getElementById("facilitiesForm:lng").value=place.geometry.location.lng();
+	PF('map').getMap().setCenter( new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng()));
+	document.getElementById("facilitiesForm:street").value = place.address_components[0].short_name;
+	document.getElementById("facilitiesForm:city").value = place.address_components[1].short_name;
+	document.getElementById("facilitiesForm:country").value = place.address_components[2].short_name;
+	
+  });
+  
+}
+
+
+</script>
 
 		</ui:define>
 	</ui:composition>

@@ -283,9 +283,12 @@ public class RoomingManagmentImpl implements RoomingManagment {
 		if (facility == null) {
 			return null;
 		} else {
+			facility.getRooms().size();
+			
 			/* 1 ROOMS */
 			List<Room> facilityRooms = roomService.getRoomsOfFacility(facility);
 			for (Room room : facilityRooms) {
+				room.getRoomImages().size();
 				List<RoomImage> roomImages = new ArrayList<RoomImage>();
 				roomImages = roomService.getRoomImageOfRoom(room);
 				room.setImages(roomImages);
@@ -301,12 +304,13 @@ public class RoomingManagmentImpl implements RoomingManagment {
 			facility.setImages(facilityImages);
 			if (facility.getImages() == null)
 				facility.setImages(new ArrayList());
-			/* 4 AMENITIES */
-			facility.setAmenities(facilityAmenityService
-					.getAmenitiesOfFacility(facility));
-			/* 5 ROLE */
-			facility.setRoles(facilityRoleService.getRolesOfFacility(facility));
-
+//			/* 4 AMENITIES */
+//			facility.setAmenities(facilityAmenityService
+//					.getAmenitiesOfFacility(facility));
+//			/* 5 ROLE */
+//			facility.setRoles(facilityRoleService.getRolesOfFacility(facility));
+			facility.getAmenities().size();
+			facility.getRoles().size();
 			return facility;
 		}
 	}

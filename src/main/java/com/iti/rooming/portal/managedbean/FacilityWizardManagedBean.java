@@ -200,7 +200,7 @@ public class FacilityWizardManagedBean extends BaseBean implements Serializable 
 			FacesMessage msg = new FacesMessage("Success",
 					"Facility was added successfully ! ");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
-			return "allfacilitiesofadvertiser.xhtml";
+			return "advertiserFacilities";
 		} catch (RoomingException e1) {
 			FacesMessage msg = new FacesMessage("Failure",
 					"Sorry a problem occured while adding your facility ! ");
