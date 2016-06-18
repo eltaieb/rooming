@@ -1,6 +1,7 @@
 package com.iti.rooming.dataaccess.daoimpl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Stateless;
 import javax.persistence.Query;
@@ -30,14 +31,34 @@ public class RoleDAOImpl extends BaseDAO implements RoleDAO {
 	@Override
 	public void remove(Role role) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public List<Role> getRoleByFacility(Facility facility) {
-		Query query = em.createQuery("SELECT r FROM FacilityRole r WHERE r.facility = :facility ");
+		Query query = em
+				.createQuery("SELECT r FROM FacilityRole r WHERE r.facility = :facility ");
 		query = query.setParameter("facility", facility);
 		return query.getResultList();
+	}
+
+	@Override
+	public void updateRole(Role role) {
+		// TODO Auto-generated method stub
+		super.persist(role);
+	}
+
+	@Override
+	public List<Role> loadRoles(int first, int pageSize, String sortField,
+			boolean ascending, Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return super.load(Role.class, first, pageSize, sortField, ascending, filters);
+	}
+
+	@Override
+	public int getNumOfRolesRows(Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return super.getNumOfRows(Role.class, filters);
 	}
 
 }

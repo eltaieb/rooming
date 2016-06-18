@@ -81,7 +81,7 @@ public class FacilityViewManagedBean implements Serializable {
 					gender = "Male .";
 				else
 					gender = "Female .";
-
+				
 				LatLng latLng = new LatLng(facility.getLan(), facility.getLon());
 				String location = facility.getStreet() + " "
 						+ facility.getCity() + " " + facility.getCountry();

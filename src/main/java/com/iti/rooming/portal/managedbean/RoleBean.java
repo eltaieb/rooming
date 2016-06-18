@@ -44,17 +44,17 @@ import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
 import com.iti.rooming.business.management.RoomingManagment;
-import com.iti.rooming.common.entity.Amenity;
+import com.iti.rooming.common.entity.Role;
 import com.iti.rooming.common.exception.RoomingException;
 
 @ManagedBean
 @ViewScoped
-public class AmenityBean implements Serializable {
+public class RoleBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private RoomingManagment management;
-	private Amenity amenity;
-	private LazyDataModel<Amenity> lazyFacilityModel;
+	private Role role;
+	private LazyDataModel<Role> lazyRoleModel;
 
 	@PostConstruct
 	public void init() {
@@ -62,34 +62,33 @@ public class AmenityBean implements Serializable {
 	}
 
 	private void LoadData() {
-		lazyFacilityModel = new LazyDataModel<Amenity>() {
+		lazyRoleModel = new LazyDataModel<Role>() {
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
-			private List<Amenity> result;
+			private List<Role> result;
 
 			@Override
-			public Amenity getRowData(String rowKey) {
-				for (Amenity amenity : result) {
-					if (amenity.getId().toString().equals(rowKey))
-						return amenity;
+			public Role getRowData(String rowKey) {
+				for (Role role : result) {
+					if (role.getId().toString().equals(rowKey))
+						return role;
 				}
 
 				return null;
 			}
 
 			@Override
-			public Object getRowKey(Amenity amenity) {
-				return amenity.getId();
+			public Object getRowKey(Role role) {
+				return role.getId();
 			}
 
 			@Override
-			public List<Amenity> load(int first, int pageSize,
-					String sortField, SortOrder sortOrder,
-					Map<String, Object> filters) {
+			public List<Role> load(int first, int pageSize, String sortField,
+					SortOrder sortOrder, Map<String, Object> filters) {
 
-				result = management.loadAmenities(first, pageSize, sortField,
+				result = management.loadRoles(first, pageSize, sortField,
 						sortOrder == SortOrder.ASCENDING, filters);
 				this.setRowCount(management.getNumOfAdvertiserRows(filters));
 
@@ -97,13 +96,13 @@ public class AmenityBean implements Serializable {
 			}
 
 			@Override
-			public void forEach(Consumer<? super Amenity> action) {
+			public void forEach(Consumer<? super Role> action) {
 				// TODO Auto-generated method stub
 
 			}
 
 			@Override
-			public Spliterator<Amenity> spliterator() {
+			public Spliterator<Role> spliterator() {
 				// TODO Auto-generated method stub
 				return null;
 			}
@@ -120,46 +119,38 @@ public class AmenityBean implements Serializable {
 		this.management = management;
 	}
 
-	public Amenity getAmenity() {
-		return amenity;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setAmenity(Amenity amenity) {
-		this.amenity = amenity;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
-	public LazyDataModel<Amenity> getLazyFacilityModel() {
-		return lazyFacilityModel;
+	public LazyDataModel<Role> getLazyRoleModel() {
+		return lazyRoleModel;
 	}
 
-	public void setLazyFacilityModel(LazyDataModel<Amenity> lazyFacilityModel) {
-		this.lazyFacilityModel = lazyFacilityModel;
+	public void setLazyRoleModel(LazyDataModel<Role> lazyRoleModel) {
+		this.lazyRoleModel = lazyRoleModel;
 	}
 
 	public void insert() {
-
-		try {
-			management.saveOrUpdateAmenity(amenity);
-
-		} catch (RoomingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		management.updateRole(role);
 	}
 
 	public void disablebuttons() {
 
-		amenity = null;
+		role = null;
 	}
 
-	public void initiateAmenity() {
-		amenity = new Amenity();
+	public void initiateRole() {
+		role = new Role();
 	}
 
 	public void update() {
 
-		management.updateAmenity(amenity);
+		management.updateRole(role);
 	}
 
 }

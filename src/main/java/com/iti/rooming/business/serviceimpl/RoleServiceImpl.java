@@ -1,6 +1,7 @@
 package com.iti.rooming.business.serviceimpl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -12,11 +13,11 @@ import com.iti.rooming.common.exception.RoomingException;
 import com.iti.rooming.dataaccess.dao.RoleDAO;
 
 @Stateless
-public class RoleServiceImpl implements RoleService  {
+public class RoleServiceImpl implements RoleService {
 
 	@EJB
-	RoleDAO roleDAO ;
-	
+	RoleDAO roleDAO;
+
 	@Override
 	public List<Role> getAll() {
 		return roleDAO.getAll();
@@ -34,13 +35,33 @@ public class RoleServiceImpl implements RoleService  {
 
 	@Override
 	public void remove(Role role) throws RoomingException {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public List<Role> getRoleByFacility(Facility facility) {
 		return roleDAO.getRoleByFacility(facility);
 
+	}
+
+	@Override
+	public void updateRole(Role role) {
+		// TODO Auto-generated method stub
+		roleDAO.updateRole(role);
+	}
+
+	@Override
+	public List<Role> loadRoles(int first, int pageSize, String sortField,
+			boolean ascending, Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return roleDAO
+				.loadRoles(first, pageSize, sortField, ascending, filters);
+	}
+
+	@Override
+	public int getNumOfRolesRows(Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return roleDAO.getNumOfRolesRows(filters);
 	}
 
 }

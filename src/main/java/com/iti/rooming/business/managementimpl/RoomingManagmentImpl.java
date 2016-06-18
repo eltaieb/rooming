@@ -281,6 +281,7 @@ public class RoomingManagmentImpl implements RoomingManagment {
 	/* FACILITY AND FACILITY IMAGES RELATED FUNCTIONS */
 	@Override
 	public Facility getFacility(Long id) {
+
 		Facility facility = facilityService.findFacility(id);
 		if (facility == null) {
 			return null;
@@ -559,16 +560,10 @@ public class RoomingManagmentImpl implements RoomingManagment {
 		// Images
 		// 1) Newly Added
 		for (int index = 0; index < facilityImages.size(); index++) {
-			// FacilityImage image = facilityImages.get(index);
-			// image.setFacility(facility);
 			facilityImages.get(index).setFacility(facility);
 			FacilityImage image = facilityService
 					.addOrUpdateFacilityImage(facilityImages.get(index));
 			facilityImages.set(index, image);
-			// image = facilityService.addOrUpdateFacilityImage(image);
-			// facilityImages.
-			// facilityImages.remove(index);
-			// facilityImages.add(image);
 		}
 		// 2) Deleted
 		facilityService.removeDeletedFacilityImages(facilityImages, facility);
@@ -577,21 +572,20 @@ public class RoomingManagmentImpl implements RoomingManagment {
 		// 1) Newly Added Rooms
 		// 2) Updated Rooms
 		for (int index = 0; index < facilityRooms.size(); index++) {
-			Room room = facilityRooms.get(index);
-			room.setFacility(facility);
-			List<RoomImage> roomImages = room.getImages();
-			room = roomService.addOrUpdateRoom(room);
-			for (RoomImage roomImage : roomImages) {
-				roomImage.setRoom(room);
-				roomService.addOrUpdateRoomImage(roomImage);
+			facilityRooms.get(index).setFacility(facility);
+			Room room = roomService.addOrUpdateRoom(facilityRooms.get(index));
+			for (int imageIndex = 0; imageIndex < facilityRooms.get(index)
+					.getImages().size(); imageIndex++) {
+				roomService.addOrUpdateRoomImage(facilityRooms.get(index)
+						.getImages().get(imageIndex));
 			}
-			facilityRooms.remove(index);
-			facilityRooms.add(room);
+			facilityRooms.set(index, room);
 		}
 
 		// 3) Deleted Rooms
 		roomService.removeDeletedRooms(facilityRooms, facility);
 		return facility;
+
 	}
 
 	@Override
@@ -669,5 +663,46 @@ public class RoomingManagmentImpl implements RoomingManagment {
 	@Override
 	public Long getNofOfflineUsers() {
 		return roomAdvertiserService.getNofOfflineUsers();
+	}
+
+	@Override
+	public List<Amenity> loadAmenities(int first, int pageSize,
+			String sortField, boolean ascending, Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return amenityService.loadAmenities(first, pageSize, sortField,
+				ascending, filters);
+	}
+
+	@Override
+	public int getNumOfAmenitiesRows(Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return amenityService.getNumOfAmenitiesRows(filters);
+	}
+
+	@Override
+	public void updateAmenity(Amenity amenity) {
+		// TODO Auto-generated method stub
+		amenityService.updateAmenity(amenity);
+
+	}
+
+	@Override
+	public void updateRole(Role role) {
+		// TODO Auto-generated method stub
+		roleService.updateRole(role);
+	}
+
+	@Override
+	public List<Role> loadRoles(int first, int pageSize, String sortField,
+			boolean ascending, Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return roleService.loadRoles(first, pageSize, sortField, ascending,
+				filters);
+	}
+
+	@Override
+	public int getNumOfRolesRows(Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return roleService.getNumOfRolesRows(filters);
 	}
 }

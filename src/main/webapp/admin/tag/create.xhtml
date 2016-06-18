@@ -1,0 +1,34 @@
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog id="createRoleDialog" widgetVar="createRoleDialog"
+		resizable="false" closeOnEscape="true" width="950px"
+		header="Create Tag">
+		<p:ajax event="close" update="createRoleForm"/>
+		<p:ajax event="close" resetValues="true" update="createRoleForm"
+			immediate="true" />
+		<h:form id="createRoleForm">
+			<p:panelGrid columns="3" style="width:100%" styleClass="noBorder">
+
+				<p:outputLabel for="roleName" value="roleName" />
+				<p:inputText id="roleName" required="true" label="roleName"
+					value="#{roleBean.role.name}" style="width:150px">
+				</p:inputText>
+				<p:message for="roleName" display="text"></p:message>
+			</p:panelGrid>
+			<p:panelGrid columns="2">
+				<p:commandButton actionListener="#{roleBean.insert()}"
+					update=":roleListForm :createRoleForm"
+					oncomplete="if(args &amp;&amp; !args.validationFailed)  PF('createRoleDialog').hide();"
+					value="Create" />
+				<p:commandButton immediate="true"
+					onclick="PF('createRoleDialog').hide()"
+					value="hide" />
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+</ui:composition>

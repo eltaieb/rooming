@@ -13,15 +13,6 @@
 		src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false&amp;libraries=places"></script>
 
 	<style>
-html,body {
-	height: 100%;
-	margin: 0;
-	padding: 0;
-}
-
-#map {
-	height: 100%;
-}
 
 .controls {
 	margin-top: 10px;
@@ -86,8 +77,12 @@ html,body {
             window.alert("Autocomplete's returned place contains no geometry");
             return;
           }
-			window.alert("Location on map ----"+place.geometry.location+"------");
-         
+          document.getElementById("formId:lat").value=place.geometry.location.lat();
+          
+          document.getElementById("formId:lng").value=place.geometry.location.lng();
+			PF('map').getMap().setCenter( new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng()));
+
+	         alert(place.name + "________" + address);
           var address = '';
           
 
@@ -119,7 +114,7 @@ html,body {
 <h:body>
 	<h1>Hello</h1>
 
-	<h:form>
+	<h:form id="formId">
 		<input id="pac-input" class="controls" type="text"
 			placeholder="Enter a location"></input>
 		<!-- GMAPS WITH MARKER -->
@@ -135,10 +130,12 @@ html,body {
 			</p:gmap>
 
 		</f:view>
-		<h:inputText id="lat" value="#{facilityWizardManagedBean.facility.lan}" />
-		<h:inputText id="lng" value="#{facilityWizardManagedBean.facility.lon}" />
-</h:form>
-		
+		<h:inputText id="lat"
+			value="#{facilityWizardManagedBean.facility.lan}" />
+		<h:inputText id="lng"
+			value="#{facilityWizardManagedBean.facility.lon}" />
+	</h:form>
+
 
 
 </h:body>

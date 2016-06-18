@@ -5,76 +5,73 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	<ui:define name="content">
-
 		<h:form id="formOfEditingFacility">
-
-			<p:panelGrid style="margin: 0 auto;" columns="1" layout="grid">
-
+			<p:growl />
+			<p:panelGrid style="border-radius:0.0;margin: 0 auto;" columns="1"
+				layout="grid">
 				<f:facet name="header">
 					<p:outputLabel
 						value="Click On A Tab To Edit Its Information Then Click   " />
-					<p:commandButton icon="ui-icon-tag" value="  Here To Save"
-						actionListener="#{facilityEditManagedBean.save}" />
+
+					<p:commandButton icon="ui-icon-tag" value=" Here To Save" update="@form"
+						action="#{facilityEditManagedBean.save}" />
 				</f:facet>
-
-				<p:tabView id="tabviewForEditingFacility">
-
+				<p:tabView id="tabviewForEditingFacility"
+					style="border-radius:0.0;margin: 0 auto;">
 					<p:tab id="facility" title="Facility Information">
+						<p:panelGrid style="border: none !important;margin: 0 auto;"
+							columns="2" layout="grid">
+							<p:outputLabel value="Building Number:*" />
+							<h:panelGrid cellpadding="5">
+								<p:message for="buildingNumber"></p:message>
+								<p:inputText id="buildingNumber" required="true" maxlength="6"
+									requiredMessage="Please fill in the Building Number"
+									converter="javax.faces.Number"
+									converterMessage="Please fill in a number"
+									value="#{facilityEditManagedBean.facility.buildingNumber}"></p:inputText>
+							</h:panelGrid>
+							<p:outputLabel value="Description:*" />
+							<p:panelGrid cellpadding="5">
+								<p:message for="description"></p:message>
+								<p:inputTextarea id="description" rows="7" cols="50"
+									maxlength="255" required="true" 
+									requiredMessage="Please fill in brief description about the facility"
+									value="#{facilityEditManagedBean.facility.description}"></p:inputTextarea>
+							</p:panelGrid>
+							<p:outputLabel value="Facility Images: " />
+							<h:panelGrid cellpadding="5">
+								<p:fileUpload
+									fileUploadListener="#{facilityEditManagedBean.uploadFacilityImage}"
+									mode="advanced" dragDropSupport="true" multiple="true"
+									update="facilityImages" fileLimit="6"
+									allowTypes="/(\.|\/)(gif|jpe?g|jpg|png)$/" />
 
-						<p:panelGrid layout="grid" columns="1">
-							<p:fieldset legend="Building Number: *"
-								style="margin-bottom:20px">
-								<h:panelGrid cellpadding="5">
-									<p:message for="buildingNumber"></p:message>
-									<p:inputText id="buildingNumber" required="true"
-										requiredMessage="Please fill in the Building Number"
-										converter="javax.faces.Number"
-										converterMessage="Please fill in a number"
-										value="#{facilityEditManagedBean.facility.buildingNumber}"></p:inputText>
-								</h:panelGrid>
-							</p:fieldset>
-							<p:fieldset legend="Description: *" style="margin-bottom:20px">
-								<h:panelGrid cellpadding="5">
-									<p:message for="description"></p:message>
-									<p:inputTextarea id="description" rows="7" cols="50"
-										maxlength="255" required="true"
-										requiredMessage="Please fill in brief description about the facility"
-										value="#{facilityEditManagedBean.facility.description}"></p:inputTextarea>
-								</h:panelGrid>
-							</p:fieldset>
-							<p:fieldset legend="Facility Images: " style="margin-bottom:20px">
-								<h:panelGrid cellpadding="5">
-									<p:fileUpload
-										fileUploadListener="#{facilityEditManagedBean.uploadFacilityImage}"
-										mode="advanced" dragDropSupport="true" multiple="true"
-										update="facilityImages" fileLimit="6"
-										allowTypes="/(\.|\/)(gif|jpe?g|jpg|png)$/" />
-
-									<p:dataTable id="facilityImages" rowIndexVar="index"
-										emptyMessage="No Images Found"
-										value="#{facilityEditManagedBean.facility.images}"
-										var="facilityImage">
-										<p:column headerText="Image">
-											<p:graphicImage style="width:300px;height:250px"
-												value="/images/dynamic/?file=#{facilityImage.image}&amp;type=3" />
-										</p:column>
-										<p:column headerText="Delete Image">
-											<h:commandLink value="Delete"
-												actionListener="#{facilityEditManagedBean.deleteImageAction(facilityImage)}"
-												update=":formOfEditingFacility:tabviewForEditingFacility:facilityImages" />
-										</p:column>
-									</p:dataTable>
-								</h:panelGrid>
-							</p:fieldset>
+								<p:dataTable id="facilityImages" rowIndexVar="index"
+									emptyMessage="No Images Found"
+									value="#{facilityEditManagedBean.facility.images}"
+									var="facilityImage">
+									<p:column headerText="Image">
+										<p:graphicImage style="width:300px;height:250px"
+											value="/images/dynamic/?file=#{facilityImage.image}&amp;type=3" />
+									</p:column>
+									<p:column headerText="Delete Image">
+										<h:commandLink value="Delete" immediate="true"
+											actionListener="#{facilityEditManagedBean.deleteImageAction(facilityImage)}"
+											update=":formOfEditingFacility:tabviewForEditingFacility:facilityImages" />
+									</p:column>
+								</p:dataTable>
+							</h:panelGrid>
 						</p:panelGrid>
-
 					</p:tab>
 
-					<p:tab id="location" title="Location">
 
-						<p:panelGrid layout="grid" columns="2">
-							<p:panel header="Map">
+					<p:tab id="location" title="Location">
+						<p:panelGrid layout="grid" columns="2"
+							style="border:none; border-radius:0.0;">
+							<p:panel header="Map" style="border:none; border-radius:0.0;">
 								<p:message for="gmap"></p:message>
+								<p:inputText id="pac-input" class="controls"
+									placeholder="Enter a location" />
 								<f:view contentType="text/html">
 									<p:gmap id="gmap"
 										center="#{facilityEditManagedBean.facility.lan},#{facilityEditManagedBean.facility.lon} "
@@ -83,13 +80,18 @@
 										model="#{facilityEditManagedBean.apartmentLocation}">
 										<p:ajax event="pointSelect"
 											listener="#{facilityEditManagedBean.onPointSelect}"
-											update="gmap country city postalCode street" />
+											update="gmap " />
 									</p:gmap>
 								</f:view>
+								<h:inputHidden id="lat"
+									value="#{facilityEditManagedBean.facility.lan}" />
+								<h:inputHidden id="lng"
+									value="#{facilityEditManagedBean.facility.lon}" />
 							</p:panel>
 
-							<p:panel header="Details">
-								<p:panelGrid columns="1" layout="grid">
+							<p:panel header="Details" style="border:none; border-radius:0.0;">
+								<p:panelGrid columns="1" styleClass="noBorder"
+									columnClasses="noBorder" layout="grid">
 									<p:outputLabel value="Country *" />
 									<p:message for="country"></p:message>
 									<p:inputText id="country" required="true"
@@ -99,7 +101,7 @@
 
 									<h:outputLabel value="City *" />
 									<p:message for="city"></p:message>
-									<p:inputText id="city" required="true"
+									<p:inputText id="city" required="true" widgetVar="city"
 										requiredMessage="Please fill in the City"
 										value="#{facilityEditManagedBean.facility.city}"></p:inputText>
 
@@ -117,20 +119,19 @@
 										value="#{facilityEditManagedBean.facility.postalCode}"></p:inputText>
 								</p:panelGrid>
 							</p:panel>
-
 						</p:panelGrid>
-
 					</p:tab>
 
 					<p:tab id="tabOfRooms" title="Rooms">
-
 						<p:panelGrid layout="grid" columns="1" id="panelGridOfRooms">
 							<p:commandButton value="Add Room" type="button"
 								onclick="PF('dialogForAddingFacility').show();" />
 							<p:dataTable id="dataTableForRoomsOfFacility"
+								style="border:0 none; border-radius:0.0"
 								emptyMessage="No Rooms Were Added . Click On Button To Add One .."
 								value="#{facilityEditManagedBean.facility.rooms}" var="room">
-								<p:column headerText="Information">
+								<p:column headerText="Information"
+									style="border:0 none; border-radius:0.0">
 									<p:panelGrid layout="grid" columns="2">
 										<p:outputLabel value="Area" />
 										<p:outputLabel value="#{room.area}" />
@@ -149,31 +150,29 @@
 								</p:column>
 								<p:column headerText="Images">
 									<p:fieldset legend="Click to view them" collapsed="true"
-										toggleable="true" toggleSpeed="500">
-										<p:dataTable value="#{room.images}" var="r"
+										toggleable="true" toggleSpeed="500" styleClass="noBorder">
+										<p:dataList value="#{room.images}" var="r"
 											emptyMessage="There Are No Images For This Room"
-											type="ordered">
-											<p:column>
-												<p:graphicImage style="width:300px;height:250px"
+											styleClass="noBorder">
+											<p:column styleClass="noBorder">
+												<p:graphicImage style="width:250px;height:200px"
 													value="/images/dynamic/?file=#{r.image}&amp;type=2" />
 											</p:column>
-										</p:dataTable>
-
+										</p:dataList>
 									</p:fieldset>
 								</p:column>
-
 								<p:column headerText="Delete Room">
 									<h:commandLink value="Delete This Room"
 										actionListener="#{facilityEditManagedBean.deleteAction(room)}"
-										update=":formOfEditingFacility:tabviewForEditingFacility:dataTableForRoomsOfFacility" />
+										immediate="true"
+										update=":formOfEditingFacility:tabviewForEditingFacility:dataTableForRoomsOfFacility @form" />
 								</p:column>
-
 							</p:dataTable>
 						</p:panelGrid>
 					</p:tab>
 
 
-					<p:tab id="facilityRoles" title="Roles">
+					<p:tab id="facilityRoles" title="Tags">
 						<p:outputLabel value="Which gender is needed for this facility ?" />
 						<p:message for="gender"></p:message>
 						<p:selectOneRadio id="gender"
@@ -196,7 +195,6 @@
 						</p:selectManyMenu>
 					</p:tab>
 
-
 					<p:tab id="amenity" title="Amenities">
 						<p:selectManyMenu id="amenities"
 							value="#{facilityEditManagedBean.selectedAmenities}"
@@ -210,7 +208,6 @@
 						</p:selectManyMenu>
 					</p:tab>
 				</p:tabView>
-
 			</p:panelGrid>
 		</h:form>
 		<p:dialog header="Room Adder" widgetVar="dialogForAddingFacility"
@@ -218,7 +215,7 @@
 			<h:form id="formOfAddingNewRoomToFacility">
 				<p:panelGrid columns="3" layout="grid">
 					<p:outputLabel value="Area* : " />
-					<p:inputText id="area" required="true" maxlength="12"
+					<p:inputText id="area" required="true"
 						requiredMessage="Please fill in the Area"
 						value="#{facilityEditManagedBean.room.area}" />
 					<p:message for="area" />
@@ -229,7 +226,7 @@
 					<p:message for="rentAvailability" />
 
 					<p:outputLabel value="Price* :" />
-					<p:spinner id="price" required="true" max="999999.99"
+					<p:spinner id="price" required="true"
 						requiredMessage="Please fill in the Price" stepFactor="0.25"
 						converter="javax.faces.Number"
 						converterMessage="Please enter a number"
@@ -253,8 +250,46 @@
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>
+		<style type="">
+			.noBorder {
+				border: none !important;
+				border-radius: 0.0 !important;
+			}
+		</style>
+		<script>
+function initMap()
+{
+  var input = document.getElementById('formOfEditingFacility:tabviewForEditingFacility:pac-input');
 
+  //var types = document.getElementById('type-selector');
+ 
+  var autocomplete = new google.maps.places.Autocomplete(input);
+ 
+  var infowindow = new google.maps.InfoWindow();
+ 
+  autocomplete.addListener('place_changed', function() {
+    infowindow.close();
+   var place = autocomplete.getPlace();
+    if (!place.geometry) {
+      window.alert("Autocomplete's returned place contains no geometry");
+      return;
+    }
+    document.getElementById("formOfEditingFacility:tabviewForEditingFacility:lat").value=place.geometry.location.lat();
+    
+    document.getElementById("formOfEditingFacility:tabviewForEditingFacility:lng").value=place.geometry.location.lng();
+	PF('map').getMap().setCenter( new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng()));
+	document.getElementById("formOfEditingFacility:tabviewForEditingFacility:street").value = place.address_components[0].short_name;
+	document.getElementById("formOfEditingFacility:tabviewForEditingFacility:city").value = place.address_components[1].short_name;
+	document.getElementById("formOfEditingFacility:tabviewForEditingFacility:country").value = place.address_components[2].short_name;
+	
+  });
+  
+}
+$( document ).ready(function() {
+	  initMap();
+	      	});
 
+</script>
 
 	</ui:define>
 </ui:composition>
