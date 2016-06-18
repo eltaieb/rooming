@@ -27,7 +27,9 @@ import com.iti.rooming.business.service.RoomingAdvertiserService;
 import com.iti.rooming.business.service.SeekerFacilityService;
 import com.iti.rooming.business.service.SeekerFavouriteFacilityService;
 import com.iti.rooming.business.service.SelectionViewService;
+import com.iti.rooming.common.dto.FacilityCity;
 import com.iti.rooming.common.dto.FacilitySelectionCriteria;
+import com.iti.rooming.common.dto.RoomAdvertiserCity;
 import com.iti.rooming.common.dto.RoomSeekerWrapper;
 import com.iti.rooming.common.dto.RoomingChatMessage;
 import com.iti.rooming.common.dto.wrapper.ChatRequestWrapper;
@@ -650,7 +652,23 @@ public class RoomingManagmentImpl implements RoomingManagment {
 	@Override
 	public List<Facility> loadFacility(int first, int pageSize,
 			String sortField, boolean b, Map<String, Object> filters) {
-		return facilityService.loadFacility(first, pageSize, sortField, b, filters);
+		return facilityService.loadFacility(first, pageSize, sortField, b,
+				filters);
+	}
+
+	@Override
+	public List<FacilityCity> getFacilitiesInCities() {
+		return facilityService.getFacilitiesInCities();
+	}
+
+	@Override
+	public List<RoomAdvertiserCity> getRoomAdvertiserInCities() {
+		return roomAdvertiserService.getRoomAdvertiserInCities();
+	}
+
+	@Override
+	public Long getNofOfflineUsers() {
+		return roomAdvertiserService.getNofOfflineUsers();
 	}
 
 	@Override

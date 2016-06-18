@@ -13,6 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import com.iti.rooming.common.dto.OnlineUsers;
 import com.iti.rooming.springsecurity.CustomAuthenticationProvider;
 import com.iti.rooming.springsecurity.CustomUserDetails;
 
@@ -41,81 +42,79 @@ public class UserAuthenticationManagedBean extends BaseBean implements
 
 	public void login() {
 
-		try
-		{
-		Authentication request = new UsernamePasswordAuthenticationToken(
-				this.getUserName(), this.getPassword());
+		try {
+			Authentication request = new UsernamePasswordAuthenticationToken(
+					this.getUserName(), this.getPassword());
 
-		Authentication result = myAuthenticationBean.authenticate(request);
-		SecurityContextHolder.getContext().setAuthentication(result);
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
-		CustomUserDetails obj = (CustomUserDetails) auth.getPrincipal();
+			Authentication result = myAuthenticationBean.authenticate(request);
+			SecurityContextHolder.getContext().setAuthentication(result);
+			Authentication auth = SecurityContextHolder.getContext()
+					.getAuthentication();
+			CustomUserDetails obj = (CustomUserDetails) auth.getPrincipal();
+  
+			PutInSession("currentUserDetails", obj);
+			PutInSession("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
 
-		PutInSession("currentUserDetails",obj );
-		String userRole = obj.getUser().getRole();
-		if (userRole.equals("admin")) {
+			String userRole = obj.getUser().getRole();
+			if (userRole.equals("admin")) {
 
-			try {
-				FacesContext ctx = FacesContext.getCurrentInstance();
+				try {
+					FacesContext ctx = FacesContext.getCurrentInstance();
 
-				ExternalContext extContext = ctx.getExternalContext();
-				String url = extContext.encodeActionURL(ctx
-						.getApplication()
-						.getViewHandler()
-						.getActionURL(ctx,
-								"/admin/home.xhtml"));
+					ExternalContext extContext = ctx.getExternalContext();
+					String url = extContext.encodeActionURL(ctx
+							.getApplication().getViewHandler()
+							.getActionURL(ctx, "/admin/home.xhtml"));
 
-				extContext.redirect(url);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+					extContext.redirect(url);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			} else if (userRole.equals("advertiser")) {
+
+				try {
+					OnlineUsers.incrementNOfOnlineUsers();
+					FacesContext ctx = FacesContext.getCurrentInstance();
+
+					ExternalContext extContext = ctx.getExternalContext();
+					String url = extContext.encodeActionURL(ctx
+							.getApplication().getViewHandler()
+							.getActionURL(ctx, "/usr/home.xhtml"));
+
+					extContext.redirect(url);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			} else {
+
+				try {
+					FacesContext ctx = FacesContext.getCurrentInstance();
+
+					ExternalContext extContext = ctx.getExternalContext();
+					String url = extContext.encodeActionURL(ctx
+							.getApplication().getViewHandler()
+							.getActionURL(ctx, "/pub/login.xhtml"));
+
+					extContext.redirect(url);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 			}
-
-		} else if (userRole.equals("advertiser")) {
-
-			try {
-				FacesContext ctx = FacesContext.getCurrentInstance();
-
-				ExternalContext extContext = ctx.getExternalContext();
-				String url = extContext.encodeActionURL(ctx
-						.getApplication()
-						.getViewHandler()
-						.getActionURL(ctx,
-								"/usr/home.xhtml"));
-
-				extContext.redirect(url);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		} else {
-
-			try {
-				FacesContext ctx = FacesContext.getCurrentInstance();
-
-				ExternalContext extContext = ctx.getExternalContext();
-				String url = extContext.encodeActionURL(ctx.getApplication()
-						.getViewHandler().getActionURL(ctx, "/pub/login.xhtml"));
-
-				extContext.redirect(url);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-		}
-		catch(Exception ex)
-		{addErrorMessage("Invalid username or password");
+		} catch (Exception ex) {
+			addErrorMessage("Invalid username or password");
 		}
 
 	}
 
 	public void logout() throws IOException {
-		SecurityContextHolder.getContext().setAuthentication(null);
 		invalidateSession();
+		OnlineUsers.decrementNOfOnlineUsers();
 		redirect("/rooming/pub/index.xhtml");
 	}
 

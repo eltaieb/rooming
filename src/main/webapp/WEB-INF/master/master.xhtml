@@ -19,12 +19,12 @@
 
 </h:head>
 <h:body>
-	<h:form>
+	 <h:form>
 		<p:idleMonitor timeout="50000">
 			<p:ajax event="idle"
 				listener="#{userAuthenticationManagedBean.logout()}" />
 		</p:idleMonitor>
-	</h:form>
+	</h:form> 
 	<ui:insert name="header">
 		<ui:include src="header.xhtml" />
 	</ui:insert>

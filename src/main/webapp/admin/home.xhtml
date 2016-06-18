@@ -6,10 +6,9 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	<ui:define name="content">
-		<h:form>
-			<center>
-				<h3>welcome to home</h3>
-			</center>
-		</h:form>
+		<p:chart type="donut" model="#{adminHomeBean.donutModel}"
+			style="width:500px;height:500px; font-size:24px;" />
+
 	</ui:define>
+
 </ui:composition>

@@ -2,12 +2,14 @@ package com.iti.rooming.dataaccess.daoimpl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 
+import com.iti.rooming.common.dto.FacilityCity;
 import com.iti.rooming.common.entity.Facility;
 import com.iti.rooming.common.entity.FacilityImage;
 import com.iti.rooming.common.entity.RoomAdvertiser;
@@ -87,39 +89,39 @@ public class FacilityDAOImpl extends BaseDAO implements FacilityDAO {
 
 	@Override
 	public List<Facility> getAllWithCritria() throws RoomingException {
-		List<Long> aminityList = new ArrayList();
-		aminityList.add((long) 1);
-		aminityList.add((long) 2);
-		aminityList.add((long) 3);
-		aminityList.add((long) 6);
-		aminityList.add((long) 7);
-
-		List<Long> rolesList = new ArrayList();
-		rolesList.add((long) 1);
-		rolesList.add((long) 2);
-		rolesList.add((long) 3);
-		rolesList.add((long) 4);
-		rolesList.add((long) 5);
-
-		GeoLocation geo = new GeoLocation(31.703443, 30.8992618, 900000.00);
-		Bounds bounds1 = geo.getBounds();
-		Query query = em
-				.createQuery("select DISTINCT f "
-						+ " FROM FacilityAmenity fa  JOIN fa.facility f"
-						+ " , FacilityRole fr JOIN fr.facility ffr"
-						+ " WHERE f.lan BETWEEN :minLat AND :maxLat and f.lon BETWEEN :minLon AND :maxLon"
-						+ " OR   fa.amenity.id IN :aminityList"
-						+ " AND f = ffr" + " AND fr.role.id IN :rolesList");
-
-		query.setParameter("minLat", bounds1.getMinLat());
-		query.setParameter("maxLat", bounds1.getMaxLat());
-		query.setParameter("minLon", bounds1.getMinLon());
-		query.setParameter("maxLon", bounds1.getMaxLon());
-		query.setParameter("aminityList", aminityList);
-		query.setParameter("rolesList", rolesList);
-
-		List<Facility> facilities = query.getResultList();
-		return facilities;
+//		List<Long> aminityList = new ArrayList();
+//		aminityList.add((long) 1);
+//		aminityList.add((long) 2);
+//		aminityList.add((long) 3);
+//		aminityList.add((long) 6);
+//		aminityList.add((long) 7);
+//
+//		List<Long> rolesList = new ArrayList();
+//		rolesList.add((long) 1);
+//		rolesList.add((long) 2);
+//		rolesList.add((long) 3);
+//		rolesList.add((long) 4);
+//		rolesList.add((long) 5);
+//
+//		GeoLocation geo = new GeoLocation(31.703443, 30.8992618, 900000.00);
+//		Bounds bounds1 = geo.getBounds();
+//		Query query = em
+//				.createQuery("select DISTINCT f "
+//						+ " FROM FacilityAmenity fa  JOIN fa.facility f"
+//						+ " , FacilityRole fr JOIN fr.facility ffr"
+//						+ " WHERE f.lan BETWEEN :minLat AND :maxLat and f.lon BETWEEN :minLon AND :maxLon"
+//						+ " OR   fa.amenity.id IN :aminityList"
+//						+ " AND f = ffr" + " AND fr.role.id IN :rolesList");
+//
+//		query.setParameter("minLat", bounds1.getMinLat());
+//		query.setParameter("maxLat", bounds1.getMaxLat());
+//		query.setParameter("minLon", bounds1.getMinLon());
+//		query.setParameter("maxLon", bounds1.getMaxLon());
+//		query.setParameter("aminityList", aminityList);
+//		query.setParameter("rolesList", rolesList);
+//
+//		List<Facility> facilities = query.getResultList();
+		return null;
 	}
 
 	@Override
@@ -179,5 +181,20 @@ public class FacilityDAOImpl extends BaseDAO implements FacilityDAO {
 		Query query = em.createQuery(sql, Facility.class);
 		query.setParameter("roomAdvertiser", roomAdvertiser);
 		return query.getResultList();
+	}
+
+	@Override
+	public List<FacilityCity> getFacilitiesInCities() {
+		String sql = "SELECT f.city, COUNT(f.id) FROM Facility f GROUP BY f.city";
+		Query query = em.createQuery(sql);
+		List result = query.getResultList();
+		List<FacilityCity> facilitycities = new LinkedList<FacilityCity>();
+		result.parallelStream().forEach(
+				f -> {
+					Object[] objects = (Object[]) f;
+					facilitycities.add(new FacilityCity((Long) objects[1],
+							objects[0].toString()));
+				});
+		return facilitycities;
 	}
 }

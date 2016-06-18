@@ -72,10 +72,8 @@ public class SelectionViewServiceImpl implements SelectionViewService {
 						.getFacilityCoverPhoto());
 				facilityWrapper
 						.setProfileImage(selectionView.getProfileImage());
-				facilityWrapper.setLon((selectionView.getLongitude() * 180)
-						/ Math.PI);
-				facilityWrapper.setLat((selectionView.getLatitude() * 180)
-						/ Math.PI);
+				facilityWrapper.setLon(selectionView.getLongitude());
+				facilityWrapper.setLat(selectionView.getLatitude());
 				facilityWrapper.setMinPrice(selectionView.getPrice());
 				facilityWrapper.setOwnerId(selectionView.getOnwerId());
 
@@ -116,12 +114,10 @@ public class SelectionViewServiceImpl implements SelectionViewService {
 	private FacilitySelectionCriteriaWrapper convertFacilityCriteriaToWrapper(
 			FacilitySelectionCriteria facilitySelectionCriteria) {
 		FacilitySelectionCriteriaWrapper facilitySelectionCriteriaWrapper = new FacilitySelectionCriteriaWrapper();
-		GeoLocation goGeoLocation = new GeoLocation(
-				facilitySelectionCriteria.getLon(),
+
+		Bounds bounds = GeoLocation.get(facilitySelectionCriteria.getLon(),
 				facilitySelectionCriteria.getLat(),
 				facilitySelectionCriteria.getArea());
-
-		Bounds bounds = goGeoLocation.getBounds();
 		facilitySelectionCriteriaWrapper.setBounds(bounds);
 
 		RoomPriceWrapper roomPriceWrapper = new RoomPriceWrapper();

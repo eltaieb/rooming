@@ -13,6 +13,7 @@ import javax.mail.internet.AddressException;
 
 import com.iti.rooming.business.service.RoomingAdvertiserService;
 import com.iti.rooming.common.config.Configurations;
+import com.iti.rooming.common.dto.RoomAdvertiserCity;
 import com.iti.rooming.common.dto.wrapper.OwnerWrapper;
 import com.iti.rooming.common.entity.RoomAdvertiser;
 import com.iti.rooming.common.exception.RoomingException;
@@ -141,6 +142,16 @@ public class RoomingAdvertiserServiceImpl implements RoomingAdvertiserService {
 	@Override
 	public List getAllRoomAdvertisers() {
 		return roomingAdverstierDAO.getAllRoomAdvertisers();
+	}
+
+	@Override
+	public List<RoomAdvertiserCity> getRoomAdvertiserInCities() {
+		return roomingAdverstierDAO.getRoomAdvertiserInCities();
+	}
+
+	@Override
+	public Long getNofOfflineUsers() {
+		return roomingAdverstierDAO.getNofOfflineUsers();
 	}
 
 }

@@ -15,11 +15,10 @@
 		<csrf disabled="true" />
 		<intercept-url pattern="**resource**" access="permitAll" />
 		<intercept-url pattern="/admin/**" access="hasAuthority('admin')" />
-		<intercept-url pattern="/advertisor/**" access="hasAuthority('advertiser')" 
-			/> 
-		<intercept-url pattern="/usr/**" access="hasAuthority('advertiser')" 
-			/> 
+		<intercept-url pattern="/advertisor/**" access="hasAuthority('advertiser')" />
+		<intercept-url pattern="/usr/**" access="hasAuthority('advertiser')" />
 		<form-login login-page="/pub/userauthentication.xhtml" />
+		<access-denied-handler error-page="/pub/accessdenied.xhtml" />
 	</http>
 	<context:component-scan base-package="com.*" />
 	<authentication-manager>

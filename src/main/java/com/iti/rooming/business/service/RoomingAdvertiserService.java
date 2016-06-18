@@ -9,6 +9,7 @@ import javax.ejb.Local;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
+import com.iti.rooming.common.dto.RoomAdvertiserCity;
 import com.iti.rooming.common.dto.wrapper.OwnerWrapper;
 import com.iti.rooming.common.entity.RoomAdvertiser;
 import com.iti.rooming.common.exception.RoomingException;
@@ -44,6 +45,10 @@ public interface RoomingAdvertiserService  {
 			Map<String, Object> filters);
 
 	public List getAllRoomAdvertisers();
+
+	public List<RoomAdvertiserCity> getRoomAdvertiserInCities();
+
+	public Long getNofOfflineUsers();
 	
 	
 }
