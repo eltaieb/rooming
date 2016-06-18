@@ -89,39 +89,39 @@ public class FacilityDAOImpl extends BaseDAO implements FacilityDAO {
 
 	@Override
 	public List<Facility> getAllWithCritria() throws RoomingException {
-		List<Long> aminityList = new ArrayList();
-		aminityList.add((long) 1);
-		aminityList.add((long) 2);
-		aminityList.add((long) 3);
-		aminityList.add((long) 6);
-		aminityList.add((long) 7);
-
-		List<Long> rolesList = new ArrayList();
-		rolesList.add((long) 1);
-		rolesList.add((long) 2);
-		rolesList.add((long) 3);
-		rolesList.add((long) 4);
-		rolesList.add((long) 5);
-
-		GeoLocation geo = new GeoLocation(31.703443, 30.8992618, 900000.00);
-		Bounds bounds1 = geo.getBounds();
-		Query query = em
-				.createQuery("select DISTINCT f "
-						+ " FROM FacilityAmenity fa  JOIN fa.facility f"
-						+ " , FacilityRole fr JOIN fr.facility ffr"
-						+ " WHERE f.lan BETWEEN :minLat AND :maxLat and f.lon BETWEEN :minLon AND :maxLon"
-						+ " OR   fa.amenity.id IN :aminityList"
-						+ " AND f = ffr" + " AND fr.role.id IN :rolesList");
-
-		query.setParameter("minLat", bounds1.getMinLat());
-		query.setParameter("maxLat", bounds1.getMaxLat());
-		query.setParameter("minLon", bounds1.getMinLon());
-		query.setParameter("maxLon", bounds1.getMaxLon());
-		query.setParameter("aminityList", aminityList);
-		query.setParameter("rolesList", rolesList);
-
-		List<Facility> facilities = query.getResultList();
-		return facilities;
+//		List<Long> aminityList = new ArrayList();
+//		aminityList.add((long) 1);
+//		aminityList.add((long) 2);
+//		aminityList.add((long) 3);
+//		aminityList.add((long) 6);
+//		aminityList.add((long) 7);
+//
+//		List<Long> rolesList = new ArrayList();
+//		rolesList.add((long) 1);
+//		rolesList.add((long) 2);
+//		rolesList.add((long) 3);
+//		rolesList.add((long) 4);
+//		rolesList.add((long) 5);
+//
+//		GeoLocation geo = new GeoLocation(31.703443, 30.8992618, 900000.00);
+//		Bounds bounds1 = geo.getBounds();
+//		Query query = em
+//				.createQuery("select DISTINCT f "
+//						+ " FROM FacilityAmenity fa  JOIN fa.facility f"
+//						+ " , FacilityRole fr JOIN fr.facility ffr"
+//						+ " WHERE f.lan BETWEEN :minLat AND :maxLat and f.lon BETWEEN :minLon AND :maxLon"
+//						+ " OR   fa.amenity.id IN :aminityList"
+//						+ " AND f = ffr" + " AND fr.role.id IN :rolesList");
+//
+//		query.setParameter("minLat", bounds1.getMinLat());
+//		query.setParameter("maxLat", bounds1.getMaxLat());
+//		query.setParameter("minLon", bounds1.getMinLon());
+//		query.setParameter("maxLon", bounds1.getMaxLon());
+//		query.setParameter("aminityList", aminityList);
+//		query.setParameter("rolesList", rolesList);
+//
+//		List<Facility> facilities = query.getResultList();
+		return null;
 	}
 
 	@Override

@@ -183,13 +183,14 @@ public class MessageBeanList implements Serializable {
 	}
 
 	public void buttonAction(ActionEvent actionEvent) {
-		String url = "rooming/usr/room_details.xhtml";
+		String url = "/rooming/usr/facilityview.xhtml?facilityId="
+				+ selectedFacility.getId();
 		FacesContext fc = FacesContext.getCurrentInstance();
 		ExternalContext ec = fc.getExternalContext();
 		try {
 			ec.redirect(url);
 		} catch (IOException ex) {
-			
+
 		}
 	}
 
