@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.ejb.Local;
 
+import com.iti.rooming.common.dto.RoomAdvertiserCity;
 import com.iti.rooming.common.entity.RoomAdvertiser;
 import com.iti.rooming.common.exception.RoomingException;
 
@@ -40,4 +41,8 @@ public interface RoomingAdvertiserDAO {
 			Map<String, Object> filters);
 
 	public List getAllRoomAdvertisers();
+
+	public List<RoomAdvertiserCity> getRoomAdvertiserInCities();
+
+	public Long getNofOfflineUsers();
 }

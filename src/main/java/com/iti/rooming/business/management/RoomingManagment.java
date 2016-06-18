@@ -10,7 +10,9 @@ import javax.ejb.Local;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
+import com.iti.rooming.common.dto.FacilityCity;
 import com.iti.rooming.common.dto.FacilitySelectionCriteria;
+import com.iti.rooming.common.dto.RoomAdvertiserCity;
 import com.iti.rooming.common.dto.RoomSeekerWrapper;
 import com.iti.rooming.common.dto.RoomingChatMessage;
 import com.iti.rooming.common.dto.wrapper.ChatRequestWrapper;
@@ -205,5 +207,11 @@ public interface RoomingManagment {
 
 	public List<Facility> loadFacility(int first, int pageSize,
 			String sortField, boolean b, Map<String, Object> filters);
+
+	public List<FacilityCity> getFacilitiesInCities();
+
+	public List<RoomAdvertiserCity> getRoomAdvertiserInCities();
+
+	public Long getNofOfflineUsers();
 
 }

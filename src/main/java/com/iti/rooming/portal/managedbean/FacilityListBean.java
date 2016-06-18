@@ -21,6 +21,7 @@ import org.primefaces.model.map.Marker;
 
 import com.iti.rooming.business.management.RoomingManagment;
 import com.iti.rooming.common.entity.Facility;
+
 @ManagedBean
 @ViewScoped
 public class FacilityListBean implements Serializable {
@@ -34,17 +35,11 @@ public class FacilityListBean implements Serializable {
 
 	private Facility facility;
 
-
-	
-
-
-
-
 	@PostConstruct
 	public void init() {
 		LoadData();
 	}
-	
+
 	private void LoadData() {
 		lazyFacilityModel = new LazyDataModel<Facility>() {
 			/**
@@ -73,11 +68,9 @@ public class FacilityListBean implements Serializable {
 					String sortField, SortOrder sortOrder,
 					Map<String, Object> filters) {
 
-				result = management.loadFacility(first,
-						pageSize, sortField, sortOrder == SortOrder.ASCENDING,
-						filters);
-				this.setRowCount(management
-						.getNumOfAdvertiserRows(filters));
+				result = management.loadFacility(first, pageSize, sortField,
+						sortOrder == SortOrder.ASCENDING, filters);
+				this.setRowCount(management.getNumOfAdvertiserRows(filters));
 
 				return result;
 			}
@@ -97,6 +90,7 @@ public class FacilityListBean implements Serializable {
 		};
 
 	}
+
 	public Facility getFacility() {
 		return facility;
 	}

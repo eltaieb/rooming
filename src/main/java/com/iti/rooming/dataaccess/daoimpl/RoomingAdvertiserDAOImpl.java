@@ -1,5 +1,6 @@
 package com.iti.rooming.dataaccess.daoimpl;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import com.iti.rooming.common.dto.RoomAdvertiserCity;
 import com.iti.rooming.common.entity.RoomAdvertiser;
 import com.iti.rooming.common.exception.RoomingException;
 import com.iti.rooming.dataaccess.dao.RoomingAdvertiserDAO;
@@ -214,6 +216,28 @@ public class RoomingAdvertiserDAOImpl extends BaseDAO implements
 		String sql = "SELECT x FROM RoomAdvertiser x";
 		Query query = em.createQuery(sql, RoomAdvertiser.class);
 		return query.getResultList();
+	}
+
+	@Override
+	public List<RoomAdvertiserCity> getRoomAdvertiserInCities() {
+		String sql = "SELECT r.city, COUNT(r.id) FROM RoomAdvertiser r GROUP BY r.city";
+		Query query = em.createQuery(sql);
+		List result = query.getResultList();
+		List<RoomAdvertiserCity> roomAdvertiserCities = new LinkedList<RoomAdvertiserCity>();
+		result.parallelStream().forEach(
+				r -> {
+					Object[] objects = (Object[]) r;
+					roomAdvertiserCities.add(new RoomAdvertiserCity(
+							(Long) objects[1], objects[0].toString()));
+				});
+		return roomAdvertiserCities;
+	}
+
+	@Override
+	public Long getNofOfflineUsers() {
+		String sql = "SELECT COUNT(u.id) FROM User u WHERE u.role != 'admin'";
+		Query query = em.createQuery(sql, Long.class);
+		return (Long) query.getSingleResult();
 	}
 
 }
