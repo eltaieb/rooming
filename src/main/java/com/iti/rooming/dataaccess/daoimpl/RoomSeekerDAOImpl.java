@@ -42,8 +42,6 @@ public class RoomSeekerDAOImpl extends BaseDAO implements RoomSeekerDAO {
 		if (result.size() > 0)
 			return roomSeeker = (RoomSeeker) result.get(0);
 
-		if (roomSeeker != null)
-			return roomSeeker;
 		roomSeeker = (RoomSeeker) super.persist(roomSeeker);
 		if (roomSeeker.getId() != null && roomSeeker.getId() > 0)
 			return roomSeeker;

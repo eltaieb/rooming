@@ -184,8 +184,8 @@ public class GeoLocation {
 			}
 		} else {
 			// a pole is within the distance
-			maxLat = Math.max(minLat, MIN_LAT);
-			minLat = Math.min(maxLat, MAX_LAT);
+			maxLat = Math.max(minLat, MAX_LAT);
+			minLat = Math.min(maxLat, MIN_LAT);
 			minLon = MIN_LON;
 			maxLon = MAX_LON;
 		}
@@ -195,6 +195,6 @@ public class GeoLocation {
 	
 	public static void main(String [] args)
 	{
-		System.out.println(GeoLocation.get(30.0712051, 31.0213056, .1));
+		System.out.println(GeoLocation.get(30.070943399999997,31.021376999999998, 4.0));
 	}
 }

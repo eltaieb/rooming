@@ -38,7 +38,7 @@
 
 	function send_message(owner, seeker, room) {
 		var obj = new Object();
-		obj.type = 0;//type 0 means you are owner
+		obj.type = 1;//type 0 means you are owner
 		obj.from = owner;
 		obj.to = seeker;
 		obj.about = room;
@@ -70,35 +70,37 @@
 		output.scrollTop = output.scrollHeight;
 
 	}
+	function hideNewMessageCSS()
+	{	
+		$('#msgTextArea').html('');
+	}
 
 	</script>
 		<table style="width: 100%;">
 			<tr>
-				<td style="width: 40%; height: 100%;"><h:form>
+				<td style="width: 30%; height: 100%;"><h:form>
 						<p:dataTable var="seekerRoomWrapper" selectionMode="single"
-							style="height:800px;"
-							selection="#{messageBeanList.selectedSeekerRoomWrapper}"
-							value="#{messageBeanList.seekerRoomWrappers}"
-							rowKey="#{seekerRoomWrapper.facility}">
-							<p:ajax event="rowSelect"
-								listener="#{messageBeanList.onRowSelect}"
-								oncomplete="hideNewMessageCSS('#{messageBeanList.selectedSeekerRoomWrapper.identifier}')"
+							style="height:800px;" class="noborder"
+							selection="#{messageBean.selectedSeekerRoomWrapper}"
+							value="#{messageBean.seekerRoomWrappers}"
+							rowKey="#{seekerRoomWrapper.roomSeeker.id}">
+							<p:ajax event="rowSelect" listener="#{messageBean.onRowSelect}"
+								onstart="hideNewMessageCSS()"
 								update=":navForm:nav_room :sendForm:sendButton @this" />
 							<p:column>
 								<p:panel style="text-align:center;height:100">
 
-									<h:panelGrid style="width:100%">
+									<p:panelGrid style="width:100%">
 										<p:row>
 											<p:column colspan="2">
-												<div
-													id="#{messageBeanList.selectedSeekerRoomWrapper.facility}"></div>
+												<div id="#{messageBean.selectedSeekerRoomWrapper.facility}"></div>
 											</p:column>
 
 										</p:row>
 										<p:row>
 											<p:column>
 												<p:graphicImage
-													value="/images/dynamic/?file=#{seekerRoomWrapper.roomSeeker.profileImage}&amp;type=2"
+													value="/images/dynamic/?file=#{seekerRoomWrapper.roomSeeker.profileImage}&amp;type=5"
 													style="width:60px; float:left; position:relative;" />
 											</p:column>
 											<p:column>
@@ -107,24 +109,24 @@
 													style="position:relative; margin-top:5px; float:left; margin-left:20px;" />
 											</p:column>
 										</p:row>
-									</h:panelGrid>
+									</p:panelGrid>
 								</p:panel>
 							</p:column>
 						</p:dataTable>
 
 					</h:form></td>
-				<td style="width: 60%; height: 100%;"><h:form id="navForm">
+				<td style="width: 70%; height: 100%;"><h:form id="navForm">
 						<p:commandLink id="nav_room"
-							actionListener="#{messageBeanList.buttonAction}" ajax="false">
+							actionListener="#{messageBean.buttonAction}" ajax="false">
 							<h:outputText value="view facility" />
 						</p:commandLink>
 					</h:form> <textarea id="msgTextArea"
-						style="border-color: black; border-style: solid; border-width: 2px; height: 700px; width: 90%; font-size:18px;"
+						style="border-color: black; border-style: solid; border-width: 2px; height: 600px; width: 90%; font-size: 24px; font-family: lucida grande, tahoma, verdana, arial, sans-serif;"
 						readonly="readonly"></textarea> <textarea rows="" cols=""
 						id="chat" style="width: 90%; margin-top: 10px;"></textarea> <h:form
 						id="sendForm">
 						<p:commandButton id="sendButton"
-							onclick="send_message(#{messageBeanList.roomAdvertiser.id}, #{messageBeanList.selectedSeekerRoomWrapper.roomSeeker.id}, #{messageBeanList.selectedSeekerRoomWrapper.facility.id})"
+							onclick="send_message(#{messageBean.roomAdvertiser.id}, #{messageBean.selectedSeekerRoomWrapper.roomSeeker.id}, #{messageBean.selectedSeekerRoomWrapper.facility.id})"
 							value="Send" />
 					</h:form></td>
 			</tr>

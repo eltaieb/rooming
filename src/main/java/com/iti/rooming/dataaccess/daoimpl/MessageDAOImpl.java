@@ -72,14 +72,11 @@ public class MessageDAOImpl extends BaseDAO implements MessageDAO {
 
 	@Override
 	public List getAllMessagesTo(ChatRequestWrapper chatRequestWrapper) {
-		String sql = "SELECT m.roomAdvertiser.firstName, m.content FROM Message m WHERE m.roomAdvertiser.id=:ownerId AND m.roomSeeker.id=:seekerId";
+		String sql = "SELECT m.content FROM Message m WHERE m.roomAdvertiser.id=:ownerId AND m.roomSeeker.id=:seekerId";
 		Query query = em.createQuery(sql);
 		query.setParameter("ownerId", chatRequestWrapper.getOwnerId());
 		query.setParameter("seekerId", chatRequestWrapper.getSeekerId());
-		List result = query.getResultList();
-		ChatMessageWrapper chatMessageWrapper = new ChatMessageWrapper();
-
-		return null;
+		return query.getResultList();
 	}
 
 	@Override

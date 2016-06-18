@@ -19,7 +19,8 @@ public class SelectionViewDAOImpl extends BaseDAO implements SelectionViewDAO {
 		String sql = "SELECT new SelectionView(v.facility ,v.longitude, v.latitude, min(v.price), count(v.roomId), v.profileImage,v.facilityCoverPhoto, v.description, v.bookmark, v.subscription) FROM SelectionView v"
 				+ "	WHERE v.price BETWEEN :minPrice AND :maxPrice"
 				+ " AND v.longitude BETWEEN :minLon AND :maxLon"
-				+ " AND v.latitude BETWEEN :minLat AND :maxLat "
+				+ " AND v.latitude BETWEEN :minLat AND :maxLat"
+				+ " AND v.facility.gender=:gender "
 				+ "group by  v.facility, v.longitude, v.latitude,  v.profileImage,v.facilityCoverPhoto, v.description";
 
 		Query query = em.createQuery(sql, SelectionView.class);
@@ -38,6 +39,7 @@ public class SelectionViewDAOImpl extends BaseDAO implements SelectionViewDAO {
 				.getBounds().getMinLat());
 		query.setParameter("maxLat", facilitySelectionCriteriaWrapper
 				.getBounds().getMaxLat());
+		query.setParameter("gender", facilitySelectionCriteriaWrapper.getGender());
 		List<SelectionView> list = query.getResultList();
 		return list;
 	}

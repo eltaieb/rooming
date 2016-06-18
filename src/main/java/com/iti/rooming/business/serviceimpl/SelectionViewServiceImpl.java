@@ -91,21 +91,6 @@ public class SelectionViewServiceImpl implements SelectionViewService {
 			}
 		}
 
-		/*
-		 * List<Facility> facilities = selectionViews .parallelStream() .map(s
-		 * -> s.getFacility()) .filter(f -> { Integer matchesRoles =
-		 * f.getRoles().parallelStream() .filter(fr -> roles.contains(fr))
-		 * .collect(Collectors.toList()).size();
-		 * 
-		 * Integer matchesAmenities = f.getAmenities() .parallelStream()
-		 * .filter(fa -> amenities.contains(fa))
-		 * .collect(Collectors.toList()).size();
-		 * 
-		 * f.setMatches(matchesAmenities + matchesRoles + 0L); if
-		 * (f.getMatches() > 0) return true; else return false;
-		 * 
-		 * }).collect(Collectors.toList());
-		 */
 		Collections.sort(facilityWrappers);
 
 		return facilityWrappers;
@@ -115,8 +100,8 @@ public class SelectionViewServiceImpl implements SelectionViewService {
 			FacilitySelectionCriteria facilitySelectionCriteria) {
 		FacilitySelectionCriteriaWrapper facilitySelectionCriteriaWrapper = new FacilitySelectionCriteriaWrapper();
 
-		Bounds bounds = GeoLocation.get(facilitySelectionCriteria.getLon(),
-				facilitySelectionCriteria.getLat(),
+		Bounds bounds = GeoLocation.get(facilitySelectionCriteria.getLat(),
+				facilitySelectionCriteria.getLon(),
 				facilitySelectionCriteria.getArea());
 		facilitySelectionCriteriaWrapper.setBounds(bounds);
 
@@ -124,8 +109,7 @@ public class SelectionViewServiceImpl implements SelectionViewService {
 		roomPriceWrapper.setMaxPrice(facilitySelectionCriteria.getMaxPrice());
 		roomPriceWrapper.setMinPrice(facilitySelectionCriteria.getMinPrice());
 		facilitySelectionCriteriaWrapper.setRoomPriceWrapper(roomPriceWrapper);
-
+		facilitySelectionCriteriaWrapper.setGender(facilitySelectionCriteria.getGender());
 		return facilitySelectionCriteriaWrapper;
 	}
-
 }

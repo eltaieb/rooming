@@ -8,6 +8,7 @@ public class FacilitySelectionCriteriaWrapper implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Bounds bounds;
 	private RoomPriceWrapper roomPriceWrapper;
+	private String gender;
 
 	public Bounds getBounds() {
 		return bounds;
@@ -23,6 +24,14 @@ public class FacilitySelectionCriteriaWrapper implements Serializable {
 
 	public void setRoomPriceWrapper(RoomPriceWrapper roomPriceWrapper) {
 		this.roomPriceWrapper = roomPriceWrapper;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 }

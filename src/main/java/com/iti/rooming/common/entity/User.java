@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -31,7 +32,8 @@ public class User extends BaseEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String username;
+	private String username = "user"
+			+ ThreadLocalRandom.current().nextLong(1000000000);
 	private String email;
 	private String password;
 	@Column(name = "facebook_token")
@@ -164,7 +166,6 @@ public class User extends BaseEntity implements Serializable {
 	public void setResetUrlValidationTime(Date resetUrlValidationTime) {
 		this.resetUrlValidationTime = resetUrlValidationTime;
 	}
-
 
 	public String getActivationToken() {
 		return activationToken;

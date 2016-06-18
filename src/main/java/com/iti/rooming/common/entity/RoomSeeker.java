@@ -27,7 +27,7 @@ public class RoomSeeker extends User implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date birthdate;
 	@Column(name = "profile_image")
-	private String profileImage;
+	private String profileImage = "index.jpg";
 
 	public RoomSeeker() {
 	}

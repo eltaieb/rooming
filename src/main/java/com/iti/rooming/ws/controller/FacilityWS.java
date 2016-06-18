@@ -32,16 +32,17 @@ public class FacilityWS {
 	@Path("/get/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public RoomingResponse getAllFavourites(RoomingRequest roomingRequest)
+	public RoomingResponse getAllFacilities(RoomingRequest roomingRequest)
 			throws RoomingException {
 
 		String json = gson.toJson(roomingRequest.getObject());
-				FacilitySelectionCriteria facilitySelectionCriteria = gson.fromJson(
+		FacilitySelectionCriteria facilitySelectionCriteria = gson.fromJson(
 				json, FacilitySelectionCriteria.class);
 
 		List<FacilityWrapper> facilities = roomingManagement
 				.getAllFacilitiesWithCriteria(facilitySelectionCriteria);
-		return RoomingResponse.prepareSuccessResponse(facilities.toArray(new FacilityWrapper[]{}));
+		return RoomingResponse.prepareSuccessResponse(facilities
+				.toArray(new FacilityWrapper[] {}));
 	}
 
 	@POST
@@ -71,7 +72,7 @@ public class FacilityWS {
 		RoomSeekerWrapper roomSeekerWrapper = gson.fromJson(json,
 				RoomSeekerWrapper.class);
 
-		roomingManagement.unsubscribeSeeker(roomSeekerWrapper);		
+		roomingManagement.unsubscribeSeeker(roomSeekerWrapper);
 		return RoomingResponse.prepareSuccessResponse(null);
 
 	}

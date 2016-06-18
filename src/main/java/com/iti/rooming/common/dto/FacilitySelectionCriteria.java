@@ -11,8 +11,9 @@ public class FacilitySelectionCriteria implements Serializable {
 	private Double area;
 	private Double minPrice;
 	private Double maxPrice;
+	private String gender;
 	private List<Long> roles = new ArrayList();
-	private List<Long> amenities = new ArrayList();;
+	private List<Long> amenities = new ArrayList();
 
 	public Double getLon() {
 		return lon;
@@ -48,6 +49,14 @@ public class FacilitySelectionCriteria implements Serializable {
 
 	public Double getMaxPrice() {
 		return maxPrice;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 	public void setMaxPrice(Double maxPrice) {
