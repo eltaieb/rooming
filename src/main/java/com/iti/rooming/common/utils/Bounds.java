@@ -13,6 +13,12 @@ public class Bounds {
 		this.maxLat = maxLat;
 	}
 
+	@Override
+	public String toString() {
+		return "Bounds [minLon=" + minLon + ", maxLon=" + maxLon + ", minLat="
+				+ minLat + ", maxLat=" + maxLat + "]";
+	}
+
 	public Double getMinLon() {
 		return minLon;
 	}

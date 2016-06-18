@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.ejb.Local;
 
+import com.iti.rooming.common.dto.FacilityCity;
 import com.iti.rooming.common.entity.Facility;
 import com.iti.rooming.common.entity.FacilityImage;
 import com.iti.rooming.common.entity.RoomAdvertiser;
@@ -43,5 +44,12 @@ public interface FacilityService  {
 	
 	public void removeDeletedFacilityImages(List<FacilityImage> facilityImages,
 			Facility facility)throws RoomingException;
+
+	public List<Facility> getAllFacilitiesOf(RoomAdvertiser roomAdvertiser);
+
+	public List<FacilityCity> getFacilitiesInCities();
+	
+
+
 
 }

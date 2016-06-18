@@ -21,8 +21,6 @@ import com.iti.rooming.common.exception.RoomingException;
 public class CustomUserService implements UserDetailsService {
 
 	RoomingManagment roomingManagement;
-	UserRole userRoleObj;
-	List<UserRole> userRole;
 
 	@PostConstruct
 	public void intit() {
@@ -33,9 +31,7 @@ public class CustomUserService implements UserDetailsService {
 			roomingManagement = (RoomingManagment) contxt
 					.lookup("java:global/rooming/RoomingManagmentImpl");
 
-			userRoleObj = new UserRole();
-
-			userRole = new ArrayList<UserRole>();
+			
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -50,14 +46,15 @@ public class CustomUserService implements UserDetailsService {
 		CustomUserDetails customUserDetails = null;
 
 		user = roomingManagement.Authlogin(username);
+		List<UserRole> userRoles = new ArrayList();
+		UserRole userRole = new UserRole();
+		userRole.setName(user.getRole());
+		userRoles.add(userRole);
 
-		userRoleObj.setName(user.getRole());
-
-		userRole.add(userRoleObj);
 
 		customUserDetails = new CustomUserDetails(user);
 
-		customUserDetails.setUserRole(userRole);
+		customUserDetails.setUserRole(userRoles);
 
 		return customUserDetails;
 	}

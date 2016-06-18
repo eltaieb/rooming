@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="amenityListForm">
+		<left> <p:dataTable var="amenity" rows="10" paginator="true"
+			style=" margin-top:60px ;width :1000px; margin-left:60px "
+			value="#{amenityBean.lazyFacilityModel}" resizableColumns="true"
+			draggableColumns="true" rowKey="#{amenity.id}"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15" selectionMode="single" dynamic="true"
+			selection="#{amenityBean.amenity}" id="aminityListTable"
+			widgetVar="amenityListTable" lazy="true">
+			<p:ajax event="rowSelect" update="@form" />
+			<p:column headerText="ID" filterBy="#{amenity.id}"
+				sortBy="#{amenity.id}">
+				<h:outputText value="#{amenity.id}" />
+			</p:column>
+
+			<p:column headerText="Name" filterBy="#{amenity.name}"
+				sortBy="#{amenity.name}">
+				<h:outputText value="#{amenity.name}" />
+			</p:column>
+		</p:dataTable> <p:commandButton value="Create" style="margin-left:60px"
+			actionListener="#{amenityBean.initiateAmenity}"
+			update=":amenityListForm :createAmenityForm"
+			oncomplete="PF('createAmenityDialog').show()"></p:commandButton> <p:commandButton
+			value="Edit"
+			disabled="#{empty amenityBean.amenity.id}"
+			update=":amenityListForm :editAmenityForm"
+			oncomplete="PF('editAmenityDialog').show()"></p:commandButton> </left>
+	</h:form>
+</ui:composition>

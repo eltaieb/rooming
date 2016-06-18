@@ -1,0 +1,16 @@
+<ui:composition template="/WEB-INF/master/master.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<p:panel header="Amenity List">
+
+			<ui:include src="list.xhtml"></ui:include>
+			<ui:include src="create.xhtml"></ui:include>
+			<ui:include src="edit.xhtml"></ui:include>
+		</p:panel>
+
+	</ui:define>
+</ui:composition>

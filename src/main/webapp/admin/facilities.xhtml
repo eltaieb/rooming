@@ -1,0 +1,58 @@
+
+<ui:composition template="/WEB-INF/master/master.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<script src="http://maps.google.com/maps/api/js?sensor=false"
+			type="text/javascript"></script>
+
+
+		<h:form id="facilityListListForm">
+			<p:dataTable var="facility" rows="10" paginator="true"
+				value="#{facilityListBean.lazyFacilityModel}"
+				resizableColumns="true" draggableColumns="true"
+				rowKey="#{facility.id}"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" selectionMode="single" dynamic="true"
+				selection="#{facilityListBean.facility}" id="facilityListTable"
+				widgetVar="facilityListTable" lazy="true">
+
+				<p:ajax event="rowSelect" update=":facilityListListForm" />
+				<p:column headerText="Facility ID" filterBy="#{facility.id}"
+					sortBy="#{facility.id}">
+					<h:outputText value="#{facility.id}" />
+				</p:column>
+				<p:column headerText="Buliding Number"
+					filterBy="#{facility.buildingNumber}"
+					sortBy="#{facility.buildingNumber}">
+					<h:outputText value="#{facility.buildingNumber}" />
+				</p:column>
+				<p:column headerText="City" filterBy="#{facility.city}"
+					sortBy="#{facility.city}">
+					<h:outputText value="#{facility.city}" />
+				</p:column>
+				<p:column headerText="Country" filterBy="#{facility.country}"
+					sortBy="#{facility.country}">
+					<h:outputText value="#{facility.country}" />
+				</p:column>
+				<p:column headerText="Location">
+					<center>
+						<p:graphicImage name="pin.png" library="images"
+							onclick="PF('dlg').show();" style="width:40px; height:40px;" />
+						<p:dialog id="gmapDialog" widgetVar="dlg" width="625" height="400"
+							modal="true">
+							<p:gmap id="gmap" center="#{facility.lan}, #{facility.lon}"
+								zoom="15" type="HYBRID" style="width:100%;height:400px" />
+						</p:dialog>
+					</center>
+				</p:column>
+			</p:dataTable>
+
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>

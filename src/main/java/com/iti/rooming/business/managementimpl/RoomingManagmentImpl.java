@@ -27,7 +27,9 @@ import com.iti.rooming.business.service.RoomingAdvertiserService;
 import com.iti.rooming.business.service.SeekerFacilityService;
 import com.iti.rooming.business.service.SeekerFavouriteFacilityService;
 import com.iti.rooming.business.service.SelectionViewService;
+import com.iti.rooming.common.dto.FacilityCity;
 import com.iti.rooming.common.dto.FacilitySelectionCriteria;
+import com.iti.rooming.common.dto.RoomAdvertiserCity;
 import com.iti.rooming.common.dto.RoomSeekerWrapper;
 import com.iti.rooming.common.dto.RoomingChatMessage;
 import com.iti.rooming.common.dto.wrapper.ChatRequestWrapper;
@@ -620,4 +622,95 @@ public class RoomingManagmentImpl implements RoomingManagment {
 		return facilityService.getAll(roomAdvertiser);
 	}
 
+	@Override
+	public int getNumOfAdvertiserRows(Map<String, Object> filters) {
+		return roomAdvertiserService.getNumOfAdvertiserRows(filters);
+	}
+
+	@Override
+	public List<RoomAdvertiser> loadAdvertisersLazyMode(int first,
+			int pageSize, String sortField, boolean b,
+			Map<String, Object> filters) {
+		return roomAdvertiserService.loadAdvertisersLazyMode(first, pageSize,
+				sortField, b, filters);
+	}
+
+	@Override
+	public List<RoomAdvertiser> findAllUnValidateAdvisors(int first,
+			int pageSize, String sortField, boolean b,
+			Map<String, Object> filters) {
+		return roomAdvertiserService.findAllUnValidateAdvisors(first, pageSize,
+				sortField, b, filters);
+	}
+
+	@Override
+	public List<Facility> getAllFacilitiesOf(RoomAdvertiser roomAdvertiser) {
+		return facilityService.getAllFacilitiesOf(roomAdvertiser);
+	}
+
+	@Override
+	public List getAllRoomAdvertisers() {
+		return roomAdvertiserService.getAllRoomAdvertisers();
+	}
+
+	@Override
+	public List<Facility> loadFacility(int first, int pageSize,
+			String sortField, boolean b, Map<String, Object> filters) {
+		return facilityService.loadFacility(first, pageSize, sortField, b,
+				filters);
+	}
+
+	@Override
+	public List<FacilityCity> getFacilitiesInCities() {
+		return facilityService.getFacilitiesInCities();
+	}
+
+	@Override
+	public List<RoomAdvertiserCity> getRoomAdvertiserInCities() {
+		return roomAdvertiserService.getRoomAdvertiserInCities();
+	}
+
+	@Override
+	public Long getNofOfflineUsers() {
+		return roomAdvertiserService.getNofOfflineUsers();
+	}
+
+	@Override
+	public List<Amenity> loadAmenities(int first, int pageSize,
+			String sortField, boolean ascending, Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return amenityService.loadAmenities(first, pageSize, sortField, ascending, filters);
+	}
+
+	@Override
+	public int getNumOfAmenitiesRows(Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return amenityService.getNumOfAmenitiesRows(filters);
+	}
+
+	@Override
+	public void updateAmenity(Amenity amenity) {
+		// TODO Auto-generated method stub
+		amenityService.updateAmenity(amenity);
+		
+	}
+
+	@Override
+	public void updateRole(Role role) {
+		// TODO Auto-generated method stub
+		roleService.updateRole(role);
+	}
+
+	@Override
+	public List<Role> loadRoles(int first, int pageSize, String sortField,
+			boolean ascending, Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return roleService.loadRoles(first, pageSize, sortField, ascending, filters);
+	}
+
+	@Override
+	public int getNumOfRolesRows(Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return roleService.getNumOfRolesRows(filters);
+	}
 }

@@ -1,0 +1,92 @@
+
+<ui:composition template="/WEB-INF/master/master.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<script src="http://maps.google.com/maps/api/js?sensor=false"
+			type="text/javascript"></script>
+
+		<h:form>
+			<p:dataTable var="advertiser"
+				value="#{roomAdvertiserListBean.roomAdvertisers}"
+				id="advertiserTable">
+				<p:ajax event="rowToggle"
+					listener="#{roomAdvertiserListBean.onRowToggle}" />
+
+				<p:column headerText="Facility" style="width:86px">
+					<p:rowToggler />
+				</p:column>
+				<p:column filterby="#{advertiser.firstName}" headerText="First Name">
+					<h:outputText value="#{advertiser.firstName}" />
+				</p:column>
+
+				<p:column filterby="#{advertiser.lastName}" headerText="Last Name">
+					<h:outputText value="#{advertiser.lastName}" />
+				</p:column>
+				<p:column headerText="Phone Number">
+					<h:outputText value="#{advertiser.phoneNumber}" />
+				</p:column>
+				<p:column headerText="Country">
+					<h:outputText value="#{advertiser.country}" />
+				</p:column>
+				<p:column filterby="#{advertiser.city}" headerText="City">
+					<h:outputText value="#{advertiser.city}" />
+				</p:column>
+				<p:column headerText="Street">
+					<h:outputText value="#{advertiser.street}" />
+				</p:column>
+				<p:column headerText="BuildingNumber">
+					<h:outputText value="#{advertiser.buildingNumber}" />
+				</p:column>
+				<p:column headerText="FloorNumber">
+					<h:outputText value="#{advertiser.floorNumber}" />
+				</p:column>
+				<p:column headerText="IsVerified">
+					<h:graphicImage name="right.png" library="images"
+						style="width:45px; height:45px;"
+						rendered="#{advertiser.isVerified}" />
+					<h:graphicImage name="wrong.png" library="images"
+						style="width:45px; height:45px;"
+						rendered="#{!advertiser.isVerified}" />
+				</p:column>
+				<p:column headerText="ProfileImage">
+
+					<h:graphicImage
+						value="/images/dynamic/?file=#{advertiser.profileImage}&amp;type=4"
+						style="width:45px; height:45px;" />
+				</p:column>
+
+				<p:rowExpansion>
+					<p:dataTable id="facilityDT" var="facility"
+						value="#{roomAdvertiserListBean.facilities}">
+						<p:column headerText="Id" style="width:40px;">
+							<h:outputText value="#{facility.id}" />
+						</p:column>
+
+						<p:column headerText="Description">
+							<h:outputText value="#{facility.description}" />
+						</p:column>
+
+						<p:column headerText="Location">
+							<center>
+								<p:graphicImage name="pin.png" library="images"
+									onclick="PF('dlg').show();" style="width:40px; height:40px;" />
+								<p:dialog id="gmapDialog" widgetVar="dlg" width="625"
+									height="400" modal="true">
+									<p:gmap id="gmap" center="#{facility.lan}, #{facility.lon}"
+										zoom="15" type="HYBRID" style="width:100%;height:400px" />
+								</p:dialog>
+							</center>
+						</p:column>
+					</p:dataTable>
+				</p:rowExpansion>
+			</p:dataTable>
+		</h:form>
+
+
+
+	</ui:define>
+</ui:composition>

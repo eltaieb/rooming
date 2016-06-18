@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import com.iti.rooming.business.service.FacilityService;
+import com.iti.rooming.common.dto.FacilityCity;
 import com.iti.rooming.common.entity.Facility;
 import com.iti.rooming.common.entity.FacilityImage;
 import com.iti.rooming.common.entity.RoomAdvertiser;
@@ -90,4 +91,15 @@ public class FacilityServiceImp implements FacilityService {
 		facilityDAO.removeImageNotInFacilityImages(facilityImages, facility);
 
 	}
+
+	@Override
+	public List<Facility> getAllFacilitiesOf(RoomAdvertiser roomAdvertiser) {
+		return facilityDAO.getAllFacilitiesOf(roomAdvertiser);
+	}
+
+	@Override
+	public List<FacilityCity> getFacilitiesInCities() {
+		return facilityDAO.getFacilitiesInCities();
+	}
+
 }

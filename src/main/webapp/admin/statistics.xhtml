@@ -1,0 +1,31 @@
+
+<ui:composition template="/WEB-INF/master/master.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<script type="text/javascript">
+    function pieExtender() {
+        this.cfg.highlighter = {
+            show: true,
+            tooltipLocation: 'n',
+            useAxesFormatters: false,
+            formatString: '%s = %d'
+        };
+    }
+</script>
+		<p:panel>
+			<p:column>
+				<p:chart type="pie" model="#{statisticsBean.facilityPieModel}"
+					style="width:500px;height:500px; font-size:24px;" />
+			</p:column>
+			<p:column>
+				<p:chart type="pie" model="#{statisticsBean.roomAdvertiserPieModel}"
+					style="width:500px;height:500px; font-size:24px;" />
+			</p:column>
+
+		</p:panel>
+	</ui:define>
+</ui:composition>

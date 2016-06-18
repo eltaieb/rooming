@@ -10,7 +10,9 @@ import javax.ejb.Local;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
+import com.iti.rooming.common.dto.FacilityCity;
 import com.iti.rooming.common.dto.FacilitySelectionCriteria;
+import com.iti.rooming.common.dto.RoomAdvertiserCity;
 import com.iti.rooming.common.dto.RoomSeekerWrapper;
 import com.iti.rooming.common.dto.RoomingChatMessage;
 import com.iti.rooming.common.dto.wrapper.ChatRequestWrapper;
@@ -188,5 +190,38 @@ public interface RoomingManagment {
 	public Facility updateFacility(Facility facility,
 			List<Amenity> selectedAmenities, List<Role> selectedRoles)
 			throws RoomingException;
+
+	public int getNumOfAdvertiserRows(Map<String, Object> filters);
+
+	public List<RoomAdvertiser> loadAdvertisersLazyMode(int first,
+			int pageSize, String sortField, boolean b,
+			Map<String, Object> filters);
+
+	public List<RoomAdvertiser> findAllUnValidateAdvisors(int first,
+			int pageSize, String sortField, boolean b,
+			Map<String, Object> filters);
+
+	public List<Facility> getAllFacilitiesOf(RoomAdvertiser roomAdvertiser);
+
+	public List getAllRoomAdvertisers();
+
+	public List<Facility> loadFacility(int first, int pageSize,
+			String sortField, boolean b, Map<String, Object> filters);
+
+	public List<FacilityCity> getFacilitiesInCities();
+
+	public List<RoomAdvertiserCity> getRoomAdvertiserInCities();
+
+	public Long getNofOfflineUsers();
+
+	
+	List<Amenity> loadAmenities(int first, int pageSize, String sortField,
+			boolean ascending, Map<String, Object> filters);
+	int getNumOfAmenitiesRows(Map<String, Object> filters);
+	public void updateAmenity(Amenity amenity);
+	public void updateRole(Role role);
+	List<Role> loadRoles(int first, int pageSize, String sortField,
+			boolean ascending, Map<String, Object> filters);
+	int getNumOfRolesRows(Map<String, Object> filters);
 
 }

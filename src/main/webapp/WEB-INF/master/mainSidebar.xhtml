@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+
+		<ul class="nav menu">
+			<li><a href="home.xhtml" class="glyphicon glyphicon-home">
+					Dashboard</a></li>
+			<li><a href="owners.xhtml" class="glyphicon glyphicon-user">
+					Users</a></li>
+			<li><a href="verify.xhtml" class="glyphicon glyphicon-eye-open">
+					Verify</a></li>
+			<li><a href="amenities.xhtml"
+				class="glyphicon glyphicon-folder-close"> Amenities</a></li>
+			<li><a href="#" class="glyphicon glyphicon-tag"> Tags</a></li>
+			<li><a href="facilities.xhtml"
+				class="glyphicon glyphicon-calendar"> Facilities</a></li>
+			<li><a href="statistics.xhtml"
+				class="glyphicon glyphicon-align-left"> Statistics</a></li>
+			<li><h:link outcome="/pub/Logout.xhtml"
+					rendered="#{userSessionBean.authenticated}">
+					<span data-hover="Logout" class="glyphicon glyphicon-remove-circle">
+						Logout</span>
+				</h:link></li>
+
+		</ul>
+
+	</div>
+	<!--/.sidebar-->
+
+</ui:composition>

@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.iti.rooming.common.entity.Category;
 import com.iti.rooming.common.entity.RoomAdvertiser;
+import com.iti.rooming.common.entity.User;
 import com.iti.rooming.springsecurity.CustomUserDetails;
 
 public class BaseBean implements Serializable {
@@ -25,14 +26,31 @@ public class BaseBean implements Serializable {
 
 	public RoomAdvertiser getCurrentlyLoggedRoomAdvertiser() {
 
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
-		CustomUserDetails obj = (CustomUserDetails) auth.getPrincipal();
-		RoomAdvertiser roomAdvertiser = (RoomAdvertiser) obj.getUser();
-
-		return roomAdvertiser;
+		CustomUserDetails customUserDetails = (CustomUserDetails)getFromSession("currentUserDetails");
+		
+		if(customUserDetails!=null)
+		{
+			return (RoomAdvertiser)customUserDetails.getUser();
+		}
+		
+		return null;
 
 	}
+	
+	
+	public User getCurrentlyLoggedUser() {
+
+		CustomUserDetails customUserDetails = (CustomUserDetails)getFromSession("currentUserDetails");
+		
+		if(customUserDetails!=null)
+		{
+			return customUserDetails.getUser();
+		}
+		
+		return null;
+
+	}
+	
 	
 	public void setCurrentLoggedRoomAdvertiser(RoomAdvertiser roomAdvertiser)
 	{
