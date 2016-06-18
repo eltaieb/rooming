@@ -206,4 +206,14 @@ public interface RoomingManagment {
 	public List<Facility> loadFacility(int first, int pageSize,
 			String sortField, boolean b, Map<String, Object> filters);
 
+	
+	List<Amenity> loadAmenities(int first, int pageSize, String sortField,
+			boolean ascending, Map<String, Object> filters);
+	int getNumOfAmenitiesRows(Map<String, Object> filters);
+	public void updateAmenity(Amenity amenity);
+	public void updateRole(Role role);
+	List<Role> loadRoles(int first, int pageSize, String sortField,
+			boolean ascending, Map<String, Object> filters);
+	int getNumOfRolesRows(Map<String, Object> filters);
+
 }

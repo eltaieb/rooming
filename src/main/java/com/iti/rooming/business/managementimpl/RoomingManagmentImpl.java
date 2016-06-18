@@ -652,4 +652,43 @@ public class RoomingManagmentImpl implements RoomingManagment {
 			String sortField, boolean b, Map<String, Object> filters) {
 		return facilityService.loadFacility(first, pageSize, sortField, b, filters);
 	}
+
+	@Override
+	public List<Amenity> loadAmenities(int first, int pageSize,
+			String sortField, boolean ascending, Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return amenityService.loadAmenities(first, pageSize, sortField, ascending, filters);
+	}
+
+	@Override
+	public int getNumOfAmenitiesRows(Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return amenityService.getNumOfAmenitiesRows(filters);
+	}
+
+	@Override
+	public void updateAmenity(Amenity amenity) {
+		// TODO Auto-generated method stub
+		amenityService.updateAmenity(amenity);
+		
+	}
+
+	@Override
+	public void updateRole(Role role) {
+		// TODO Auto-generated method stub
+		roleService.updateRole(role);
+	}
+
+	@Override
+	public List<Role> loadRoles(int first, int pageSize, String sortField,
+			boolean ascending, Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return roleService.loadRoles(first, pageSize, sortField, ascending, filters);
+	}
+
+	@Override
+	public int getNumOfRolesRows(Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return roleService.getNumOfRolesRows(filters);
+	}
 }

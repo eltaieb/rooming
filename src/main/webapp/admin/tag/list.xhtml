@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="roleListForm">
+		<left> <p:dataTable var="role" rows="10" paginator="true"
+			style=" margin-top:60px ;width :1000px; margin-left:60px "
+			value="#{roleBean.lazyRoleModel}" resizableColumns="true"
+			draggableColumns="true" rowKey="#{role.id}"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15" selectionMode="single" dynamic="true"
+			selection="#{roleBean.role}" id="aminityListTable"
+			widgetVar="roleListTable" lazy="true" >
+			<p:ajax event="rowSelect" update="@form" />
+			<p:column headerText="ID" filterBy="#{role.id}"
+				sortBy="#{role.id}">
+				<h:outputText value="#{role.id}" />
+			</p:column>
+
+			<p:column headerText="Name" filterBy="#{role.name}"
+				sortBy="#{role.name}">
+				<h:outputText value="#{role.name}" />
+			</p:column>
+		</p:dataTable> <p:commandButton value="Create" style="margin-left:60px"
+			actionListener="#{roleBean.initiateRole}"
+			update=":roleListForm :createRoleForm"
+			oncomplete="PF('createRoleDialog').show()"></p:commandButton> <p:commandButton
+			value="Edit"
+			disabled="#{empty roleBean.role.id}"
+			update=":roleListForm :editRoleForm"
+			oncomplete="PF('editRoleDialog').show()"></p:commandButton> </left>
+	</h:form>
+</ui:composition>

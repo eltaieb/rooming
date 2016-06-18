@@ -1,6 +1,7 @@
 package com.iti.rooming.business.serviceimpl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -42,6 +43,22 @@ public class AmenityServiceImpl implements AmenityService {
 	@Override
 	public List<Amenity> getAmenityByFacility(Facility facility) {
 		return amenityDAO.getAmenityByFacility(facility);
+	}
+	@Override
+	public List<Amenity> loadAmenities(int first, int pageSize,
+			String sortField, boolean ascending, Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return amenityDAO.loadAmenities(first, pageSize, sortField, ascending, filters);
+	}
+	@Override
+	public int getNumOfAmenitiesRows(Map<String, Object> filters) {
+		// TODO Auto-generated method stub
+		return amenityDAO.getNumOfAmenitiesRows(filters);
+	}
+	@Override
+	public void updateAmenity(Amenity amenity) {
+		// TODO Auto-generated method stub
+		amenityDAO.updateAmenity(amenity);
 	}
 	
 

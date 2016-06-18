@@ -1,6 +1,7 @@
 package com.iti.rooming.dataaccess.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Local;
 
@@ -16,4 +17,8 @@ public interface AmenityDAO  {
 	public Amenity find(Long id);
 	public void saveOrUpdate(Amenity amenity);
 	public List<Amenity> getAmenityByFacility(Facility facility);
+	List<Amenity> loadAmenities(int first, int pageSize, String sortField,
+			boolean ascending, Map<String, Object> filters);
+	int getNumOfAmenitiesRows(Map<String, Object> filters);
+	public void updateAmenity(Amenity amenity);
 }
