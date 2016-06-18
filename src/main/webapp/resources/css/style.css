@@ -1571,3 +1571,17 @@ h2.hd {
 	}
 }
 /*--responsive-ends-here--*/
+
+.noBorder
+{
+	border:none !important;
+}
+
+.noBorder tr
+{
+	border:none !important;
+}
+.noBorder td
+{
+	border:none !important;
+}

@@ -170,17 +170,15 @@ public class FacilityEditManagedBean extends BaseBean implements Serializable {
 				+ " " + facility.getCountry();
 		location = new DefaultMapModel();
 		location.addOverlay(new Marker(latLng, locationName));
-
-		// SET ROLES AND AMENITIES
 		amenities = management.getAllAmenities();
-		selectedAmenities = facility.getAmenities();
+		selectedAmenities = management.getAmenitiesByFacility(facility);
 		if (amenities == null)
 			amenities = new ArrayList<Amenity>();
 		if (selectedAmenities == null)
 			selectedAmenities = new ArrayList<Amenity>();
 
 		roles = management.getAllRoles();
-		selectedRoles = facility.getRoles();
+		selectedRoles = management.getRolesByFacility(facility);
 		if (roles == null)
 			roles = new ArrayList<Role>();
 		if (selectedRoles == null)
@@ -205,7 +203,9 @@ public class FacilityEditManagedBean extends BaseBean implements Serializable {
 
 	/* | ON DELETE CLICK | */
 	public void deleteAction(Room room) {
+		System.out.println(facility.getRooms().toString());
 		facility.getRooms().remove(room);
+		System.out.println(facility.getRooms().toString());
 	}
 
 	/* | ON DELETE IMAGE CLICK | */
@@ -226,9 +226,9 @@ public class FacilityEditManagedBean extends BaseBean implements Serializable {
 	/* | Set Room Image | */
 	public void uploadRoomImage(FileUploadEvent event) {
 		try {
-			Utils.copyFile(
-					Configurations.getProperty(Configurations.ROOM_PATH), event
-							.getFile().getFileName(), event.getFile()
+			Utils.copyFile(Configurations
+					.getProperty(Configurations.UPLOADED_ROOM_IMAGES_PATH),
+					event.getFile().getFileName(), event.getFile()
 							.getInputstream());
 
 			RoomImage roomImage = new RoomImage();
@@ -248,8 +248,9 @@ public class FacilityEditManagedBean extends BaseBean implements Serializable {
 		try {
 
 			Utils.copyFile(Configurations
-					.getProperty(Configurations.FACILITY_IMAGES_PATH), event
-					.getFile().getFileName(), event.getFile().getInputstream());
+					.getProperty(Configurations.UPLOADED_FACILITY_IMAGES_PATH),
+					event.getFile().getFileName(), event.getFile()
+							.getInputstream());
 
 			FacilityImage image = new FacilityImage();
 			image.setImage(event.getFile().getFileName());
@@ -311,14 +312,14 @@ public class FacilityEditManagedBean extends BaseBean implements Serializable {
 			facility.setIsDeleted(Boolean.FALSE);
 			facility = management.updateFacility(facility, selectedAmenities,
 					selectedRoles);
+			FacesMessage msg = new FacesMessage("Successful",
+					"Your Facility Was Updated Successfully ! ");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (RoomingException e1) {
 			FacesMessage msg = new FacesMessage("Failure",
 					"Sorry a problem occured while updating your facility ! ");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
-		FacesMessage msg = new FacesMessage("Successful",
-				"Your Facility Was Updated Successfully ! ");
-		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 }

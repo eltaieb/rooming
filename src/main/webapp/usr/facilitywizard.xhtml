@@ -56,7 +56,7 @@
 													value="/images/dynamic/?file=#{facilityImage.image}&amp;type=3" />
 											</p:column>
 											<p:column headerText="Delete Image">
-												<h:commandLink value="Delete"
+												<h:commandLink value="Delete" immediate="true"
 													actionListener="#{facilityWizardManagedBean.deleteImageAction(facilityImage)}"
 													update=":facilitiesForm:facilityImages" />
 											</p:column>
@@ -169,7 +169,7 @@
 										</p:column>
 
 										<p:column headerText="Delete Room">
-											<h:commandLink value="Delete This Room"
+											<h:commandLink value="Delete This Room"  immediate="true"
 												actionListener="#{facilityWizardManagedBean.deleteAction(room)}"
 												update=":facilitiesForm:roomsOfFacility" />
 										</p:column>

@@ -281,16 +281,14 @@ public class RoomingManagmentImpl implements RoomingManagment {
 	/* FACILITY AND FACILITY IMAGES RELATED FUNCTIONS */
 	@Override
 	public Facility getFacility(Long id) {
+
 		Facility facility = facilityService.findFacility(id);
 		if (facility == null) {
 			return null;
 		} else {
-			facility.getRooms().size();
-			
 			/* 1 ROOMS */
 			List<Room> facilityRooms = roomService.getRoomsOfFacility(facility);
 			for (Room room : facilityRooms) {
-				room.getRoomImages().size();
 				List<RoomImage> roomImages = new ArrayList<RoomImage>();
 				roomImages = roomService.getRoomImageOfRoom(room);
 				room.setImages(roomImages);
@@ -306,13 +304,12 @@ public class RoomingManagmentImpl implements RoomingManagment {
 			facility.setImages(facilityImages);
 			if (facility.getImages() == null)
 				facility.setImages(new ArrayList());
-//			/* 4 AMENITIES */
-//			facility.setAmenities(facilityAmenityService
-//					.getAmenitiesOfFacility(facility));
-//			/* 5 ROLE */
-//			facility.setRoles(facilityRoleService.getRolesOfFacility(facility));
-			facility.getAmenities().size();
-			facility.getRoles().size();
+			/* 4 AMENITIES */
+			facility.setAmenities(facilityAmenityService
+					.getAmenitiesOfFacility(facility));
+			/* 5 ROLE */
+			facility.setRoles(facilityRoleService.getRolesOfFacility(facility));
+
 			return facility;
 		}
 	}
@@ -563,16 +560,10 @@ public class RoomingManagmentImpl implements RoomingManagment {
 		// Images
 		// 1) Newly Added
 		for (int index = 0; index < facilityImages.size(); index++) {
-			// FacilityImage image = facilityImages.get(index);
-			// image.setFacility(facility);
 			facilityImages.get(index).setFacility(facility);
 			FacilityImage image = facilityService
 					.addOrUpdateFacilityImage(facilityImages.get(index));
 			facilityImages.set(index, image);
-			// image = facilityService.addOrUpdateFacilityImage(image);
-			// facilityImages.
-			// facilityImages.remove(index);
-			// facilityImages.add(image);
 		}
 		// 2) Deleted
 		facilityService.removeDeletedFacilityImages(facilityImages, facility);
@@ -581,21 +572,20 @@ public class RoomingManagmentImpl implements RoomingManagment {
 		// 1) Newly Added Rooms
 		// 2) Updated Rooms
 		for (int index = 0; index < facilityRooms.size(); index++) {
-			Room room = facilityRooms.get(index);
-			room.setFacility(facility);
-			List<RoomImage> roomImages = room.getImages();
-			room = roomService.addOrUpdateRoom(room);
-			for (RoomImage roomImage : roomImages) {
-				roomImage.setRoom(room);
-				roomService.addOrUpdateRoomImage(roomImage);
+			facilityRooms.get(index).setFacility(facility);
+			Room room = roomService.addOrUpdateRoom(facilityRooms.get(index));
+			for (int imageIndex = 0; imageIndex < facilityRooms.get(index)
+					.getImages().size(); imageIndex++) {
+				roomService.addOrUpdateRoomImage(facilityRooms.get(index)
+						.getImages().get(imageIndex));
 			}
-			facilityRooms.remove(index);
-			facilityRooms.add(room);
+			facilityRooms.set(index, room);
 		}
 
 		// 3) Deleted Rooms
 		roomService.removeDeletedRooms(facilityRooms, facility);
 		return facility;
+
 	}
 
 	@Override
@@ -679,7 +669,8 @@ public class RoomingManagmentImpl implements RoomingManagment {
 	public List<Amenity> loadAmenities(int first, int pageSize,
 			String sortField, boolean ascending, Map<String, Object> filters) {
 		// TODO Auto-generated method stub
-		return amenityService.loadAmenities(first, pageSize, sortField, ascending, filters);
+		return amenityService.loadAmenities(first, pageSize, sortField,
+				ascending, filters);
 	}
 
 	@Override
@@ -692,7 +683,7 @@ public class RoomingManagmentImpl implements RoomingManagment {
 	public void updateAmenity(Amenity amenity) {
 		// TODO Auto-generated method stub
 		amenityService.updateAmenity(amenity);
-		
+
 	}
 
 	@Override
@@ -705,7 +696,8 @@ public class RoomingManagmentImpl implements RoomingManagment {
 	public List<Role> loadRoles(int first, int pageSize, String sortField,
 			boolean ascending, Map<String, Object> filters) {
 		// TODO Auto-generated method stub
-		return roleService.loadRoles(first, pageSize, sortField, ascending, filters);
+		return roleService.loadRoles(first, pageSize, sortField, ascending,
+				filters);
 	}
 
 	@Override
