@@ -1,6 +1,11 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
 
 <meta charset="utf-8" />
 <title>Login</title>
@@ -18,14 +23,14 @@
 <h:outputStylesheet name="prettyPhoto.css" library="css" />
 <h:outputStylesheet name="settings.css" library="css" />
 <h:outputStylesheet name="responsive.css" library="css" />
-<link rel="shortcut icon" href="img/favicon.ico">
+<link rel="shortcut icon" href="img/favicon.ico"/>
 
 <!-- End CSS Files -->
 
-</head>
+</h:head>
 
 
-<body data-spy="scroll" data-target=".nav-menu" data-offset="50"
+<h:body data-spy="scroll" data-target=".nav-menu" data-offset="50"
 	class="bg-3">
 
 	<!-- Page Loader-->
@@ -45,22 +50,22 @@
 				<div>
 					<div class="genral-form">
 						<div class="login-logo">
-							<a href="index.html"><img src="images/final_rooming_logo.png"></a>
+							<!-- <a href="index.html"><img src="images/final_rooming_logo.png"></a> -->
 						</div>
 						<form>
 							<div class="form-group">
 								<label>E-mail</label> <input type="email" class="form-control"
-									placeholder="Enter your email">
+									placeholder="Enter your email"/>
 							</div>
 							<div class="form-group">
 								<label>Password</label> <input type="password"
-									class="form-control" placeholder="Enter your password">
+									class="form-control" placeholder="Enter your password"/>
 							</div>
 							<div class="form-group">
 								<div class="col-md-6 col-sm-6 pull-right">
 									<div class="checkbox-list">
 										<label class="checkbox"><div class="checker">
-												<span><input type="checkbox"></span>
+												<span><input type="checkbox"/></span>
 											</div>Remember</label>
 									</div>
 								</div>
@@ -109,6 +114,6 @@
 
 	<!-- End JS Files -->
 
-</body>
+</h:body>
 
 </html>

@@ -34,7 +34,8 @@
 		href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
 		rel='stylesheet' type='text/css'></link>
 
-	<script src="http://maps.google.com/maps/api/js?sensor=false&amp;libraries=places"
+	<script
+		src="http://maps.google.com/maps/api/js?sensor=false&amp;libraries=places"
 		type="text/javascript"></script>
 
 	<style>
@@ -62,11 +63,15 @@
 .ui-message-error {
 	background: transparent !important;;
 }
+
+.bak {
+	background-image: url("#{resource['images/bg3.jpg']}");
+}
 </style>
 </h:head>
-<h:body id="page-top" styleClass="index">
+<h:body id="page-top" styleClass="index bak">
 	<h:form>
-		<p:idleMonitor timeout="50000">
+		<p:idleMonitor timeout="300000">
 			<p:ajax event="idle"
 				listener="#{userAuthenticationManagedBean.logout()}" />
 		</p:idleMonitor>
@@ -78,15 +83,10 @@
 	<ui:insert name="header">
 		<ui:include src="/WEB-INF/template/header.xhtml"></ui:include>
 	</ui:insert>
-
-	<ui:insert name="content">
+	<section class="main-content"> <ui:insert name="content">
 		<ui:include src="/WEB-INF/template/content.xhtml"></ui:include>
-	</ui:insert>
-	
+	</ui:insert> </section>
 
-	<ui:insert name="footer">
-		<ui:include src="/WEB-INF/template/footer.xhtml"></ui:include>
-	</ui:insert>
 	<!-- jQuery -->
 
 	<!-- 	<h:outputScript library="js" name="jquery.js"></h:outputScript> -->

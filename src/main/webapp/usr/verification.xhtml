@@ -7,10 +7,10 @@
 
 	<ui:define name="content">
 		<h:form id="form" enctype="multipart/form-data">
-
-			<center>
-				<p:panelGrid columns="2" styleClass="ui-responsive noborder"
-					style="width:800px; position:absolute; top:300px; left:450px; ">
+			<p:panelGrid style=" margin: 0 auto; margin-top: 4cm;" columns="1">
+			</p:panelGrid>
+			<p:panelGrid columns="2" styleClass="ui-responsive noborder"
+					style="margin: 0 auto;"  >
 					<p:outputLabel for="verficationType" value="Verfication Type" />
 					<p:selectOneMenu id="verficationType"
 						converter="#{lookupConverter}"
@@ -44,7 +44,6 @@
 						actionListener="#{advertiserVerficationManagedBean.saveAdvisorVerfications()}"
 						update="@form" />
 				</p:panelGrid>
-			</center>
 		</h:form>
 	</ui:define>
 </ui:composition>

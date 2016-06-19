@@ -41,7 +41,6 @@ CREATE  TABLE IF NOT EXISTS `rooming_db`.`bookmark` (
   `seeker_id` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 22
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
 
@@ -102,7 +101,6 @@ CREATE  TABLE IF NOT EXISTS `rooming_db`.`room_advertisers` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 12
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
 
@@ -132,7 +130,6 @@ CREATE  TABLE IF NOT EXISTS `rooming_db`.`facility` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
 
@@ -154,7 +151,6 @@ CREATE  TABLE IF NOT EXISTS `rooming_db`.`facility_amenities` (
     FOREIGN KEY (`facility_id` )
     REFERENCES `rooming_db`.`facility` (`id` ))
 ENGINE = InnoDB
-AUTO_INCREMENT = 493
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
 
@@ -173,7 +169,6 @@ CREATE  TABLE IF NOT EXISTS `rooming_db`.`facility_images` (
     FOREIGN KEY (`facility_id` )
     REFERENCES `rooming_db`.`facility` (`id` ))
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
 
@@ -187,7 +182,6 @@ CREATE  TABLE IF NOT EXISTS `rooming_db`.`facility_roles` (
   `role_id` INT(11) NOT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 167
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
 
@@ -213,7 +207,7 @@ CREATE  TABLE IF NOT EXISTS `rooming_db`.`users` (
   `reset_url_validation_time` DATETIME NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 13
+AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
 
@@ -257,7 +251,6 @@ CREATE  TABLE IF NOT EXISTS `rooming_db`.`room` (
     FOREIGN KEY (`facility_id` )
     REFERENCES `rooming_db`.`facility` (`id` ))
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
 
@@ -276,7 +269,7 @@ CREATE  TABLE IF NOT EXISTS `rooming_db`.`room_seekers` (
   `profile_image` VARCHAR(200) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NULL DEFAULT 'index.jpg' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 13
+AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
 
@@ -311,7 +304,7 @@ CREATE  TABLE IF NOT EXISTS `rooming_db`.`messages` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 21
+AUTO_INCREMENT = 14
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
 
@@ -342,7 +335,6 @@ CREATE  TABLE IF NOT EXISTS `rooming_db`.`room_images` (
     FOREIGN KEY (`room_id` )
     REFERENCES `rooming_db`.`room` (`id` ))
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
 
@@ -398,7 +390,7 @@ CREATE  TABLE IF NOT EXISTS `rooming_db`.`seeker_favourite_facility` (
   `facility_id` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 10
+AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
 

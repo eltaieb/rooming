@@ -20,7 +20,7 @@
 </h:head>
 <h:body>
 	 <h:form>
-		<p:idleMonitor timeout="50000">
+		<p:idleMonitor timeout="300000">
 			<p:ajax event="idle"
 				listener="#{userAuthenticationManagedBean.logout()}" />
 		</p:idleMonitor>

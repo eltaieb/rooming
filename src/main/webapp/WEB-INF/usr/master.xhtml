@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>Rooming</title>
+
+	<!-- Custom CSS -->
+	<h:outputStylesheet name="=reset.css" library="usr/css" />
+	<h:outputStylesheet name="animate.min.css" library="usr/css" />
+	<h:outputStylesheet name="bootstrap.css" library="usr/css" />
+	<h:outputStylesheet name="style.css" library="usr/css" />
+	<h:outputStylesheet name="font-awesome.css" library="usr/css" />
+	<h:outputStylesheet name="owl.carousel.css" library="usr/css" />
+	<h:outputStylesheet name="prettyPhoto.css" library="usr/css" />
+	<h:outputStylesheet name="settings.css" library="usr/css" />
+	<h:outputStylesheet name="responsive.css" library="usr/css" />
+	<link rel="shortcut icon" href="img/favicon.ico" />
+	<!-- Custom CSS -->
+	<h:outputStylesheet name="bootstrap.min.css" library="usr/css" />
+	<h:outputStylesheet name="style.css" library="usr/css" />
+
+	<script type="application/x-javascript"> addEventListener("load", function() {setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+		rel="stylesheet" type="text/css"></link>
+	<link href='https://fonts.googleapis.com/css?family=Kaushan+Script'
+		rel='stylesheet' type='text/css'></link>
+	<link
+		href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic'
+		rel='stylesheet' type='text/css'></link>
+	<link
+		href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
+		rel='stylesheet' type='text/css'></link>
+
+	<script
+		src="http://maps.google.com/maps/api/js?sensor=false&amp;libraries=places"
+		type="text/javascript"></script>
+
+	<style>
+.noborder {
+	border: none !important;
+}
+
+.noborder td {
+	border: none !important;
+}
+
+.noborder tr {
+	border: none !important;
+}
+
+.navbar-brand {
+	color: white !important;
+}
+
+.ui-state-error {
+	color: black !important;
+	background: white !important;
+}
+
+.ui-message-error {
+	background: transparent !important;;
+}
+</style>
+</h:head>
+<h:body styleClass="bg-3" data-spy="scroll" data-target=".nav-menu"
+	data-offset="50">
+	<h:form>
+		<p:idleMonitor timeout="300000">
+			<p:ajax event="idle"
+				listener="#{userAuthenticationManagedBean.logout()}" />
+		</p:idleMonitor>
+	</h:form>
+	<ui:insert name="navigation">
+		<ui:include src="/WEB-INF/usr/navigation.xhtml"></ui:include>
+	</ui:insert>
+
+	<section class="main-content"> <ui:insert name="content">
+		<ui:include src="/WEB-INF/usr/content.xhtml"></ui:include>
+	</ui:insert> </section>
+	<!-- jQuery -->
+
+	<!-- 	<h:outputScript library="usr/js" name="jquery.js"></h:outputScript> -->
+	<!-- Bootstrap Core JavaScript -->
+
+
+	<h:outputScript name="jquery-1.10.2.min.js" library="usr/js" />
+	<h:outputScript name="bootstrap.js" library="usr/js" />
+	<h:outputScript name="jquery.appear.js" library="usr/js" />
+	<h:outputScript name="jquery.countTo.js" library="usr/js" />
+	<h:outputScript name="waypoints.min.js" library="usr/js" />
+	<h:outputScript name="jquery.prettyPhoto.js" library="usr/js" />
+	<h:outputScript name="modernizr-latest.js" library="usr/js" />
+	<h:outputScript name="SmoothScroll.js" library="usr/js" />
+	<h:outputScript name="jquery.parallax-1.1.3.js" library="usr/js" />
+	<h:outputScript name="jquery.easing.1.3.js" library="usr/js" />
+	<h:outputScript name="jquery.sticky.js" library="usr/js" />
+	<h:outputScript name="owl.carousel.js" library="usr/js" />
+	<h:outputScript name="jquery.isotope.js" library="usr/js" />
+	<h:outputScript name="jquery.themepunch.plugins.min.js"
+		library="js/rev-slider" />
+	<h:outputScript name="jquery.themepunch.revolution.min.js"
+		library="js/rev-slider" />
+	<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	<h:outputScript name="jquery.mapmarker.js" library="usr/js" />
+	<h:outputScript name="scripts.js" library="usr/js" />
+
+</h:body>
+
+</html>

@@ -11,13 +11,36 @@
 </h:head>
 <h:body>
 
-	<ui:composition template="/WEB-INF/template/master.xhtml">
+	<ui:composition template="/WEB-INF/usr/master.xhtml">
 		<ui:define name="content">
+			<div style="visibility: hidden;">
+				<table style="visibility: hidden;">
+					<tr>
+						<td>jhjdfs</td>
+					</tr>
+					<tr>
+						<td>jhjdfs</td>
+					</tr>
+					<tr>
+						<td>jhjdfs</td>
+					</tr>
+					<tr>
+						<td>jhjdfs</td>
+					</tr>
+					<tr>
+						<td>jhjdfs</td>
+					</tr>
+				</table>
+			</div>
 
-			<h:form id="form" enctype="multipart/form-data">
-				<p:panelGrid style=" margin: 0 auto; margin-top: 4cm;" columns="1">
-				
-					<p:panelGrid columns="3" layout="grid" id="pg">
+			<div class="genral-form">
+				<div class="login-logo">
+					<a href="index.html"><h:graphicImage
+							name="final_rooming_logo.png" library="images" /></a>
+				</div>
+
+				<h:form id="form" enctype="multipart/form-data">
+					<div class="form-group">
 						<p:outputLabel for="username" value="UserName: " />
 						<p:inputText id="username"
 							value="#{userAuthenticationManagedBean.userName}" required="true"
@@ -25,7 +48,8 @@
 							<f:validateLength minimum="2" maximum="10" />
 						</p:inputText>
 						<p:message for="username" />
-
+					</div>
+					<div class="form-group">
 						<p:outputLabel for="password" value="Password: " />
 						<p:password id="password"
 							value="#{userAuthenticationManagedBean.password}" required="true"
@@ -33,14 +57,16 @@
 							<f:validateLength minimum="2" maximum="10" />
 						</p:password>
 						<p:message for="password" />
-
-						<p:outputLabel value="" />
+					</div>
+					<p:outputLabel value="" />
+					<div class="form-group">
 						<p:commandButton value="login"
 							actionListener="#{userAuthenticationManagedBean.login()}"
 							update="@form" />
-					</p:panelGrid>
-				</p:panelGrid>
-			</h:form>
+					</div>
+
+				</h:form>
+			</div>
 		</ui:define>
 	</ui:composition>
 </h:body>

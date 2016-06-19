@@ -1,0 +1,16 @@
+.ui-state-highlight{
+background: #4A4A4A !important;
+color: #FED136  !important;
+}
+.ui-seperator-template{
+	width:100% !important;
+	height:200px !important;
+	background-color: #242122  !important;
+}
+.ui-fieldset-legend{
+	padding:0.1em 1em  !important;
+}
+.booleanImage{
+	width:20px !important;
+	height:20px !important;
+}

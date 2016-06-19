@@ -22,9 +22,9 @@ public class RoomAdvertiser extends User implements Serializable {
 	@Column(name = "building_number")
 	private Integer buildingNumber;
 
-	private String city;
+	private String city = "alex";
 
-	private String country;
+	private String country = "egypt";
 
 	@Column(name = "floor_number")
 	private Integer floorNumber;
@@ -33,7 +33,7 @@ public class RoomAdvertiser extends User implements Serializable {
 	private Integer phoneNumber;
 
 	@Column(name = "profile_image")
-	private String profileImage;
+	private String profileImage="index.png";
 
 	private String street;
 
@@ -50,7 +50,7 @@ public class RoomAdvertiser extends User implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date birthday;
 	@Column(name = "is_verified")
-	private Boolean isVerified;
+	private Boolean isVerified = false;
 
 	// Lookup IdentificationType
 
